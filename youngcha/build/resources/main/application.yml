@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/restaurant
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: 5269611
+  jpa:
+    hibernate:
+      ddl-auto:create
+    properties:
+      hibernate:
+        format_sql: true
+logging.level:
+  org.hibernate.SQL: debug
+  org.hibernate.type: trace
