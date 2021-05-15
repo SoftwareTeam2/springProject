@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <form action="/walkIn/new" method="post">
+        <div class="form-group">
+            <label for="tableNo">테이블 번호</label>
+            <input type="text" name="tableNo" id="tableNo"><br>
+            <label for="walkInDate">워크인 날짜</label>
+            <input type="text" id="walkInDate" name="walkInDate" placeholder="예약 날짜 yyyy-MM-dd-HH:mm:ss"><br>
+        </div>
+        <button type="submit">등록</button>
+    </form>
+</div> <!-- /container -->
+</body>
+</html>

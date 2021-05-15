@@ -21,7 +21,8 @@
             <div >
                 <a href="/reservations/new" th:if="${session?.loginCheck}">예약하기</a>
                 <a href="/reservations" th:if="${session?.loginCheck} and ${session.admin == true}">예약 조회</a>
-                <a href="walkIn/new" th:if="${session?.admin}">워크인 등록</a>
+                <a href="/walkIn/new" th:if="${session?.admin}">워크인 등록</a>
+                <a href="/walkIn" th:if="${session?.admin}">워크인 조회</a>
             </div>
         </p>
 
