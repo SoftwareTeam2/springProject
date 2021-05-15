@@ -1,19 +1,24 @@
 package Team2.youngcha.hellospring.domain;
 
+import Team2.youngcha.hellospring.util.BooleanToYNConverter;
+
 import javax.persistence.*;
 
 @Entity
 public class Customer {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "systemID")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long systemID;
-    @Column(name = "userID")
+    @Column(name = "user_id")
     private String userID;
-    @Column(name="userPSW")
+    @Column(name = "user_psw")
     private String userPSW;
-    @Column(name = "userName")
+    @Column(name = "user_name")
     private String userName;
-    @Column(name = "userPhoneNumber")
+    @Column(name = "user_phone_number")
     private String userPhoneNumber;
+    @Convert(converter = BooleanToYNConverter.class) @Column(name = "is_admin",columnDefinition = "boolean default false")
+    private boolean isAdmin;
 
     public Long getSystemID() {
         return systemID;
@@ -55,7 +60,11 @@ public class Customer {
         this.userPhoneNumber = userPhoneNumber;
     }
 
-    public void printAll(){
-        System.out.println("ID : "+userID+"\nPSW : "+userPSW+"\nName : "+userName+"\nPhoneNumber : "+userPhoneNumber);
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }

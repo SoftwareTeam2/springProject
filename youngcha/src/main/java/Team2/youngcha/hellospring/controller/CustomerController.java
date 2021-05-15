@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -21,39 +21,53 @@ public class CustomerController {
     }
 
     @GetMapping("customers/new")
-    public String createForm(){
+    public String createForm() {
         return "customers/createCustomerForm";
     }
 
     @PostMapping("customers/new")
-    public String create(CustomerForm form){
+    public String create(CustomerForm form) {
         Customer customer = new Customer();
         customer.setUserName(form.getUserName());
         customer.setUserID(form.getUserID());
         customer.setUserPSW(form.getUserPSW());
         customer.setUserPhoneNumber(form.getUserPhoneNumber());
-        //member.printAll();
+
         customerService.join(customer);
 
         return "redirect:/";
     }
 
     @GetMapping("/customers")
-    public String list(Model model){
+    public String list(Model model) {
         List<Customer> customers = customerService.findMember();
         model.addAttribute("customers", customers);
         return "customers/customerList";
     }
+
     @GetMapping("/customers/login")
-    public String enterInfo(){
+    public String enterInfo() {
         return "customers/customerLogin";
     }
 
     @PostMapping("/customers/login")
-    @ResponseBody
-    public String logIn(LogInForm form){
-        System.out.println(form.getUserID());
-        System.out.println(form.getUserPSW());
-        return customerService.LogIn(form.getUserID(), form.getUserPSW());
+    public String logIn(HttpSession session, LogInForm form) {
+        if (customerService.LogIn(form.getUserID(), form.getUserPSW())) {
+            if (customerService.isAdmin(form.getUserID()))
+                session.setAttribute("admin", true);
+            else session.setAttribute("admin", false);
+            session.setAttribute("loginCheck", true);
+            session.setAttribute("id", form.getUserID());
+            return "redirect:/";
+        } else return "/customers/customerLogin";
     }
+
+    @GetMapping("/customers/logout")
+    public String logOut(HttpSession session) {
+        session.setAttribute("loginCheck", false);
+        session.setAttribute("id", null);
+
+        return "redirect:/";
+    }
+
 }
