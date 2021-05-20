@@ -3,11 +3,12 @@ package Team2.youngcha.hellospring.service;
 import Team2.youngcha.hellospring.domain.Reservation;
 import Team2.youngcha.hellospring.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
 public class ReservationService {
     private final ReservationRepository reservationRepository;
 
@@ -33,19 +34,27 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
-    public String cancel(Reservation reservation) {
-        Optional<Reservation> result = reservationRepository.findById(reservation.getOid());
-        if(result.isPresent()){
-            reservationRepository.delete(reservation);
-            return "Reservation Canceled";
-        } else return "There is no reservation with that information";
+    public List<Reservation> cancel(String id) {
+        List<Reservation> result = reservationRepository.findByCustomerID(id);
+        return result;
     }
 
-    public Long customerArrival(Long id) {
-        return null;
+    public String customerArrival(String id) {
+        return reservationRepository.customerArrival(id);
+
     }
 
-    public Long tableReallocation(Long id) {
-        return null;
+    public Long tableReallocation(Long oid,int tableNo) {
+        return reservationRepository.tableReallocation(oid,tableNo);
+
+    }
+
+    public List<Reservation> listReservationByCustomerId(String id){
+        List<Reservation> byCustomerID = reservationRepository.findByCustomerID(id);
+        return byCustomerID;
+    }
+
+    public void cancel(Long oid){
+        reservationRepository.cancelReservation(oid);
     }
 }

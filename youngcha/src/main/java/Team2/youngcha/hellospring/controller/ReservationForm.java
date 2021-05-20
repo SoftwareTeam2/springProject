@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class ReservationForm {
     private String customerID;
     private int tableNo;
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
     private LocalDateTime reservationDate;
 
     public String getCustomerID() {

@@ -17,7 +17,7 @@ public class Customer {
     private String userName;
     @Column(name = "user_phone_number")
     private String userPhoneNumber;
-    @Convert(converter = BooleanToYNConverter.class) @Column(name = "is_admin",columnDefinition = "boolean default false")
+    @Convert(converter = BooleanToYNConverter.class) @Column(name = "is_admin",columnDefinition = "tinytext default \"N\"")
     private boolean isAdmin;
 
     public Long getSystemID() {

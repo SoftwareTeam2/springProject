@@ -5,7 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 
 public class WalkInForm {
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
     private LocalDateTime walkInDate;
     private int tableNo;
 

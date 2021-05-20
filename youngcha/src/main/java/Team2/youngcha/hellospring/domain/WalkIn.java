@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 public class WalkIn extends Booking{
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:MM-ss") @Column(name = "walkInDate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm") @Column(name = "walkInDate")
     private LocalDateTime walkInDate;
 
     public LocalDateTime getWalkInDate() {
