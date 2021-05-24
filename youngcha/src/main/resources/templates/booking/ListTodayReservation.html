@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>테이블 번호</th>
+                <th>고객 아이디</th>
+                <th>예약 날짜</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reservation : ${reservations}">
+                <td th:text="${reservation.tableNo}"></td>
+                <td th:text="${reservation.customerId}"></td>
+                <td>
+                    <form action="/reservations/arrival"method="post">
+                        <button type="submit" name="customerId" th:value="${reservation.customerId}">
+                            <i>도착</i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>

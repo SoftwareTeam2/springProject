@@ -2,7 +2,7 @@ package Team2.youngcha.hellospring.controller;
 
 public class LogInForm {
     private String userID;
-    private String userPSW;
+    private String userPW;
 
     public String getUserID() {
         return userID;
@@ -12,11 +12,11 @@ public class LogInForm {
         this.userID = userID;
     }
 
-    public String getUserPSW() {
-        return userPSW;
+    public String getUserPW() {
+        return userPW;
     }
 
-    public void setUserPSW(String userPSW) {
-        this.userPSW = userPSW;
+    public void setUserPW(String userPW) {
+        this.userPW = userPW;
     }
 }

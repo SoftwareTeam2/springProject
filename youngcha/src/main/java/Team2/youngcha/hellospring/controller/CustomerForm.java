@@ -37,8 +37,4 @@ public class CustomerForm {
     public void setUserPhoneNumber(String userPhoneNumber) {
         this.userPhoneNumber = userPhoneNumber;
     }
-
-    public void printAll(){
-        System.out.println("ID : "+userID+"\nPSW : "+userPSW+"\nName : "+userName+"\nPhoneNumber : "+userPhoneNumber);
-    }
 }
