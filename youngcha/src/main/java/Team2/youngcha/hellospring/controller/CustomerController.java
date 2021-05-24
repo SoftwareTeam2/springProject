@@ -20,12 +20,12 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping("customers/new")
+    @GetMapping("/customers/new")
     public String createForm() {
-        return "customers/createCustomerForm";
+        return "SignUp";
     }
 
-    @PostMapping("customers/new")
+    @PostMapping("/customers/new")
     public String create(CustomerForm form) {
         Customer customer = new Customer();
         customer.setUserName(form.getUserName());
@@ -47,27 +47,36 @@ public class CustomerController {
 
     @GetMapping("/customers/login")
     public String enterInfo() {
-        return "customers/customerLogin";
+        return "Login";
     }
 
     @PostMapping("/customers/login")
     public String logIn(HttpSession session, LogInForm form) {
-        if (customerService.LogIn(form.getUserID(), form.getUserPSW())) {
+        if (customerService.LogIn(form.getUserID(), form.getUserPW())) {
             if (customerService.isAdmin(form.getUserID()))
                 session.setAttribute("admin", true);
             else session.setAttribute("admin", false);
             session.setAttribute("loginCheck", true);
-            session.setAttribute("id", form.getUserID());
+            session.setAttribute("userID", form.getUserID());
             return "redirect:/";
-        } else return "/customers/customerLogin";
+        } else return "Login";
     }
 
     @GetMapping("/customers/logout")
     public String logOut(HttpSession session) {
         session.setAttribute("loginCheck", false);
-        session.setAttribute("id", null);
+        session.setAttribute("userID", null);
 
         return "redirect:/";
     }
 
+    @GetMapping("/customers/findID")
+    public String findID(){
+        return "FindID";
+    }
+
+    @GetMapping("/customers/findPW")
+    public String findPW(){
+        return "FindPW";
+    }
 }

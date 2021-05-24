@@ -28,7 +28,7 @@ public class ReservationController {
 
     @GetMapping("/reservations/new")
     public String createReservationForm() {
-        return "booking/newReservation";
+        return "Reservation";
     }
 
     @PostMapping("/reservations/new")
@@ -43,14 +43,14 @@ public class ReservationController {
     }
 
     @GetMapping("/reservations/cancel")
-    public String lists(HttpSession session, Model model){
+    public String lists(HttpSession session, Model model) {
         List<Reservation> reservationList = reservationService.cancel(String.valueOf(session.getAttribute("id")));
         model.addAttribute("reservationList", reservationList);
         return "booking/CancelReservation";
     }
 
     @PostMapping("/reservations/cancel")
-    public String cancelReservation(@RequestParam(name = "cancelOid") Long oid){
+    public String cancelReservation(@RequestParam(name = "cancelOid") Long oid) {
         reservationService.cancel(oid);
         return "redirect:/";
     }
@@ -63,22 +63,22 @@ public class ReservationController {
     }
 
     @PostMapping("/reservations/arrival")
-    public String setArrival(@RequestParam(name = "customerId") String id,Model model){
+    public String setArrival(@RequestParam(name = "customerId") String id, Model model) {
         reservationService.customerArrival(id);
         return "redirect:/";
     }
 
     @GetMapping("/reservations/reallocate")
-    public String createReallocationForm(HttpSession session,Model model){
+    public String createReallocationForm(HttpSession session, Model model) {
         List<Reservation> reservationList = reservationService.listReservationByCustomerId(String.valueOf(session.getAttribute("id")));
         model.addAttribute("reservations", reservationList);
         return "/booking/ReallocationList";
     }
 
     @PostMapping("/reservations/reallocate")
-    public String reallocateTable(@RequestParam(name = "oid") Long oid){
+    public String reallocateTable(@RequestParam(name = "oid") Long oid) {
         System.out.println(oid);
-        reservationService.tableReallocation(oid,4);
+        reservationService.tableReallocation(oid, 4);
         return "redirect:/";
     }
 }
