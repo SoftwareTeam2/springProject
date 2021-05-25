@@ -76,13 +76,14 @@
 					<img class="d-block mx-auto mb-4" src="../../resources/image/ronaldo.png" alt=""
 						width="150" height="100">
 					<h2>회원가입</h2>
-					<p class="lead"></p>
+                    <p class="lead"></p>
 				</div>
+    <form action="/customers/new" method="POST">
 		<div class="form-group" id="divId" style="margin-bottom: 15px;">
 			<label for="inputId" class="col-lg-2 control-label">아이디</label>
 			<div class="col-lg-10">
 				<input type="text" class="form-control onlyAlphabetAndNumber"
-					id="id" data-rule-required="true"
+					name="cid"id="id" data-rule-required="true"
 					placeholder="30자이내의 알파벳, 언더스코어(_), 숫자만 입력 가능합니다." maxlength="30">
 			</div>
 		</div>
@@ -90,7 +91,7 @@
 			<label for="inputPassword" class="col-lg-2 control-label">비밀번호</label>
 			<div class="col-lg-10">
 				<input type="password" class="form-control" id="password"
-					name="excludeHangul" data-rule-required="true" placeholder="비밀번호"
+					name="psw" data-rule-required="true" placeholder="비밀번호"
 					maxlength="30">
 			</div>
 		</div>
@@ -105,7 +106,7 @@
 		<div class="form-group" id="divName" style="margin-bottom: 15px;">
 			<label for="inputName" class="col-lg-2 control-label">이름</label>
 			<div class="col-lg-10">
-				<input type="text" class="form-control onlyHangul" id="name"
+				<input type="text" class="form-control onlyHangul" id="name" name="name"
 					data-rule-required="true" placeholder="한글만 입력 가능합니다."
 					maxlength="15">
 			</div>
@@ -114,7 +115,7 @@
 		<div class="form-group" id="divEmail" style="margin-bottom: 15px;">
 			<label for="inputEmail" class="col-lg-2 control-label">이메일</label>
 			<div class="col-lg-10">
-				<input type="email" class="form-control" id="email"
+				<input type="email" class="form-control" id="email" name="email"
 					data-rule-required="true" placeholder="이메일" maxlength="40">
 			</div>
 		</div>
@@ -122,7 +123,7 @@
 			<label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰
 				번호</label>
 			<div class="col-lg-10">
-				<input type="tel" class="form-control onlyNumber" id="phoneNumber"
+				<input type="tel" class="form-control onlyNumber" id="phoneNumber" name="phoneNumber"
 					data-rule-required="true" placeholder="-를 제외하고 숫자만 입력하세요."
 					maxlength="11">
 			</div>
@@ -130,7 +131,7 @@
 		<div class="form-group" style="margin-bottom: 15px;">
 			<label for="inputPhoneNumber" class="col-lg-2 control-label">성별</label>
 			<div class="col-lg-10">
-				<select class="form-control" id="gender">
+				<select class="form-control" id="gender" name="gender">
 					<option value="M">남</option>
 					<option value="F">여</option>
 				</select>
@@ -156,7 +157,7 @@
 				<label class="radio-inline"> <input type="radio"
 					id="smsReceiveYn" name="smsReceiveYn" value="Y" checked>
 					동의합니다.
-				</label> 
+				</label>
 				<label class="radio-inline"> <input type="radio"
 					id="smsReceiveYn" name="smsReceiveYn" value="N"> 동의하지 않습니다.
 				</label>
@@ -166,7 +167,9 @@
 			<div class="col-lg-offset-2 col-lg-10">
 				<button type="submit" class="btn btn-warning btn-primary">가입</button>
 			</div>
+
 		</div>
+    </form>
 
 
 		<script>

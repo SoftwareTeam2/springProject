@@ -2,69 +2,97 @@ package Team2.youngcha.hellospring.domain;
 
 import Team2.youngcha.hellospring.util.BooleanToYNConverter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Customer {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long systemID;
-    @Column(name = "user_id")
-    private String userID;
-    @Column(name = "user_psw")
-    private String userPSW;
-    @Column(name = "user_name")
-    private String userName;
-    @Column(name = "user_phone_number")
-    private String userPhoneNumber;
-    @Convert(converter = BooleanToYNConverter.class) @Column(name = "is_admin",columnDefinition = "tinytext default \"N\"")
-    private boolean isAdmin;
+    private String cid;
+    private String psw;
+    private String name;
+    private String email;
+    private String phoneNumber;
+    private String gender;
+    @Convert(converter = BooleanToYNConverter.class)
+    private Boolean emailReceive;
+    @Convert(converter = BooleanToYNConverter.class)
+    private Boolean messageReceive;
+    @Convert(converter = BooleanToYNConverter.class) @Column(columnDefinition = "tinytext default \"N\"")
+    private Boolean isAdmin;
 
-    public Long getSystemID() {
-        return systemID;
+    public String getCid() {
+        return cid;
     }
 
-    public void setSystemID(Long systemID) {
-        this.systemID = systemID;
+    public void setCid(String cid) {
+        this.cid = cid;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getPsw() {
+        return psw;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setPsw(String psw) {
+        this.psw = psw;
     }
 
-    public String getUserPSW() {
-        return userPSW;
+    public String getName() {
+        return name;
     }
 
-    public void setUserPSW(String userPSW) {
-        this.userPSW = userPSW;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUserPhoneNumber() {
-        return userPhoneNumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setUserPhoneNumber(String userPhoneNumber) {
-        this.userPhoneNumber = userPhoneNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public boolean getIsAdmin() {
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Boolean getEmailReceive() {
+        return emailReceive;
+    }
+
+    public void setEmailReceive(Boolean emailReceive) {
+        this.emailReceive = emailReceive;
+    }
+
+    public Boolean getMessageReceive() {
+        return messageReceive;
+    }
+
+    public void setMessageReceive(Boolean messageReceive) {
+        this.messageReceive = messageReceive;
+    }
+
+    public Boolean getAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setAdmin(Boolean admin) {
         isAdmin = admin;
     }
 }
