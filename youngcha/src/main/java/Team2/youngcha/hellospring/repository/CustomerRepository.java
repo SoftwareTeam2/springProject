@@ -29,7 +29,7 @@ public class CustomerRepository implements MemberRepository {
     }
 
 
-    public Optional<Customer> findByName(Customer customer) {
+    public Optional<Customer> findByCid(Customer customer) {
         List<Customer> result = em.createQuery("select c from Customer c where c.cid=:cid")
                 .setParameter("cid", customer.getCid())
                 .getResultList();
@@ -44,8 +44,8 @@ public class CustomerRepository implements MemberRepository {
 
     @Override
     public Boolean validateUser(String id, String pwd) {
-        Optional<Customer> customer = Optional.ofNullable(em.createQuery("select c from Customer c where c.userID=:userID", Customer.class)
-                .setParameter("userID", id)
+        Optional<Customer> customer = Optional.ofNullable(em.createQuery("select c from Customer c where c.cid=:cid", Customer.class)
+                .setParameter("cid", id)
                 .getSingleResult());
         if(customer.isPresent()) {
             return pwd.equals(customer.get().getPsw());
@@ -56,8 +56,8 @@ public class CustomerRepository implements MemberRepository {
 
     @Override
     public Boolean isAdmin(String id) {
-        return em.createQuery("select c from Customer c where c.userID=:id",Customer.class)
-                .setParameter("id",id)
+        return em.createQuery("select c from Customer c where c.cid=:cid",Customer.class)
+                .setParameter("cid",id)
                 .getSingleResult()
                 .getAdmin();
     }

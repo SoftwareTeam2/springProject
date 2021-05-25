@@ -27,7 +27,7 @@ public class CustomerService {
     }
 
     private void validateDuplicateName(Customer customer) {
-        memberRepository.findByName(customer)
+        memberRepository.findByCid(customer)
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });

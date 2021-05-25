@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface MemberRepository {
     Customer save(Customer customer);
     Optional<Customer> findById(Long id);
-    Optional<Customer> findByName(Customer customer);
+    Optional<Customer> findByCid(Customer customer);
     List<Customer> findAll();
     Boolean validateUser(String id, String pwd);
     Boolean isAdmin(String id);
