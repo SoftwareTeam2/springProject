@@ -20,11 +20,10 @@ public class CustomerService {
     /**
      * 회원가입
      */
-    public Long join(Customer customer) {
+    public void join(Customer customer) {
         validateDuplicateName(customer); // 중복회원 검증
 
         memberRepository.save(customer);
-        return customer.getSystemID();
     }
 
     private void validateDuplicateName(Customer customer) {
@@ -48,10 +47,14 @@ public class CustomerService {
      */
 
     public Boolean LogIn(String id, String psw) {
-        return memberRepository.validateUser(id,psw);
+        return memberRepository.validateUser(id, psw);
     }
 
-    public Boolean isAdmin(String id){
+    public Boolean isAdmin(String id) {
         return memberRepository.isAdmin(id);
+    }
+
+    public static Boolean SToBConvert(String string) {
+        return (string.equals("Y")) ? true : false;
     }
 }

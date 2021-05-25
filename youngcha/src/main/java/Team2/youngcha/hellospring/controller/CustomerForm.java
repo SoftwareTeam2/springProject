@@ -1,40 +1,80 @@
 package Team2.youngcha.hellospring.controller;
 
 public class CustomerForm {
-    private String userID;
-    private String userPSW;
-    private String userName;
-    private String userPhoneNumber;
+    private String cid;
+    private String psw;
+    private String name;
+    private String email;
+    private String phoneNumber;
+    private String gender;
+    private String emailReceiveYn;
+    private String smsReceiveYn;
 
-    public String getUserID() {
-        return userID;
+    public String getCid() {
+        return cid;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setCid(String cid) {
+        this.cid = cid;
     }
 
-    public String getUserPSW() {
-        return userPSW;
+    public String getPsw() {
+        return psw;
     }
 
-    public void setUserPSW(String userPSW) {
-        this.userPSW = userPSW;
+    public void setPsw(String psw) {
+        this.psw = psw;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUserPhoneNumber() {
-        return userPhoneNumber;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserPhoneNumber(String userPhoneNumber) {
-        this.userPhoneNumber = userPhoneNumber;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getEmailReceiveYn() {
+        return emailReceiveYn;
+    }
+
+    public void setEmailReceiveYn(String emailReceiveYn) {
+        this.emailReceiveYn = emailReceiveYn;
+    }
+
+    public String getSmsReceiveYn() {
+        return smsReceiveYn;
+    }
+
+    public void setSmsReceiveYn(String smsReceiveYn) {
+        this.smsReceiveYn = smsReceiveYn;
+    }
+
+    public void printAll(){
+        System.out.println(cid +" "+psw+" "+name+" "+email+" "+phoneNumber+" "+gender+" "+emailReceiveYn+" "+smsReceiveYn);
     }
 }

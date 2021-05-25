@@ -27,11 +27,16 @@ public class CustomerController {
 
     @PostMapping("/customers/new")
     public String create(CustomerForm form) {
+        form.printAll();
         Customer customer = new Customer();
-        customer.setUserName(form.getUserName());
-        customer.setUserID(form.getUserID());
-        customer.setUserPSW(form.getUserPSW());
-        customer.setUserPhoneNumber(form.getUserPhoneNumber());
+        customer.setCid(form.getCid());
+        customer.setEmail(form.getEmail());
+        customer.setEmailReceive(CustomerService.SToBConvert(form.getEmailReceiveYn()));
+        customer.setGender(form.getGender());
+        customer.setName(form.getName());
+        customer.setMessageReceive(CustomerService.SToBConvert(form.getSmsReceiveYn()));
+        customer.setPsw(form.getPsw());
+        customer.setPhoneNumber(form.getPhoneNumber());
 
         customerService.join(customer);
 
@@ -79,4 +84,5 @@ public class CustomerController {
     public String findPW(){
         return "FindPW";
     }
+
 }

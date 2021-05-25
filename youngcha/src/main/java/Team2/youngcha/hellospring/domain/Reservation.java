@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Entity
 public class Reservation extends Booking {
 
-
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
     @Column(name = "reservation_date")
     private LocalDateTime reservationDate;

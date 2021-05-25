@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
 public abstract class Booking {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long oid;

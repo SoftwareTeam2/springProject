@@ -30,8 +30,8 @@ public class CustomerRepository implements MemberRepository {
 
 
     public Optional<Customer> findByName(Customer customer) {
-        List<Customer> result = em.createQuery("select c from Customer c where c.userName=:userName")
-                .setParameter("userName", customer.getUserName())
+        List<Customer> result = em.createQuery("select c from Customer c where c.cid=:cid")
+                .setParameter("cid", customer.getCid())
                 .getResultList();
         return result.stream().findAny();
     }
@@ -48,7 +48,7 @@ public class CustomerRepository implements MemberRepository {
                 .setParameter("userID", id)
                 .getSingleResult());
         if(customer.isPresent()) {
-            return pwd.equals(customer.get().getUserPSW());
+            return pwd.equals(customer.get().getPsw());
         }
         else return false;
     }
@@ -59,6 +59,6 @@ public class CustomerRepository implements MemberRepository {
         return em.createQuery("select c from Customer c where c.userID=:id",Customer.class)
                 .setParameter("id",id)
                 .getSingleResult()
-                .getIsAdmin();
+                .getAdmin();
     }
 }
