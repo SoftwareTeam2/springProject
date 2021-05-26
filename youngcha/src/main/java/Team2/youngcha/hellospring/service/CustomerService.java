@@ -17,9 +17,6 @@ public class CustomerService {
         this.memberRepository = memberRepository;
     }
 
-    /**
-     * 회원가입
-     */
     public void join(Customer customer) {
         validateDuplicateName(customer); // 중복회원 검증
 
@@ -33,9 +30,6 @@ public class CustomerService {
                 });
     }
 
-    /**
-     * 전체 회원 조회
-     */
     public List<Customer> findMember() {
         return memberRepository.findAll();
     }

@@ -4,6 +4,7 @@ import Team2.youngcha.hellospring.domain.Customer;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,13 +45,14 @@ public class CustomerRepository implements MemberRepository {
 
     @Override
     public Boolean validateUser(String id, String pwd) {
-        Optional<Customer> customer = Optional.ofNullable(em.createQuery("select c from Customer c where c.cid=:cid", Customer.class)
-                .setParameter("cid", id)
-                .getSingleResult());
-        if(customer.isPresent()) {
-            return pwd.equals(customer.get().getPsw());
+        try {
+            Customer customer = em.createQuery("select c from Customer c where c.cid=:cid", Customer.class)
+                    .setParameter("cid", id)
+                    .getSingleResult();
+            return customer.getPsw().equals(pwd);
+        }catch(NoResultException e){
+            return false;
         }
-        else return false;
     }
 
 

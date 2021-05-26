@@ -27,7 +27,6 @@ public class CustomerController {
 
     @PostMapping("/customers/new")
     public String create(CustomerForm form) {
-        form.printAll();
         Customer customer = new Customer();
         customer.setCid(form.getCid());
         customer.setEmail(form.getEmail());

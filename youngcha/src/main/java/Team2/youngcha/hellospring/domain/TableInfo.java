@@ -11,8 +11,17 @@ public class TableInfo {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long oid;
     private int tableNumber;
+    private int people;
     private int places;
     private int bookingNo;
+
+    public int getPeople() {
+        return people;
+    }
+
+    public void setPeople(int people) {
+        this.people = people;
+    }
 
     public Long getOid() {
         return oid;
