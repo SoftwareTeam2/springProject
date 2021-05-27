@@ -17,10 +17,14 @@ public class CustomerService {
         this.memberRepository = memberRepository;
     }
 
-    public void join(Customer customer) {
-        validateDuplicateName(customer); // 중복회원 검증
-
-        memberRepository.save(customer);
+    public Boolean join(Customer customer) {
+        try {
+            validateDuplicateName(customer); // 중복회원 검증
+            memberRepository.save(customer);
+            return true;
+        } catch(IllegalStateException e){
+            return false;
+        }
     }
 
     private void validateDuplicateName(Customer customer) {

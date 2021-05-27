@@ -1,5 +1,6 @@
 package Team2.youngcha.hellospring.controller;
 
+import Team2.youngcha.hellospring.service.ManagerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +21,8 @@ public class ManagerController {
     }
 
     @PostMapping("/manager/tableSetting")
-    public String tableSetting(@RequestParam(name = "table") Integer table, @RequestParam(name = "people") Integer people){
-        return "";
+    public String tableSetting(@RequestParam(name = "tableCount") Integer tableCount){
 
+        return "";
     }
 }

@@ -13,7 +13,6 @@ public class TableInfo {
     private int tableNumber;
     private int people;
     private int places;
-    private int bookingNo;
 
     public int getPeople() {
         return people;
@@ -45,13 +44,5 @@ public class TableInfo {
 
     public void setPlaces(int places) {
         this.places = places;
-    }
-
-    public int getBookingNo() {
-        return bookingNo;
-    }
-
-    public void setBookingNo(int bookingNo) {
-        this.bookingNo = bookingNo;
     }
 }

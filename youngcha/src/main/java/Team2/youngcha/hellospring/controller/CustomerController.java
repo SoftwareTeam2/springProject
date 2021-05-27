@@ -37,9 +37,10 @@ public class CustomerController {
         customer.setPsw(form.getPsw());
         customer.setPhoneNumber(form.getPhoneNumber());
 
-        customerService.join(customer);
-
-        return "redirect:/";
+        if(customerService.join(customer))
+            return "redirect:/";
+        else
+            return "SignUp";
     }
 
     @GetMapping("/customers")
