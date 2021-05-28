@@ -44,6 +44,7 @@ width: 100%;
 
 </style>
 </head>
+
 <div class="py-5 text-center" style="user-select: auto;">
 	<img class="d-block mx-auto mb-4" src="../../resources/image/jisung.jpg" alt=""
 		width="100" height="125" style="user-select: auto;">
@@ -53,70 +54,13 @@ width: 100%;
 	<div class="container" style="user-select: auto;" id="login_wrapper">
 	<main style="user-select: auto;">
 			<div class="col-md-7 col-lg-8" style="user-select: auto;">
-				<h4 class="mb-3" style="user-select: auto;">Billing address</h4>
-				<form class="needs-validation" novalidate=""
+				<h4 class="mb-3" style="user-select: auto;">Reservation</h4>
+				<form action="/reservations/new" method="POST" class="needs-validation" novalidate=""
 					style="user-select: auto;">
 					<div class="row g-3" style="user-select: auto;">
-						<div class="col-sm-6" style="user-select: auto;">
-							<label for="firstName" class="form-label"
-								style="user-select: auto;">First name</label> <input type="text"
-								class="form-control" id="firstName" placeholder="" value=""
-								required="" style="user-select: auto;">
-							<div class="invalid-feedback" style="user-select: auto;">
-								Valid first name is required.</div>
-						</div>
-
-						<div class="col-sm-6" style="user-select: auto;">
-							<label for="lastName" class="form-label"
-								style="user-select: auto;">Last name</label> <input type="text"
-								class="form-control" id="lastName" placeholder="" value=""
-								required="" style="user-select: auto;">
-							<div class="invalid-feedback" style="user-select: auto;">
-								Valid last name is required.</div>
-						</div>
-
-						<div class="col-12" style="user-select: auto;">
-							<label for="username" class="form-label"
-								style="user-select: auto;">Username</label>
-							<div class="input-group has-validation"
-								style="user-select: auto;">
-								<span class="input-group-text" style="user-select: auto;">@</span>
-								<input type="text" class="form-control" id="username"
-									placeholder="Username" required="" style="user-select: auto;">
-								<div class="invalid-feedback" style="user-select: auto;">
-									Your username is required.</div>
-							</div>
-						</div>
-
-						<div class="col-12" style="user-select: auto;">
-							<label for="email" class="form-label" style="user-select: auto;">Email
-								<span class="text-muted" style="user-select: auto;">(Optional)</span>
-							</label> <input type="email" class="form-control" id="email"
-								placeholder="you@example.com" style="user-select: auto;">
-							<div class="invalid-feedback" style="user-select: auto;">
-								Please enter a valid email address for shipping updates.</div>
-						</div>
-
-						<div class="col-12" style="user-select: auto;">
-							<label for="address" class="form-label"
-								style="user-select: auto;">Address</label> <input type="text"
-								class="form-control" id="address" placeholder="1234 Main St"
-								required="" style="user-select: auto;">
-							<div class="invalid-feedback" style="user-select: auto;">
-								Please enter your shipping address.</div>
-						</div>
-
-						<div class="col-12" style="user-select: auto;">
-							<label for="address2" class="form-label"
-								style="user-select: auto;">Address 2 <span
-								class="text-muted" style="user-select: auto;">(Optional)</span></label>
-							<input type="text" class="form-control" id="address2"
-								placeholder="Apartment or suite" style="user-select: auto;">
-						</div>
-
 						<div class="col-md-5" style="user-select: auto;">
-							<label for="Table" class="form-label" style="user-select: auto;">테이블
-								위치</label> <select class="form-select" id="Table" required=""
+							<label for="tableNo" class="form-label" style="user-select: auto;">테이블
+								위치</label> <select class="form-select" id="tableNo" name="tableNo" required=""
 								style="user-select: auto;">
 								<option value="" style="user-select: auto;">선택</option>
 								<option style="user-select: auto;">1</option>
@@ -128,9 +72,9 @@ width: 100%;
 						</div>
 
 						<div class="col-md-4" style="user-select: auto;">
-							<label for="Headcount" class="form-label"
+							<label for="numberOfPeople" class="form-label"
 								style="user-select: auto;">인원 수</label> <select
-								class="form-select" id="Headcount" required=""
+								class="form-select" name="numberOfPeople" id="numberOfPeople" required=""
 								style="user-select: auto;">
 								<option value="" style="user-select: auto;">선택</option>
 								<option style="user-select: auto;">1</option>
@@ -140,16 +84,20 @@ width: 100%;
 							</select>
 							<div class="invalid-feedback" style="user-select: auto;"></div>
 						</div>
+
 						<div class="col-md-3" style="user-select: auto;">
-							<label for="Car" class="form-label">자차여부</label>
+							<label for="hasCar" class="form-label">자차여부</label>
 							<div class="col-lg-10">
 								<label class="radio-inline y-1"> <input type="radio"
-									id="smsReceiveYn" name="smsReceiveYn" value="Y" checked>
+									id="hasCar" name="hasCar" value="Y" checked>
 									Y
 								</label> <label class="radio-inline"> <input type="radio"
-									id="smsReceiveYn" name="smsReceiveYn" value="N"> N
+									id="hasCar" name="hasCar" value="N"> N
 								</label>
 							</div>
+						</div>
+						<div>
+							<input type="text" id="datePicker" class="form-control" value="종료시간선택" name="reservationDate">
 						</div>
 					</div>
 

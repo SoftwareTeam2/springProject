@@ -65,8 +65,8 @@ class YoungchaApplicationTests {
         // given
         Reservation reservation = new Reservation();
         reservation.setReservationDate(LocalDateTime.of(2013, 11, 25, 16, 50));
-        reservation.setTableNo(3);
-        reservation.setCustomerId("go");
+        reservation.setTableNo("3");
+        reservation.setCustomerID("go");
 
         // when
         reservationService.join(reservation);
@@ -84,8 +84,6 @@ class YoungchaApplicationTests {
         int result = testManagerService.setTable(tableCount);
 
         assertThat(result).isEqualTo(tableCount);
-
-
     }
 
     @Test
@@ -96,5 +94,23 @@ class YoungchaApplicationTests {
 
         // then
         assertThat(Collections.frequency(booleans, false)).isEqualTo(1);
+    }
+
+    @Test
+    void 예약테이블변경테스트됨(){
+
+        // given, when
+        Boolean hyeonho9877 = testManagerService.changeTable("hyeonho9877", "3");
+
+        // then
+        assertThat(hyeonho9877).isEqualTo(true);
+    }
+
+    @Test
+    void 예약테이블변경테스트안됨(){
+        Boolean hyeonho9877 = testManagerService.changeTable("hyeonho9877", "2");
+
+        // then
+        assertThat(hyeonho9877).isEqualTo(false);
     }
 }

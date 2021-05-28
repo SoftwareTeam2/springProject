@@ -36,7 +36,7 @@ public class WalkInController {
         WalkIn walkIn = new WalkIn();
         walkIn.setGuestCount(Integer.getInteger(String.valueOf(session.getAttribute("guestCount"))));
         walkIn.setWalkInDate(LocalDateTime.now());
-        walkIn.setTableNo(tableNo);
+        walkIn.setTableNo(Integer.toString(tableNo));
 
         walkInService.join(walkIn);
         return "confirm";

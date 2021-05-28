@@ -17,16 +17,18 @@ public class ReservationService {
     }
 
     public Long join(Reservation reservation) {
-        validateDuplicateTable(reservation);
+        //validateDuplicateTable(reservation); // 중복 시간대에 예약인지 확인 나중에는 아예 안보이게 하는 것도 가능??
+
         reservationRepository.save(reservation);
         return reservation.getOid();
     }
 
-
+    /*
     private void validateDuplicateTable(Reservation reservation) {
-        reservationRepository.findByResDate(reservation)
-                .ifPresent(r -> {throw new IllegalStateException("존재하는게 맞음");});
+
+        // 로직
     }
+    */
 
     public List<Reservation> listsReservation() {
         return reservationRepository.findAll();
@@ -37,12 +39,11 @@ public class ReservationService {
         return result;
     }
 
-    public String customerArrival(String id) {
-        return reservationRepository.customerArrival(id);
+//    public String customerArrival(String id) {
+//        return reservationRepository.customerArrival(id);
+//    }
 
-    }
-
-    public Long tableReallocation(Long oid,int tableNo) {
+    public Long tableReallocation(Long oid,String tableNo) {
         return reservationRepository.tableReallocation(oid,tableNo);
 
     }
@@ -50,6 +51,10 @@ public class ReservationService {
     public List<Reservation> listReservationByCustomerId(String id){
         List<Reservation> byCustomerID = reservationRepository.findByCustomerID(id);
         return byCustomerID;
+    }
+
+    public static Boolean SToBConvert(String string) {
+        return (string.equals("Y")) ? true : false;
     }
 
     public void cancel(Long oid){

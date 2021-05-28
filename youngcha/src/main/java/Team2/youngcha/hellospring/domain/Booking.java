@@ -10,7 +10,7 @@ public abstract class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long oid;
-    private int tableNo;
+    private String tableNo;
 
     public Long getOid() {
         return oid;
@@ -20,11 +20,11 @@ public abstract class Booking {
         this.oid = oid;
     }
 
-    public int getTableNo() {
+    public String getTableNo() {
         return tableNo;
     }
 
-    public void setTableNo(int tableNo) {
+    public void setTableNo(String tableNo) {
         this.tableNo = tableNo;
     }
 }

@@ -3,18 +3,77 @@ package Team2.youngcha.hellospring.controller;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ReservationForm {
-    private int tableNo;
+    private String customerID;
+    private String tableNo;
+    private String numberOfPeople;
+    private String customerName;
+    private String customerEmail;
+    private String hasCar;
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
     private LocalDateTime reservationDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
+    private LocalDateTime arrivalTime = LocalDateTime.now();
+    transient DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일 a h시 m분");
+    private String nowString = arrivalTime.format(dateTimeFormatter);
 
-    public int getTableNo() {
+    public String getNowString() {
+        return nowString;
+    }
+
+    public void setNowString(String nowString) {
+        this.nowString = nowString;
+    }
+
+    public String getNumberOfPeople() {
+        return numberOfPeople;
+    }
+
+    public void setNumberOfPeople(String numberOfPeople) {
+        this.numberOfPeople = numberOfPeople;
+    }
+
+    public String getTableNo() {
         return tableNo;
     }
 
-    public void setTableNo(int tableNo) {
+    public void setTableNo(String tableNo) {
         this.tableNo = tableNo;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
+    public String getCustomerID(){
+        return customerID;
+    }
+
+    public void setCustomerID(String customerID){
+        this.customerID = customerID;
+    }
+
+
+    public String getHasCar() {
+        return hasCar;
+    }
+
+    public void setHasCar(String hasCar) {
+        this.hasCar = hasCar;
     }
 
     public LocalDateTime getReservationDate() {

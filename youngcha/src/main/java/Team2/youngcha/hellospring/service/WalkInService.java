@@ -31,7 +31,7 @@ public class WalkInService {
         Boolean[] validAry = new Boolean[tables.size()];
         Arrays.fill(validAry,true);
         for(Reservation reservation : reservationList){
-            validAry[reservation.getTableNo()-1] = false;
+            validAry[Integer.getInteger(reservation.getTableNo())-1] = false;
         }
 
         validateGuestCountTable(guestCount,tables,validAry);

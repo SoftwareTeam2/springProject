@@ -17,18 +17,18 @@ public class ReservationRepository {
     }
 
     public Long save(Reservation reservation) {
+        //validateDuplicateTable(reservation); // 중복 시간대에 예약인지 확인 나중에는 아예 안보이게 하는 것도 가능??
+
         em.persist(reservation);
         return reservation.getOid();
     }
 
+    /*
+    private void validateDuplicateTable(Reservation reservation) {
 
-    public Optional<Reservation> findByResDate(Reservation reservation) {
-        List<Reservation> result = em.createQuery("select r from Reservation r where not r.reservationDate between :minusHour and :plusHour", Reservation.class)
-                .setParameter("minusHour", reservation.getReservationDate().minusHours(2))
-                .setParameter("plusHour", reservation.getReservationDate().plusHours(2))
-                .getResultList();
-        return result.stream().findAny();
+        // 로직
     }
+    */
 
     public List<Reservation> findAll() {
         return em.createQuery("select r from Reservation r", Reservation.class)
@@ -36,33 +36,31 @@ public class ReservationRepository {
     }
 
     public List<Reservation> findByCustomerID(String id) {
-        List<Reservation> result = em.createQuery("select r from Reservation r where r.customerId=:customerId", Reservation.class)
+        List<Reservation> result = em.createQuery("select r from Reservation r where r.customerId=:customerId",Reservation.class)
                 .setParameter("customerId", id)
                 .getResultList();
         return result;
     }
 
-    @Modifying(clearAutomatically = true)
-    public String customerArrival(String customerId) {
-        Reservation reservation = em.createQuery("select r from Reservation r where r.customerId=:customerId", Reservation.class)
-                .setParameter("customerId", customerId)
-                .getSingleResult();
-        reservation.setArrivalTime();
-        return reservation.getArrivalTime().toString();
-    }
+//    @Modifying(clearAutomatically = true)
+//    public String customerArrival(String customerId) {
+//        Reservation reservation = em.createQuery("select r from Reservation r where r.customerId=:customerId", Reservation.class)
+//                .setParameter("customerId", customerId)
+//                .getSingleResult();
+//        reservation.setArrivalTime();
+//        return reservation.getArrivalTime().toString();
+//    }
 
     @Modifying(clearAutomatically = true)
-    public Long tableReallocation(Long oid, int tableNo) {
+    public Long tableReallocation(Long oid,String tableNo) {
         Reservation reservation = em.find(Reservation.class, oid);
         reservation.setTableNo(tableNo);
         return reservation.getOid();
     }
 
     @Modifying(clearAutomatically = true)
-    public void cancelReservation(Long oid) {
+    public void cancelReservation(Long oid){
         Optional<Reservation> reservation = Optional.ofNullable(em.find(Reservation.class, oid));
-        reservation.ifPresent(selectedReservation -> {
-            em.remove(selectedReservation);
-        });
+        reservation.ifPresent(selectedReservation ->{em.remove(selectedReservation);});
     }
 }

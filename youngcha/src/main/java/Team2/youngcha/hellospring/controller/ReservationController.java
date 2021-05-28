@@ -34,11 +34,21 @@ public class ReservationController {
     @PostMapping("/reservations/new")
     public String createReservation(HttpSession session, ReservationForm reservationForm) {
         Reservation reservation = new Reservation();
-        reservation.setCustomerId(String.valueOf(session.getAttribute("userID")));
+//        String customerID = (String)session.getAttribute("userID");
+//        String customerName = (String)session.getAttribute("userName");
+//        String customerEmail = (String) session.getAttribute("userEmail");
+
+        reservation.setCustomerID(String.valueOf(session.getAttribute("userID")));
+        reservation.setCustomerName(String.valueOf(session.getAttribute("userName")));
+        reservation.setCustomerEmail(String.valueOf(session.getAttribute("userEmail")));
         reservation.setTableNo(reservationForm.getTableNo());
+        reservation.setNumberOfPeople(reservationForm.getNumberOfPeople());
+        reservation.setHasCar(ReservationService.SToBConvert(reservationForm.getHasCar()));
         reservation.setReservationDate(reservationForm.getReservationDate());
+        reservation.setNowString(reservationForm.getNowString());
 
         reservationService.join(reservation);
+
         return "redirect:/";
     }
 
@@ -62,11 +72,11 @@ public class ReservationController {
         return "booking/ListTodayReservation";
     }
 
-    @PostMapping("/reservations/arrival")
-    public String setArrival(@RequestParam(name = "customerId") String id, Model model) {
-        reservationService.customerArrival(id);
-        return "redirect:/";
-    }
+//    @PostMapping("/reservations/arrival")
+//    public String setArrival(@RequestParam(name = "customerId") String id, Model model) {
+//        reservationService.customerArrival(id);
+//        return "redirect:/";
+//    }
 
     @GetMapping("/reservations/reallocate")
     public String createReallocationForm(HttpSession session, Model model) {
@@ -78,7 +88,9 @@ public class ReservationController {
     @PostMapping("/reservations/reallocate")
     public String reallocateTable(@RequestParam(name = "oid") Long oid) {
         System.out.println(oid);
-        reservationService.tableReallocation(oid, 4);
+        reservationService.tableReallocation(oid, "4");
         return "redirect:/";
     }
+
+
 }
