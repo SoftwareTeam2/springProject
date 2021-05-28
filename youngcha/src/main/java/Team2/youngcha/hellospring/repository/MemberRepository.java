@@ -12,4 +12,6 @@ public interface MemberRepository {
     List<Customer> findAll();
     Boolean validateUser(String id, String pwd);
     Boolean isAdmin(String id);
+    Optional<Customer> findEmailByCid(String cid);
+    Optional<Customer> findNameByCid(String cid);
 }

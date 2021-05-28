@@ -37,6 +37,13 @@ public class CustomerRepository implements MemberRepository {
         return result.stream().findAny();
     }
 
+    public Optional<Customer> findEmailByCid(String cid){
+        Customer customer = em.createQuery("select c from Customer c where c.cid=:cid", Customer.class)
+                .setParameter("cid", cid)
+                .getSingleResult();
+
+        return Optional.ofNullable(customer);
+    }
     @Override
     public List<Customer> findAll(){
         return em.createQuery("select c from Customer c", Customer.class)
@@ -62,5 +69,13 @@ public class CustomerRepository implements MemberRepository {
                 .setParameter("cid",id)
                 .getSingleResult()
                 .getAdmin();
+    }
+
+    @Override
+    public Optional<Customer> findNameByCid(String cid) {
+        Customer result = em.createQuery("select c from Customer c where c.cid=:cid", Customer.class)
+                .setParameter("cid", cid)
+                .getSingleResult();
+        return Optional.ofNullable(result);
     }
 }

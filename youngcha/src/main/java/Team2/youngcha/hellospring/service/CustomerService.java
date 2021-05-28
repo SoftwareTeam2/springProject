@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -33,7 +34,20 @@ public class CustomerService {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
     }
+    public String findEmailByCid(String cid){
+        Optional<Customer> result = memberRepository.findEmailByCid(cid);
+        if(result.isPresent())
+            return result.get().getEmail();
+        else
+            return "";
+    }
 
+    public String findNameByCid(String cid){
+        Optional<Customer> result = memberRepository.findNameByCid(cid);
+        if(result.isPresent())
+            return result.get().getName();
+        else return "";
+    }
     public List<Customer> findMember() {
         return memberRepository.findAll();
     }

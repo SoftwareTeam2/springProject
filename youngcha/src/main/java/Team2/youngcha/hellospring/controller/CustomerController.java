@@ -25,6 +25,7 @@ public class CustomerController {
         return "SignUp";
     }
 
+
     @PostMapping("/customers/new")
     public String create(CustomerForm form) {
         Customer customer = new Customer();
@@ -63,6 +64,8 @@ public class CustomerController {
             else session.setAttribute("admin", false);
             session.setAttribute("loginCheck", true);
             session.setAttribute("userID", form.getUserID());
+            session.setAttribute("userEmail",customerService.findEmailByCid(form.getUserID()));
+            session.setAttribute("userName",customerService.findNameByCid(form.getUserID()));
             return "redirect:/";
         } else return "Login";
     }

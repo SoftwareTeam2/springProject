@@ -34,9 +34,6 @@ public class ReservationController {
     @PostMapping("/reservations/new")
     public String createReservation(HttpSession session, ReservationForm reservationForm) {
         Reservation reservation = new Reservation();
-//        String customerID = (String)session.getAttribute("userID");
-//        String customerName = (String)session.getAttribute("userName");
-//        String customerEmail = (String) session.getAttribute("userEmail");
 
         reservation.setCustomerID(String.valueOf(session.getAttribute("userID")));
         reservation.setCustomerName(String.valueOf(session.getAttribute("userName")));
