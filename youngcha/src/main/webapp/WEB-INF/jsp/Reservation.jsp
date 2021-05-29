@@ -96,6 +96,7 @@ width: 100%;
 								</label>
 							</div>
 						</div>
+
 						<div>
 							<input type="text" id="datePicker" class="form-control" value="종료시간선택" name="reservationDate">
 						</div>

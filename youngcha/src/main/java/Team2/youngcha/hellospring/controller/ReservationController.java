@@ -19,11 +19,11 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping("/reservations")
+    @GetMapping("/waitList")
     public String lists(Model model) {
-        List<Reservation> reservations = reservationService.listsReservation();
-        model.addAttribute("reservations", reservations);
-        return "/booking/ListReservation";
+        List<Reservation> list= reservationService.listsReservation();
+        model.addAttribute("list", list);
+        return "/waitList";
     }
 
     @GetMapping("/reservations/new")

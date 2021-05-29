@@ -152,15 +152,23 @@ class YoungchaApplicationTests {
 
     @Test
     void 업데이트결과성공(){
+
+        // given
         reservationService.updateReservation("hyeonho9877", "2021-05-29-13:20", "2021-05-29-17:20", "3", "1");
         LocalDateTime parse = LocalDateTime.parse("2021-05-29-17:20", DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm"));
+
+        // when
         try {
             Reservation result = em.createQuery("select r from Reservation r where r.reservationDate=:resDate", Reservation.class)
                     .setParameter("resDate", parse)
                     .getSingleResult();
+
+            // then
             assertThat(result.getTableNo()).isEqualTo("1");
         }catch (Exception e){
             fail();
         }
     }
+
+
 }
