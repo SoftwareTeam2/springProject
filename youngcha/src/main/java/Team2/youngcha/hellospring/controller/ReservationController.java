@@ -89,5 +89,34 @@ public class ReservationController {
         return "redirect:/";
     }
 
+    @GetMapping("/reservations/update")
+    public String forwardToUpdatePage() {
+        return "updateReservation";
+    }
 
+    @PostMapping("/reservations/update")
+    public String returnValidTables(@RequestParam(name = "customerID") String cid,
+                                    @RequestParam(name = "sourceDate") String sourceDate,
+                                    @RequestParam(name = "destDate") String destDate,
+                                    @RequestParam(name = "guestCount") String guestCount,
+                                    Model model,
+                                    HttpSession session) {
+        List<Boolean> validTables = reservationService.findValidTables(cid, sourceDate, guestCount);
+        session.setAttribute("cid",cid);
+        session.setAttribute("sourceDate",sourceDate);
+        session.setAttribute("destDate",destDate);
+        session.setAttribute("guestCount",guestCount);
+        model.addAttribute("tableInfo", validTables);
+        return "selectTable";
+    }
+
+    @GetMapping("/reservations/selectTable")
+    public String updateReservation(@RequestParam(name = "tableNo") String tableNo, HttpSession session, Model model){
+        String cid = String.valueOf(session.getAttribute("cid"));
+        String sourceDate = String.valueOf(session.getAttribute("sourceDate"));
+        String destDate = String.valueOf(session.getAttribute("destDate"));
+        String guestCount = String.valueOf(session.getAttribute("guestCount"));
+        model.addAttribute("result",reservationService.updateReservation(cid,sourceDate,destDate,guestCount,tableNo));
+        return "UpdateResResultPage";
+    }
 }

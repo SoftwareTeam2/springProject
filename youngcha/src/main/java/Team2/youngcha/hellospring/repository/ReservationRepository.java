@@ -1,10 +1,12 @@
 package Team2.youngcha.hellospring.repository;
 
 import Team2.youngcha.hellospring.domain.Reservation;
+import Team2.youngcha.hellospring.domain.TableInfo;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,5 +64,40 @@ public class ReservationRepository {
     public void cancelReservation(Long oid){
         Optional<Reservation> reservation = Optional.ofNullable(em.find(Reservation.class, oid));
         reservation.ifPresent(selectedReservation ->{em.remove(selectedReservation);});
+    }
+
+    public Optional<Reservation> findResByResDateAndCid(String cid, LocalDateTime resDate){
+        Reservation result = em.createQuery("select r from Reservation r where r.customerID=:cid and r.reservationDate=:resDate", Reservation.class)
+                .setParameter("cid", cid)
+                .setParameter("resDate", resDate)
+                .getSingleResult();
+        return Optional.ofNullable(result);
+    }
+
+    public List<Reservation> findResByResDate(LocalDateTime startRange, LocalDateTime endRange){
+        List<Reservation> resultList = em.createQuery("select r from Reservation r where r.reservationDate between :startRange and :endRange", Reservation.class)
+                .setParameter("startRange", startRange)
+                .setParameter("endRange", endRange)
+                .getResultList();
+
+        return resultList;
+    }
+
+    public List<TableInfo> getTables(){
+        return em.createQuery("select t from TableInfo t", TableInfo.class)
+                .getResultList();
+    }
+
+    @Modifying(clearAutomatically = true)
+    public Boolean update(Reservation reservation,LocalDateTime resDate, String guestCount, String tableNo) {
+        try {
+            reservation.setReservationDate(resDate);
+            reservation.setTableNo(tableNo);
+            reservation.setNumberOfPeople(guestCount);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+
     }
 }

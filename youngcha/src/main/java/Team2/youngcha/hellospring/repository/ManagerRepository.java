@@ -51,9 +51,6 @@ public class ManagerRepository {
                 .setParameter("minusHour", localDateTime.minusHours(2))
                 .setParameter("plusHour", localDateTime.plusHours(2))
                 .getResultList();
-        System.out.println(localDateTime.minusHours(2));
-        System.out.println(localDateTime.plusHours(2));
-        System.out.println(result.size());
         return result;
     }
 
