@@ -31,10 +31,14 @@ public class CustomerRepository implements MemberRepository {
 
 
     public Optional<Customer> findByCid(Customer customer) {
-        List<Customer> result = em.createQuery("select c from Customer c where c.cid=:cid")
-                .setParameter("cid", customer.getCid())
-                .getResultList();
-        return result.stream().findAny();
+        try {
+            Customer result = em.createQuery("select c from Customer c where c.cid=:cid", Customer.class)
+                    .setParameter("cid", customer.getCid())
+                    .getSingleResult();
+            return Optional.ofNullable(result);
+        } catch(Exception e){
+            return Optional.empty();
+        }
     }
 
     public Optional<Customer> findEmailByCid(String cid){
