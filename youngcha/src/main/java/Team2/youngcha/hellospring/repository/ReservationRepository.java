@@ -1,5 +1,6 @@
 package Team2.youngcha.hellospring.repository;
 
+import Team2.youngcha.hellospring.domain.Customer;
 import Team2.youngcha.hellospring.domain.Reservation;
 import Team2.youngcha.hellospring.domain.TableInfo;
 import org.springframework.data.jpa.repository.Modifying;
@@ -33,7 +34,8 @@ public class ReservationRepository {
     */
 
     public List<Reservation> findAll() {
-        return em.createQuery("select r from Reservation r", Reservation.class)
+        return em.createQuery("select r from Reservation r where :now < r.reservationDate", Reservation.class)
+                .setParameter("now",LocalDateTime.now())
                 .getResultList();
     }
 
@@ -98,6 +100,11 @@ public class ReservationRepository {
         } catch (Exception e){
             return false;
         }
+    }
 
+    @Modifying(clearAutomatically = true)
+    public void reservationCountReallocation(String ID){
+        Customer customer = em.find(Customer.class, ID);
+        customer.setReservation_count(customer.getReservation_count()+1);
     }
 }

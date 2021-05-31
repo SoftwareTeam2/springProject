@@ -103,4 +103,9 @@ public class ReservationService {
         }
         return false;
     }
+
+    public void reservationCountReallocation(String ID){
+        reservationRepository.reservationCountReallocation(ID);
+    }
+
 }

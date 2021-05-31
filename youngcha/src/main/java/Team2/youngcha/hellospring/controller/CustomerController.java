@@ -37,6 +37,7 @@ public class CustomerController {
         customer.setMessageReceive(CustomerService.SToBConvert(form.getSmsReceiveYn()));
         customer.setPsw(form.getPsw());
         customer.setPhoneNumber(form.getPhoneNumber());
+        customer.setReservation_count(customer.getReservation_count());
 
         if(customerService.join(customer))
             return "redirect:/";

@@ -33,7 +33,6 @@ public class ManagerController {
             model.addAttribute("result", true);
         else
             model.addAttribute("result", false);
-
         return "TodayReservation";
     }
 }

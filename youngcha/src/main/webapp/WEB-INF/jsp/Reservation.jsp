@@ -34,7 +34,7 @@
 		font-size: 3.5rem;
 	}
 }
-#login_wrapper { 
+#login_wrapper {
 width: 100%;
   max-width: 1500px;
   padding-left: 380px;

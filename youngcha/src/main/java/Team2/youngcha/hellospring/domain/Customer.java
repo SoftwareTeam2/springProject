@@ -27,6 +27,16 @@ public class Customer {
     private Boolean isAdmin;
     @Column(columnDefinition = "varchar(10) default \"General\"")
     private String rank;
+    @Column(name = "reservation_count")
+    private int reservation_count = 0;
+
+    public int getReservation_count() {
+        return reservation_count;
+    }
+
+    public void setReservation_count(int reservation_count) {
+        this.reservation_count = reservation_count;
+    }
 
     public String getCid() {
         return cid;

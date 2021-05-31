@@ -34,6 +34,7 @@ public class ReservationController {
     @PostMapping("/reservations/new")
     public String createReservation(HttpSession session, ReservationForm reservationForm) {
         Reservation reservation = new Reservation();
+        String ID = (String)session.getAttribute("userID");
 
         reservation.setCustomerID(String.valueOf(session.getAttribute("userID")));
         reservation.setCustomerName(String.valueOf(session.getAttribute("userName")));
@@ -42,7 +43,8 @@ public class ReservationController {
         reservation.setNumberOfPeople(reservationForm.getNumberOfPeople());
         reservation.setHasCar(ReservationService.SToBConvert(reservationForm.getHasCar()));
         reservation.setReservationDate(reservationForm.getReservationDate());
-        reservation.setNowString(reservationForm.getNowString());
+//      reservation.setNowString(reservationForm.getNowString());
+        reservationService.reservationCountReallocation(ID);
 
         reservationService.join(reservation);
 
