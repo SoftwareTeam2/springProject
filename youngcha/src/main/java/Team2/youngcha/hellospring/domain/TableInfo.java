@@ -1,9 +1,6 @@
 package Team2.youngcha.hellospring.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class TableInfo {
@@ -11,6 +8,7 @@ public class TableInfo {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long oid;
     private int tableNumber;
+    @Column(columnDefinition = "default int 4")
     private int people;
     private int places;
 

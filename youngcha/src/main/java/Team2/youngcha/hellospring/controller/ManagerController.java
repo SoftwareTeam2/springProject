@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class ManagerController {
 
@@ -34,5 +36,16 @@ public class ManagerController {
         else
             model.addAttribute("result", false);
         return "TodayReservation";
+    }
+
+    @GetMapping("/manager/tableManage")
+    public String createPage(){
+        return "tableManage";
+    }
+
+    @PostMapping("/manager/tableManage")
+    public String tableSetting(@RequestParam(name = "tableList") List<Integer> tableList) {
+        managerService.joinTable(tableList);
+        return "tableManage";
     }
 }

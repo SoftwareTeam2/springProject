@@ -76,4 +76,15 @@ public class ManagerService {
         validateGuestCountTable(guestCount, tables, validAry);
         return Arrays.asList(validAry);
     }
+
+    public void joinTable(List<Integer> tableList) {
+        for (int i = 0; i < tableList.size(); i++) {
+            TableInfo newTable = new TableInfo();
+            newTable.setTableNumber(i+1);
+            newTable.setPeople(tableList.get(i));
+            newTable.setPlaces(1);
+
+            managerRepository.saveTableInfo(newTable);
+        }
+    }
 }

@@ -2,6 +2,7 @@ package Team2.youngcha;
 
 import Team2.youngcha.hellospring.MainApplication;
 import Team2.youngcha.hellospring.domain.Reservation;
+import Team2.youngcha.hellospring.domain.TableInfo;
 import Team2.youngcha.hellospring.repository.ManagerRepository;
 import Team2.youngcha.hellospring.repository.ReservationRepository;
 import Team2.youngcha.hellospring.repository.WalkInRepository;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,10 +40,10 @@ class YoungchaApplicationTests {
     ReservationRepository reservationRepository;
 
     @Autowired
-    ManagerService testManagerService;
+    ManagerService managerService;
 
     @Autowired
-    ManagerRepository testManagerRepository;
+    ManagerRepository managerRepository;
 
     @Autowired
     WalkInService walkInService;
@@ -87,7 +89,7 @@ class YoungchaApplicationTests {
     void testTableCreation() {
         int tableCount = 5;
 
-        int result = testManagerService.setTable(tableCount);
+        int result = managerService.setTable(tableCount);
 
         assertThat(result).isEqualTo(tableCount);
     }
@@ -106,7 +108,7 @@ class YoungchaApplicationTests {
     void 예약테이블변경테스트됨() {
 
         // given, when
-        Boolean hyeonho9877 = testManagerService.changeTable("hyeonho9877", "3");
+        Boolean hyeonho9877 = managerService.changeTable("hyeonho9877", "3");
 
         // then
         assertThat(hyeonho9877).isEqualTo(true);
@@ -114,7 +116,7 @@ class YoungchaApplicationTests {
 
     @Test
     void 예약테이블변경테스트안됨() {
-        Boolean hyeonho9877 = testManagerService.changeTable("hyeonho9877", "2");
+        Boolean hyeonho9877 = managerService.changeTable("hyeonho9877", "2");
 
         // then
         assertThat(hyeonho9877).isEqualTo(false);
@@ -168,6 +170,27 @@ class YoungchaApplicationTests {
         }catch (Exception e){
             fail();
         }
+    }
+
+    @Test
+    void 테이블설정하기(){
+
+        //given
+        List<Integer> tableList = new ArrayList<Integer>();
+        tableList.add(2);
+        tableList.add(4);
+        tableList.add(4);
+        tableList.add(4);
+        tableList.add(2);
+        tableList.add(3);
+        tableList.add(3);
+        tableList.add(4);
+        tableList.add(4);
+
+        managerService.joinTable(tableList);
+        List<TableInfo> result = em.createQuery("select t from TableInfo t", TableInfo.class).getResultList();
+
+        assertThat(result.size()).isEqualTo(tableList.size());
     }
 
 
