@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ManagerController {
@@ -47,5 +48,16 @@ public class ManagerController {
     public String tableSetting(@RequestParam(name = "tableList") List<Integer> tableList) {
         managerService.joinTable(tableList);
         return "tableManage";
+    }
+
+    @GetMapping("/manager/dishManage")
+    public String createDishPage(){
+        return "dishManage";
+    }
+
+    @PostMapping("/manager/dishManage")
+    public String editDishes(@RequestParam(name = "dishInfo") Map<String,String> dishInfo) {
+        managerService.editDishes(dishInfo);
+        return "dishManage";
     }
 }

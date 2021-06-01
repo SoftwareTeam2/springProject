@@ -41,6 +41,7 @@
                             <th>이메일</th>
                             <th>자차여부</th>
                             <th>도착시간</th>
+                            <th>도착기록</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -53,6 +54,7 @@
                                 <td>${Reservation.customerEmail}</td>
                                 <td>${Reservation.hasCar}</td>
                                 <td>${Reservation.reservationDate}</td>
+                                <td><button>Continue to checkout</button></td>
                             </tr>
                         </c:forEach>
                         </tbody>

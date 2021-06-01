@@ -8,7 +8,7 @@ public class TableInfo {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long oid;
     private int tableNumber;
-    @Column(columnDefinition = "default int 4")
+    @Column(columnDefinition = "int default 4")
     private int people;
     private int places;
 

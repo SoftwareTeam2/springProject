@@ -1,5 +1,6 @@
 package Team2.youngcha.hellospring.service;
 
+import Team2.youngcha.hellospring.domain.Menu;
 import Team2.youngcha.hellospring.domain.Reservation;
 import Team2.youngcha.hellospring.domain.TableInfo;
 import Team2.youngcha.hellospring.repository.ManagerRepository;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -85,6 +87,20 @@ public class ManagerService {
             newTable.setPlaces(1);
 
             managerRepository.saveTableInfo(newTable);
+        }
+    }
+
+    public void editDishes(Map<String,String> dishInfo) {
+        for(String dish : dishInfo.keySet()) {
+            Optional<Menu> result = managerRepository.isDishAlreadyExists(dish);
+            if(result.isPresent())
+                managerRepository.changeDishPrice(result.get(),Integer.valueOf(dishInfo.get(dish)));
+            else {
+                Menu newMenu = new Menu();
+                newMenu.setDish(dish);
+                newMenu.setPrice(Integer.valueOf(dishInfo.get(dish)));
+                managerRepository.saveMenu(newMenu);
+            }
         }
     }
 }

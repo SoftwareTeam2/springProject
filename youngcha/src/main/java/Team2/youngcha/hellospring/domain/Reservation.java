@@ -7,11 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Reservation extends Booking {
-
 
     @Column(name = "customer_id")
     private String customerID;
@@ -29,17 +27,7 @@ public class Reservation extends Booking {
     private LocalDateTime reservationDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
     @Column(name = "arrival_time")
-    private LocalDateTime arrivalTime = LocalDateTime.now();
-    transient DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일 a h시 m분");
-    private String nowString = arrivalTime.format(dateTimeFormatter);
-
-    public String getNowString() {
-        return nowString;
-    }
-
-    public void setNowString(String nowString) {
-        this.nowString = nowString;
-    }
+    private LocalDateTime arrivalTime;
 
     public String getNumberOfPeople() {
         return numberOfPeople;
@@ -97,6 +85,4 @@ public class Reservation extends Booking {
     public void setReservationDate(LocalDateTime reservationDate) {
         this.reservationDate = reservationDate;
     }
-
-
 }

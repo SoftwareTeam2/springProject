@@ -64,13 +64,6 @@ public class ReservationController {
         return "redirect:/";
     }
 
-    @GetMapping("/reservations/arrival")
-    public String arrival(Model model) {
-        List<Reservation> reservations = reservationService.listsReservation();
-        model.addAttribute("reservations", reservations);
-        return "booking/ListTodayReservation";
-    }
-
 //    @PostMapping("/reservations/arrival")
 //    public String setArrival(@RequestParam(name = "customerId") String id, Model model) {
 //        reservationService.customerArrival(id);

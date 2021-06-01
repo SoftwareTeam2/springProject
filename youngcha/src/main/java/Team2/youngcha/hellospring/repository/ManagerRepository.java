@@ -1,5 +1,6 @@
 package Team2.youngcha.hellospring.repository;
 
+import Team2.youngcha.hellospring.domain.Menu;
 import Team2.youngcha.hellospring.domain.Reservation;
 import Team2.youngcha.hellospring.domain.TableInfo;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -57,5 +58,38 @@ public class ManagerRepository {
     public List<TableInfo> getTables(){
         return entityManager.createQuery("select t from TableInfo t", TableInfo.class)
                 .getResultList();
+    }
+
+    public Optional<Menu> isDishAlreadyExists(String dish) {
+        try {
+            Menu menu = entityManager.find(Menu.class, dish);
+            return Optional.of(menu);
+        }catch (Exception e){
+            return Optional.empty();
+        }
+    }
+
+    public void saveMenu(Menu dish){
+        entityManager.persist(dish);
+    }
+
+    @Modifying(clearAutomatically = true)
+    public void changeDishPrice(Menu dish, int price) {
+        dish.setPrice(price);
+    }
+
+    public List<Menu> listMenus() {
+        List<Menu> result = entityManager.createQuery("select m from Menu m", Menu.class)
+                .getResultList();
+        return result;
+    }
+
+    public Optional<Menu> getMenuByDish(String dish){
+        try {
+            Menu result = entityManager.find(Menu.class, dish);
+            return Optional.ofNullable(result);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 }

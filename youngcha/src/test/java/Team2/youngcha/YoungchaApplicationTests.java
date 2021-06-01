@@ -1,6 +1,7 @@
 package Team2.youngcha;
 
 import Team2.youngcha.hellospring.MainApplication;
+import Team2.youngcha.hellospring.domain.Menu;
 import Team2.youngcha.hellospring.domain.Reservation;
 import Team2.youngcha.hellospring.domain.TableInfo;
 import Team2.youngcha.hellospring.repository.ManagerRepository;
@@ -18,9 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -139,7 +138,6 @@ class YoungchaApplicationTests {
 
         // then
         assertThat(hyeonho9877.get(1)).isEqualTo(false);
-
     }
 
     @Test
@@ -194,4 +192,31 @@ class YoungchaApplicationTests {
     }
 
 
+    @Test
+    void 메뉴추가하기(){
+        Map<String, String> testMap = new HashMap<>();
+        testMap.put("Seafood Platter","18000");
+        testMap.put("Soup of the Day","8000");
+        testMap.put("Grilled Salmon","13000");
+        testMap.put("Mixed Green Salad","10000");
+        testMap.put("Lobster Cocktail","18000");
+
+        managerService.editDishes(testMap);
+        List<Menu> menus = managerRepository.listMenus();
+        assertThat(menus.size()).isEqualTo(5);
+    }
+
+    @Test
+    void 메뉴가격만바뀜(){
+        Map<String, String> testMap = new HashMap<>();
+        testMap.put("Seafood Platter","18000");
+        testMap.put("Soup of the Day","8000");
+        testMap.put("Grilled Salmon","13000");
+        testMap.put("Mixed Green Salad","10000");
+        testMap.put("Seafood Platter","15000");
+
+        managerService.editDishes(testMap);
+        Optional<Menu> result = managerRepository.getMenuByDish("Seafood Platter");
+        assertThat(result.get().getPrice()).isEqualTo(15000);
+    }
 }
