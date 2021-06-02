@@ -46,6 +46,7 @@
                         </thead>
                         <tbody>
                         <c:forEach items="${list}" var="Reservation">
+                          <form action="/waitList" method="POST">
                             <tr>
                                 <td>${Reservation.customerID}</td>
                                 <td>${Reservation.tableNo}</td>
@@ -54,7 +55,8 @@
                                 <td>${Reservation.customerEmail}</td>
                                 <td>${Reservation.hasCar}</td>
                                 <td>${Reservation.reservationDate}</td>
-                                <td><button>Continue to checkout</button></td>
+                                <td><button>도착시간 기록하기</button></td>
+                             </form>
                             </tr>
                         </c:forEach>
                         </tbody>

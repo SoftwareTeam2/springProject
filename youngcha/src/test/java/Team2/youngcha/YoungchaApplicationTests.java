@@ -1,6 +1,7 @@
 package Team2.youngcha;
 
 import Team2.youngcha.hellospring.MainApplication;
+import Team2.youngcha.hellospring.domain.Income;
 import Team2.youngcha.hellospring.domain.Menu;
 import Team2.youngcha.hellospring.domain.Reservation;
 import Team2.youngcha.hellospring.domain.TableInfo;
@@ -49,10 +50,6 @@ class YoungchaApplicationTests {
 
     @Autowired
     WalkInRepository walkInRepository;
-
-    @Test
-    void contextLoads() {
-    }
 
     @Test
     void compareLocalDateTime() {
@@ -208,15 +205,69 @@ class YoungchaApplicationTests {
 
     @Test
     void 메뉴가격만바뀜(){
+
+        // given
         Map<String, String> testMap = new HashMap<>();
+        Optional<Menu> result = managerRepository.getMenuByDish("Seafood Platter");
+        int beforeCount = result.get().getSalesCount();
         testMap.put("Seafood Platter","18000");
         testMap.put("Soup of the Day","8000");
         testMap.put("Grilled Salmon","13000");
         testMap.put("Mixed Green Salad","10000");
         testMap.put("Seafood Platter","15000");
 
+        // when
         managerService.editDishes(testMap);
-        Optional<Menu> result = managerRepository.getMenuByDish("Seafood Platter");
-        assertThat(result.get().getPrice()).isEqualTo(15000);
+        result = managerRepository.getMenuByDish("Seafood Platter");
+        int afterCount = result.get().getSalesCount();
+
+        //then
+        assertThat(beforeCount).isEqualTo(afterCount).isNotEqualTo(0);
     }
+
+    @Test
+    void 총수익확인맞음(){
+
+        List<Income> incomeList = managerService.getIncome();
+        int sum = 0;
+        for (Income income : incomeList) {
+            sum+=income.getProfit();
+        }
+
+        assertThat(sum).isEqualTo(164000);
+    }
+
+    @Test
+    void 접시당수익맞음(){
+        List<Income> incomeList = managerService.getIncome();
+        Map<String, Integer> dishWithProfit = managerService.getDishWithProfit(incomeList);
+
+        assertThat(dishWithProfit.get("Soup of the Day")).isEqualTo(64000);
+    }
+
+    @Test
+    void 접시당판매개수맞음(){
+        List<Income> incomeList = managerService.getIncome();
+        Map<String, Integer> dishWithCount = managerService.getDishWithCount(incomeList);
+
+        assertThat(dishWithCount.get("Lobster Cocktail")).isEqualTo(1);
+    }
+
+    @Test
+    void 복수테이블예약(){
+        List<Boolean> hyeonho9877 = reservationService.findValidTables("hyeonho9877", "2021-06-03-00:36", "3");
+        assertThat(Collections.frequency(hyeonho9877, false)).isEqualTo(3);
+    }
+
+    @Test
+    void 도착기록(){
+        LocalDateTime target = LocalDateTime.of(2021, 6, 3, 18, 45);
+        managerService.setArrivalTime("hyeonho9877",target);
+        Reservation result = em.createQuery("select r from Reservation r where r.customerID=:cid and r.reservationDate=:resDate", Reservation.class)
+                .setParameter("cid", "hyeonho9877")
+                .setParameter("resDate", target)
+                .getSingleResult();
+        assertThat(result.getArrivalTime().isBefore(LocalDateTime.now().plusMinutes(1)) && result.getArrivalTime().isAfter(LocalDateTime.now().minusMinutes(1))).isEqualTo(true);
+    }
+
 }

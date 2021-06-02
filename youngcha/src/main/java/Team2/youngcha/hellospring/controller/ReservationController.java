@@ -21,20 +21,21 @@ public class ReservationController {
 
     @GetMapping("/waitList")
     public String lists(Model model) {
-        List<Reservation> list= reservationService.listsReservation();
+        List<Reservation> list = reservationService.listsReservation();
         model.addAttribute("list", list);
         return "/waitList";
     }
 
     @GetMapping("/reservations/new")
-    public String createReservationForm() {
+    public String createReservationForm(Model model) {
+        //reservationService.getDishStock();
         return "Reservation";
     }
 
     @PostMapping("/reservations/new")
     public String createReservation(HttpSession session, ReservationForm reservationForm) {
         Reservation reservation = new Reservation();
-        String ID = (String)session.getAttribute("userID");
+        String ID = (String) session.getAttribute("userID");
 
         reservation.setCustomerID(String.valueOf(session.getAttribute("userID")));
         reservation.setCustomerName(String.valueOf(session.getAttribute("userName")));
@@ -43,9 +44,8 @@ public class ReservationController {
         reservation.setNumberOfPeople(reservationForm.getNumberOfPeople());
         reservation.setHasCar(ReservationService.SToBConvert(reservationForm.getHasCar()));
         reservation.setReservationDate(reservationForm.getReservationDate());
-//      reservation.setNowString(reservationForm.getNowString());
-        reservationService.reservationCountReallocation(ID);
 
+        reservationService.reservationCountReallocation(ID);
         reservationService.join(reservation);
 
         return "redirect:/";
@@ -63,12 +63,6 @@ public class ReservationController {
         reservationService.cancel(oid);
         return "redirect:/";
     }
-
-//    @PostMapping("/reservations/arrival")
-//    public String setArrival(@RequestParam(name = "customerId") String id, Model model) {
-//        reservationService.customerArrival(id);
-//        return "redirect:/";
-//    }
 
     @GetMapping("/reservations/reallocate")
     public String createReallocationForm(HttpSession session, Model model) {
@@ -97,21 +91,21 @@ public class ReservationController {
                                     Model model,
                                     HttpSession session) {
         List<Boolean> validTables = reservationService.findValidTables(cid, sourceDate, guestCount);
-        session.setAttribute("cid",cid);
-        session.setAttribute("sourceDate",sourceDate);
-        session.setAttribute("destDate",destDate);
-        session.setAttribute("guestCount",guestCount);
+        session.setAttribute("cid", cid);
+        session.setAttribute("sourceDate", sourceDate);
+        session.setAttribute("destDate", destDate);
+        session.setAttribute("guestCount", guestCount);
         model.addAttribute("tableInfo", validTables);
         return "selectTable";
     }
 
     @GetMapping("/reservations/selectTable")
-    public String updateReservation(@RequestParam(name = "tableNo") String tableNo, HttpSession session, Model model){
+    public String updateReservation(@RequestParam(name = "tableNo") String tableNo, HttpSession session, Model model) {
         String cid = String.valueOf(session.getAttribute("cid"));
         String sourceDate = String.valueOf(session.getAttribute("sourceDate"));
         String destDate = String.valueOf(session.getAttribute("destDate"));
         String guestCount = String.valueOf(session.getAttribute("guestCount"));
-        model.addAttribute("result",reservationService.updateReservation(cid,sourceDate,destDate,guestCount,tableNo));
+        model.addAttribute("result", reservationService.updateReservation(cid, sourceDate, destDate, guestCount, tableNo));
         return "UpdateResResultPage";
     }
 }

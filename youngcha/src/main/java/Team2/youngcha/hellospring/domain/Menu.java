@@ -3,6 +3,7 @@ package Team2.youngcha.hellospring.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
 @Entity
 public class Menu {
@@ -12,6 +13,8 @@ public class Menu {
     private int price;
     @Column(columnDefinition = "int default 0")
     private int salesCount;
+    private int stock;
+    private LocalDate lastRestockedDate;
 
     public String getDish() {
         return dish;
@@ -35,5 +38,21 @@ public class Menu {
 
     public void setSalesCount(int salesCount) {
         this.salesCount = salesCount;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public LocalDate getLastRestockedDate() {
+        return lastRestockedDate;
+    }
+
+    public void setLastRestockedDate(LocalDate lastRestockedDate) {
+        this.lastRestockedDate = lastRestockedDate;
     }
 }

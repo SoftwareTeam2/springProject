@@ -1,5 +1,6 @@
 package Team2.youngcha.hellospring.service;
 
+import Team2.youngcha.hellospring.domain.Income;
 import Team2.youngcha.hellospring.domain.Menu;
 import Team2.youngcha.hellospring.domain.Reservation;
 import Team2.youngcha.hellospring.domain.TableInfo;
@@ -8,10 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -102,5 +100,41 @@ public class ManagerService {
                 managerRepository.saveMenu(newMenu);
             }
         }
+    }
+
+    public List<Income> getIncome(){
+        return managerRepository.getIncome();
+    }
+
+    public Map<String,Integer> getDishWithProfit(List<Income> incomeList){
+        HashMap<String, Integer> result = new HashMap<>();
+        for(Income income : incomeList){
+            if(result.containsKey(income.getDish()))
+                result.replace(income.getDish(),result.get(income.getDish())+income.getProfit());
+            else result.put(income.getDish(), income.getProfit());
+        }
+        return result;
+    }
+
+    public Map<String, Integer> getDishWithCount(List<Income> incomeList) {
+        HashMap<String, Integer> result = new HashMap<>();
+        for(Income income : incomeList){
+            if(result.containsKey(income.getDish()))
+                result.replace(income.getDish(),result.get(income.getDish())+income.getDishCount());
+            else result.put(income.getDish(), income.getDishCount());
+        }
+        return result;
+    }
+
+    public void rankRallocation(String ID){
+        managerRepository.rankReallocation(ID);
+    }
+
+    public void reservationCountReallocation(String ID){
+        managerRepository.reservationCountReallocation(ID);
+    }
+
+    public void setArrivalTime(String ID,LocalDateTime resDate){
+        managerRepository.setArrivalTime(ID,resDate);
     }
 }

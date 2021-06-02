@@ -20,18 +20,9 @@ public class ReservationRepository {
     }
 
     public Long save(Reservation reservation) {
-        //validateDuplicateTable(reservation); // 중복 시간대에 예약인지 확인 나중에는 아예 안보이게 하는 것도 가능??
-
         em.persist(reservation);
         return reservation.getOid();
     }
-
-    /*
-    private void validateDuplicateTable(Reservation reservation) {
-
-        // 로직
-    }
-    */
 
     public List<Reservation> findAll() {
         return em.createQuery("select r from Reservation r where :now < r.reservationDate", Reservation.class)

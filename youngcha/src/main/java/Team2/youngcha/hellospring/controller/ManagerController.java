@@ -1,5 +1,6 @@
 package Team2.youngcha.hellospring.controller;
 
+import Team2.youngcha.hellospring.domain.Income;
 import Team2.youngcha.hellospring.service.ManagerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +19,16 @@ public class ManagerController {
 
     public ManagerController(ManagerService managerService) {
         this.managerService = managerService;
+    }
+
+    @PostMapping("/waitList")
+    public String todo(@RequestParam(name = "customerID") String customerID, @RequestParam(name = "resDate")  LocalDateTime resDate) {
+
+        managerService.reservationCountReallocation(customerID);
+        managerService.rankRallocation(customerID);
+        managerService.setArrivalTime(customerID,resDate);
+
+        return "redirect:/";
     }
 
     @GetMapping("/manager/tableSetting")
@@ -59,5 +71,15 @@ public class ManagerController {
     public String editDishes(@RequestParam(name = "dishInfo") Map<String,String> dishInfo) {
         managerService.editDishes(dishInfo);
         return "dishManage";
+    }
+
+    @GetMapping("/manager/Income")
+    public String createIncomePage(Model model){
+        List<Income> incomeList = managerService.getIncome();
+        model.addAttribute("totalIncome",incomeList);
+        model.addAttribute("incomeWithDishAndProfit",managerService.getDishWithProfit(incomeList));
+        model.addAttribute("incomeWithDishAndDishCount", managerService.getDishWithCount(incomeList));
+
+        return "StatisticsGraph";
     }
 }

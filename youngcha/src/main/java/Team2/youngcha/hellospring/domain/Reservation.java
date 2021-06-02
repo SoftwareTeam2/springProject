@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Reservation extends Booking {
 
+
     @Column(name = "customer_id")
     private String customerID;
     @Column(name = "table_no")
@@ -84,5 +85,13 @@ public class Reservation extends Booking {
 
     public void setReservationDate(LocalDateTime reservationDate) {
         this.reservationDate = reservationDate;
+    }
+
+    public LocalDateTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(LocalDateTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 }

@@ -1,19 +1,20 @@
 package Team2.youngcha.hellospring.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Entity
 public class Income {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate incomeDate;
     private int profit;
     private String dish;
     private int dishCount;
-    //private String customerId;
 
     public Long getId() {
         return id;

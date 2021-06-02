@@ -1,13 +1,12 @@
 package Team2.youngcha.hellospring.repository;
 
-import Team2.youngcha.hellospring.domain.Menu;
-import Team2.youngcha.hellospring.domain.Reservation;
-import Team2.youngcha.hellospring.domain.TableInfo;
+import Team2.youngcha.hellospring.domain.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -91,5 +90,41 @@ public class ManagerRepository {
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    public List<Income> getIncome(){
+        LocalDate now = LocalDate.now();
+        List<Income> resultList = entityManager.createQuery("select i from Income i where i.incomeDate between :startRange and :endRange", Income.class)
+                .setParameter("startRange", now.minusDays(7))
+                .setParameter("endRange", now)
+                .getResultList();
+        return resultList;
+    }
+
+    @Modifying(clearAutomatically = true)
+    public void rankReallocation(String ID){
+        Customer customer = entityManager.find(Customer.class, ID);
+        int value = customer.getReservation_count();
+        if (value >= 0 && value <= 3) {
+            customer.setRank("General");
+        } else if (value >= 4 && value <= 7) {
+            customer.setRank("VIP");
+        } else {
+            customer.setRank("VVIP");
+        }
+    }
+
+    public void reservationCountReallocation(String ID) {
+        Customer customer = entityManager.find(Customer.class, ID);
+        customer.setReservation_count(customer.getReservation_count() + 1);
+    }
+
+    @Modifying(clearAutomatically = true)
+    public void setArrivalTime(String ID,LocalDateTime resDate) {
+        Reservation reservation = entityManager.createQuery("select r from Reservation r where r.customerID=:cid and r.reservationDate=:resDate", Reservation.class)
+                .setParameter("cid", ID)
+                .setParameter("resDate", resDate)
+                .getSingleResult();
+        reservation.setArrivalTime(LocalDateTime.now());
     }
 }
