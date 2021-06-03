@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <html>
@@ -26,13 +27,6 @@
 			font-size: 3.5rem;
 		}
 	}
-	#login_wrapper {
-		width: 100%;
-		max-width: 1500px;
-		padding-left: 380px;
-		margin: auto;
-	}
-
 </style>
 
 <link href="../../../../../../../youngcha/src/main/webapp/resources/css/carousel.css" rel="stylesheet">
@@ -40,25 +34,44 @@
 	<div class="py-5 text-center" style="user-select: auto;">
 		<h2 style="user-select: auto;">예약조회</h2>
 	</div>
+</head>
 <body>
-<div class="table-responsive" style="margin-bottom: 40px;">
+
+<div class="table-responsive" style="margin-bottom: 40px; width: 1075px; margin-left:auto; margin-right: auto">
 	<table class="table table-striped table-sm">
 		<thead>
 			<tr>
-				<th>테이블 위치</th>
-				<th>인원 수</th>
-				<th>자차 여부</th>
+				<th>ID</th>
 				<th>예약 시간</th>
+				<th>테이블 위치</th>
+				<th>자차 여부</th>
+				<th>인원 수</th>
 			</tr>
-			</thead>
-			<tbody>
-			<tr>
-				<td>${reservation.tableNo}</td>
-				<td>${reservation.numberOfPeople}</td>
-				<td>${reservation.hasCar}</td>
-				<td>${reservation.reservationDate}</td>
-			</tr>
-		</thead>
+ 	</thead>
+		<tbody>
+			<c:forEach items="${inqList}" var="inq">
+				<c:if test="${userID eq 'ad'}">
+					<tr>
+						<th>${inq.customerID}</th>
+						<th>${inq.reservationDate}</th>
+						<th>${inq.tableNo}</th>
+						<th>${inq.hasCar}</th>
+						<th>${inq.numberOfPeople}</th>
+					</tr>
+				</c:if>
+				<c:if test="${inq.customerID eq userID}">
+					<tr>
+						<th>${inq.customerID}</th>
+						<th>${inq.reservationDate}</th>
+						<th>${inq.tableNo}</th>
+						<th>${inq.hasCar}</th>
+						<th>${inq.numberOfPeople}</th>
+					</tr>
+				</c:if>
+			</c:forEach>
+		</tbody>
 	</table>
+
+</div>
 </body>
 </html>
