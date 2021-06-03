@@ -134,7 +134,21 @@ public class ManagerService {
         managerRepository.reservationCountReallocation(ID);
     }
 
-    public void setArrivalTime(String ID,LocalDateTime resDate){
-        managerRepository.setArrivalTime(ID,resDate);
+    public LocalDateTime setArrivalTime(String ID,LocalDateTime resDate){
+        return managerRepository.setArrivalTime(ID, resDate);
+    }
+
+    public void enrollIncome(String argDishes, String argDishCounts,LocalDateTime now){
+        String[] dishes = argDishes.split(",");
+        String[] dishCounts = argDishCounts.split(",");
+        for (int i = 0; i < dishes.length; i++) {
+            Income income = new Income();
+            income.setIncomeDate(now.toLocalDate());
+            income.setDish(dishes[i]);
+            income.setDishCount(Integer.valueOf(dishCounts[i]));
+            income.setProfit(managerRepository.getDishPrice(dishes[i])*Integer.valueOf(Integer.valueOf(dishCounts[i])));
+
+            managerRepository.saveIncome(income);
+        }
     }
 }

@@ -69,4 +69,20 @@ public class CustomerService {
     public static Boolean SToBConvert(String string) {
         return (string.equals("Y")) ? true : false;
     }
+
+    public String isAlreadyJoined(String name, String email) {
+        Optional<Customer> result = memberRepository.findIdByNameAndEmail(name, email);
+        if (result.isPresent()) return result.get().getCid();
+        return "";
+    }
+
+    public Boolean findByEmailAndNameAndCid(String email, String name, String cid) {
+        Optional<Customer> result = memberRepository.findByEmailAndNameAndCid(email, name, cid);
+        if(result.isPresent()) return true;
+        else return false;
+    }
+
+    public Boolean changePSW(String cid, String psw) {
+        return memberRepository.changePSW(cid, psw);
+    }
 }

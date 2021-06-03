@@ -3,7 +3,6 @@ package Team2.youngcha.hellospring.controller;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class ReservationForm {
     private String customerID;
@@ -16,16 +15,6 @@ public class ReservationForm {
     private LocalDateTime reservationDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
     private LocalDateTime arrivalTime = LocalDateTime.now();
-    transient DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy년 M월 d일 a h시 m분");
-    private String nowString = arrivalTime.format(dateTimeFormatter);
-
-    public String getNowString() {
-        return nowString;
-    }
-
-    public void setNowString(String nowString) {
-        this.nowString = nowString;
-    }
 
     public String getNumberOfPeople() {
         return numberOfPeople;

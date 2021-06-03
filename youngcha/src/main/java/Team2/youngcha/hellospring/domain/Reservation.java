@@ -29,6 +29,8 @@ public class Reservation extends Booking {
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
     @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
+    private String dishes;
+    private String dishCounts;
 
     public String getNumberOfPeople() {
         return numberOfPeople;
@@ -93,5 +95,21 @@ public class Reservation extends Booking {
 
     public void setArrivalTime(LocalDateTime arrivalTime) {
         this.arrivalTime = arrivalTime;
+    }
+
+    public String getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(String dishes) {
+        this.dishes = dishes;
+    }
+
+    public String getDishCounts() {
+        return dishCounts;
+    }
+
+    public void setDishCounts(String dishCounts) {
+        this.dishCounts = dishCounts;
     }
 }

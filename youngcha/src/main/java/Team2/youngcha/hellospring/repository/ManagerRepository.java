@@ -28,6 +28,10 @@ public class ManagerRepository {
         return tableNo.getTableNumber();
     }
 
+    public void saveIncome(Income income) {
+        entityManager.persist(income);
+    }
+
     public Optional<Reservation> getReservationByCidOnToday(String cid, LocalDateTime startRange, LocalDateTime endRange){
         try {
             Reservation result = entityManager.createQuery("select r from Reservation r where r.reservationDate between :startRange and :endRange and r.customerID=:cid", Reservation.class)
@@ -120,11 +124,24 @@ public class ManagerRepository {
     }
 
     @Modifying(clearAutomatically = true)
-    public void setArrivalTime(String ID,LocalDateTime resDate) {
+    public LocalDateTime setArrivalTime(String ID,LocalDateTime resDate) {
         Reservation reservation = entityManager.createQuery("select r from Reservation r where r.customerID=:cid and r.reservationDate=:resDate", Reservation.class)
                 .setParameter("cid", ID)
                 .setParameter("resDate", resDate)
                 .getSingleResult();
-        reservation.setArrivalTime(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        reservation.setArrivalTime(now);
+        return now;
+    }
+
+    public int getDishPrice(String dish){
+        try {
+            return entityManager.createQuery("select m from Menu m where m.dish=:dish", Menu.class)
+                    .setParameter("dish", dish)
+                    .getSingleResult()
+                    .getPrice();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

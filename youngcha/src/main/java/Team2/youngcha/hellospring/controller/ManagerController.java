@@ -22,11 +22,15 @@ public class ManagerController {
     }
 
     @PostMapping("/waitList")
-    public String todo(@RequestParam(name = "customerID") String customerID, @RequestParam(name = "resDate")  LocalDateTime resDate) {
+    public String todo(@RequestParam(name = "customerID") String customerID,
+                       @RequestParam(name = "resDate")  LocalDateTime resDate,
+                       @RequestParam(name = "dishes") String dishes,
+                       @RequestParam(name = "dishCounts") String dishCounts) {
 
         managerService.reservationCountReallocation(customerID);
         managerService.rankRallocation(customerID);
-        managerService.setArrivalTime(customerID,resDate);
+        LocalDateTime now = managerService.setArrivalTime(customerID, resDate);
+        managerService.enrollIncome(dishes, dishCounts, now);
 
         return "redirect:/";
     }

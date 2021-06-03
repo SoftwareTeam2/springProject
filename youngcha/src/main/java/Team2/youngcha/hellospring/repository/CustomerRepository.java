@@ -1,6 +1,7 @@
 package Team2.youngcha.hellospring.repository;
 
 import Team2.youngcha.hellospring.domain.Customer;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -36,20 +37,24 @@ public class CustomerRepository implements MemberRepository {
                     .setParameter("cid", customer.getCid())
                     .getSingleResult();
             return Optional.ofNullable(result);
-        } catch(Exception e){
+        } catch (Exception e) {
             return Optional.empty();
         }
     }
 
-    public Optional<Customer> findEmailByCid(String cid){
-        Customer customer = em.createQuery("select c from Customer c where c.cid=:cid", Customer.class)
-                .setParameter("cid", cid)
-                .getSingleResult();
-
-        return Optional.ofNullable(customer);
+    public Optional<Customer> findEmailByCid(String cid) {
+        try {
+            Customer customer = em.createQuery("select c from Customer c where c.cid=:cid", Customer.class)
+                    .setParameter("cid", cid)
+                    .getSingleResult();
+            return Optional.ofNullable(customer);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
+
     @Override
-    public List<Customer> findAll(){
+    public List<Customer> findAll() {
         return em.createQuery("select c from Customer c", Customer.class)
                 .getResultList();
     }
@@ -61,7 +66,7 @@ public class CustomerRepository implements MemberRepository {
                     .setParameter("cid", id)
                     .getSingleResult();
             return customer.getPsw().equals(pwd);
-        }catch(NoResultException e){
+        } catch (NoResultException e) {
             return false;
         }
     }
@@ -69,17 +74,65 @@ public class CustomerRepository implements MemberRepository {
 
     @Override
     public Boolean isAdmin(String id) {
-        return em.createQuery("select c from Customer c where c.cid=:cid",Customer.class)
-                .setParameter("cid",id)
-                .getSingleResult()
-                .getAdmin();
+        try {
+            return em.createQuery("select c from Customer c where c.cid=:cid", Customer.class)
+                    .setParameter("cid", id)
+                    .getSingleResult()
+                    .getAdmin();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public Optional<Customer> findNameByCid(String cid) {
-        Customer result = em.createQuery("select c from Customer c where c.cid=:cid", Customer.class)
-                .setParameter("cid", cid)
-                .getSingleResult();
-        return Optional.ofNullable(result);
+        try {
+            Customer result = em.createQuery("select c from Customer c where c.cid=:cid", Customer.class)
+                    .setParameter("cid", cid)
+                    .getSingleResult();
+            return Optional.ofNullable(result);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<Customer> findIdByNameAndEmail(String name, String email) {
+        try {
+            Customer result = em.createQuery("select c from Customer c where c.name=:name and c.email=:email", Customer.class)
+                    .setParameter("name", name)
+                    .setParameter("email", email)
+                    .getSingleResult();
+            return Optional.ofNullable(result);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<Customer> findByEmailAndNameAndCid(String email, String name, String cid) {
+        try {
+            return Optional.ofNullable(em.createQuery("select c from Customer c where c.email=:email and c.name=:name and c.cid=:cid", Customer.class)
+                    .setParameter("email", email)
+                    .setParameter("name", name)
+                    .setParameter("cid", cid)
+                    .getSingleResult());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    @Modifying(clearAutomatically = true)
+    public Boolean changePSW(String cid, String psw) {
+        try {
+            Customer target = em.createQuery("select c from Customer c where c.cid=:cid", Customer.class)
+                    .setParameter("cid", cid)
+                    .getSingleResult();
+            target.setPsw(psw);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

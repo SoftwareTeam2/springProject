@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -80,13 +81,30 @@ public class CustomerController {
     }
 
     @GetMapping("/customers/findID")
-    public String findID(){
+    public String createFindIDPage(){
         return "FindID";
     }
 
-    @GetMapping("/customers/findPW")
-    public String findPW(){
-        return "FindPW";
+    @PostMapping("/customers/findID")
+    public String findID(@RequestParam(name = "name") String name, @RequestParam(name = "email") String email, Model model){
+        String cid = customerService.isAlreadyJoined(name, email);
+        model.addAttribute("cid", cid);
+        return "foundId";
     }
 
+    @GetMapping("/customers/findPW")
+    public String findPW(@RequestParam(name = "email") String email,@RequestParam(name = "name") String name, @RequestParam(name = "cid") String cid,HttpSession session) {
+        if(customerService.findByEmailAndNameAndCid(email,name,cid)){
+            session.setAttribute("userID",cid);
+            return "changePSW";
+        }
+        return "infoFault";
+    }
+
+    @PostMapping("/customers/changePSW")
+    public String changePSW(@RequestParam(name = "newPSW") String newPSW, HttpSession session){
+        String userID = String.valueOf(session.getAttribute("userID"));
+        customerService.changePSW(userID, newPSW);
+        return "Login";
+    }
 }

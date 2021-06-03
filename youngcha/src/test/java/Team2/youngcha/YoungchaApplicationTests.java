@@ -270,4 +270,38 @@ class YoungchaApplicationTests {
         assertThat(result.getArrivalTime().isBefore(LocalDateTime.now().plusMinutes(1)) && result.getArrivalTime().isAfter(LocalDateTime.now().minusMinutes(1))).isEqualTo(true);
     }
 
+    @Test
+    void 수입등록메뉴여러개개수확인(){
+        LocalDateTime now = LocalDateTime.of(2021,6,4,18,45);
+        managerService.enrollIncome("Seafood Platter,Soup of the Day","3,2",now);
+
+        List<Income> result = em.createQuery("select i from Income i where i.incomeDate=:argIncomeDate", Income.class)
+                .setParameter("argIncomeDate", now.toLocalDate())
+                .getResultList();
+
+        assertThat(result.size()).isEqualTo(2);
+    }
+
+    @Test
+    void 수입등록메뉴여러개가격확인(){
+        LocalDateTime now = LocalDateTime.of(2021,6,4,18,45);
+        managerService.enrollIncome("Seafood Platter,Soup of the Day","3,2",now);
+
+        List<Income> result = em.createQuery("select i from Income i where i.incomeDate=:argIncomeDate", Income.class)
+                .setParameter("argIncomeDate", now.toLocalDate())
+                .getResultList();
+
+        int sum = 0;
+        for(Income income : result){
+            sum+=income.getProfit();
+        }
+
+        assertThat(sum).isEqualTo(54000+16000);
+    }
+
+    @Test
+    void 아이디찾기(){
+
+    }
+
 }
