@@ -25,5 +25,4 @@ public class SpringConfig {
     public MemberRepository memberRepository() {
         return new CustomerRepository(em);
     }
-
 }
