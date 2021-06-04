@@ -1,9 +1,12 @@
 package Team2.youngcha.hellospring.repository;
 
+import Team2.youngcha.hellospring.domain.Reservation;
+import Team2.youngcha.hellospring.domain.TableInfo;
 import Team2.youngcha.hellospring.domain.WalkIn;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -21,12 +24,13 @@ public class WalkInRepository {
         return walkIn.getOid();
     }
 
-    /*
-    private void validateDuplicateTable(Reservation reservation) {
-
-        // 로직
+    public List<Reservation> findByResDate(LocalDateTime localDateTime) {
+        List<Reservation> result = em.createQuery("select r from Reservation r where r.reservationDate between :minusHour and :plusHour", Reservation.class)
+                .setParameter("minusHour", localDateTime.minusHours(2))
+                .setParameter("plusHour", localDateTime.plusHours(2))
+                .getResultList();
+        return result;
     }
-    */
 
     public List<WalkIn> findAll() {
         return em.createQuery("select w from WalkIn w", WalkIn.class)
@@ -38,5 +42,10 @@ public class WalkInRepository {
                 .setParameter("customerId", id)
                 .getResultList();
         return result;
+    }
+
+    public List<TableInfo> getTables(){
+        return em.createQuery("select t from TableInfo t", TableInfo.class)
+                .getResultList();
     }
 }

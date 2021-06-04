@@ -1,9 +1,6 @@
 package Team2.youngcha.hellospring.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class TableInfo {
@@ -11,8 +8,17 @@ public class TableInfo {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long oid;
     private int tableNumber;
+    @Column(columnDefinition = "int default 4")
+    private int people;
     private int places;
-    private int bookingNo;
+
+    public int getPeople() {
+        return people;
+    }
+
+    public void setPeople(int people) {
+        this.people = people;
+    }
 
     public Long getOid() {
         return oid;
@@ -36,13 +42,5 @@ public class TableInfo {
 
     public void setPlaces(int places) {
         this.places = places;
-    }
-
-    public int getBookingNo() {
-        return bookingNo;
-    }
-
-    public void setBookingNo(int bookingNo) {
-        this.bookingNo = bookingNo;
     }
 }

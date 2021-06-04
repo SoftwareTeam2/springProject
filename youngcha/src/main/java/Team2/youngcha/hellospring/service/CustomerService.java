@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -17,13 +18,14 @@ public class CustomerService {
         this.memberRepository = memberRepository;
     }
 
-    /**
-     * 회원가입
-     */
-    public void join(Customer customer) {
-        validateDuplicateName(customer); // 중복회원 검증
-
-        memberRepository.save(customer);
+    public Boolean join(Customer customer) {
+        try {
+            validateDuplicateName(customer); // 중복회원 검증
+            memberRepository.save(customer);
+            return true;
+        } catch(IllegalStateException e){
+            return false;
+        }
     }
 
     private void validateDuplicateName(Customer customer) {
@@ -32,19 +34,23 @@ public class CustomerService {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
     }
+    public String findEmailByCid(String cid){
+        Optional<Customer> result = memberRepository.findEmailByCid(cid);
+        if(result.isPresent())
+            return result.get().getEmail();
+        else
+            return "";
+    }
 
-    /**
-     * 전체 회원 조회
-     */
+    public String findNameByCid(String cid){
+        Optional<Customer> result = memberRepository.findNameByCid(cid);
+        if(result.isPresent())
+            return result.get().getName();
+        else return "";
+    }
     public List<Customer> findMember() {
         return memberRepository.findAll();
     }
-
-    /*
-    public Optional<Member> findOne(Long memberId) {
-        return memberRepository.findById(memberId);
-    }
-     */
 
     public Boolean LogIn(String id, String psw) {
         return memberRepository.validateUser(id, psw);
@@ -56,5 +62,26 @@ public class CustomerService {
 
     public static Boolean SToBConvert(String string) {
         return (string.equals("Y")) ? true : false;
+    }
+
+    public String isAlreadyJoined(String name, String phoneNumber) {
+        Optional<Customer> result = memberRepository.findIdByNameAndPhoneNo(name, phoneNumber);
+        if (result.isPresent()) return result.get().getCid();
+        return "1";
+    }
+
+    public Boolean findUserByPhoneNoAndNameAndCid(String phoneNo, String name, String cid) {
+        Optional<Customer> result = memberRepository.findUserByPhoneNoAndNameAndCid(phoneNo, name, cid);
+        if(result.isPresent()) return true;
+        else return false;
+    }
+
+    public Boolean changePSW(String cid, String psw) {
+        return memberRepository.changePSW(cid, psw);
+    }
+
+    public Boolean checkIDDuplication(String cid){
+        Optional<Customer> byId = memberRepository.findById(cid);
+        return byId.isPresent();
     }
 }

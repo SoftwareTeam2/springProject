@@ -1,10 +1,14 @@
 package Team2.youngcha.hellospring.service;
 
+import Team2.youngcha.hellospring.domain.Reservation;
+import Team2.youngcha.hellospring.domain.TableInfo;
 import Team2.youngcha.hellospring.domain.WalkIn;
 import Team2.youngcha.hellospring.repository.WalkInRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -17,18 +21,36 @@ public class WalkInService {
     }
 
     public Long join(WalkIn walkIn) {
-        //validateDuplicateTable(reservation); // 중복 시간대에 예약인지 확인 나중에는 아예 안보이게 하는 것도 가능??
         walkInRepository.save(walkIn);
         return walkIn.getOid();
     }
 
-    /*
-    private void validateDuplicateTable(Reservation reservation) {
-        // 로직
+    public List<Boolean> validateDuplicateTable(int guestCount) {
+        List<Reservation> reservationList = walkInRepository.findByResDate(LocalDateTime.now());
+        List<TableInfo> tables = walkInRepository.getTables();
+        Boolean[] validAry = new Boolean[tables.size()];
+        Arrays.fill(validAry,true);
+        for(Reservation reservation : reservationList){
+            validAry[Integer.getInteger(reservation.getTableNo())-1] = false;
+        }
+
+        validateGuestCountTable(guestCount,tables,validAry);
+        return Arrays.asList(validAry);
     }
-    */
+    private Boolean[] validateGuestCountTable(int guestCount, List<TableInfo> tables, Boolean[] validAry){
+        for(TableInfo tableInfo : tables){
+            if(tableInfo.getPeople()<guestCount){
+                validAry[tableInfo.getTableNumber()-1] = false;
+            }
+        }
+        return validAry;
+    }
 
     public List<WalkIn> listsWalkIn() {
         return walkInRepository.findAll();
+    }
+
+    public List<Boolean> checkTable(int guestCount){
+        return validateDuplicateTable(guestCount);
     }
 }

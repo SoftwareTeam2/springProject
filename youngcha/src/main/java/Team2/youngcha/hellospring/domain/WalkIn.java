@@ -11,6 +11,7 @@ public class WalkIn extends Booking{
 
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm") @Column(name = "walkInDate")
     private LocalDateTime walkInDate;
+    private int guestCount;
 
     public LocalDateTime getWalkInDate() {
         return walkInDate;
@@ -18,5 +19,13 @@ public class WalkIn extends Booking{
 
     public void setWalkInDate(LocalDateTime walkInDate) {
         this.walkInDate = walkInDate;
+    }
+
+    public int getGuestCount() {
+        return guestCount;
+    }
+
+    public void setGuestCount(int guestCount) {
+        this.guestCount = guestCount;
     }
 }

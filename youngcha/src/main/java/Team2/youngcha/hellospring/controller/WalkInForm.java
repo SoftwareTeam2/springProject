@@ -8,6 +8,7 @@ public class WalkInForm {
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
     private LocalDateTime walkInDate;
     private int tableNo;
+    private int guestCount;
 
     public LocalDateTime getWalkInDate() {
         return walkInDate;
@@ -23,5 +24,13 @@ public class WalkInForm {
 
     public void setTableNo(int tableNo) {
         this.tableNo = tableNo;
+    }
+
+    public int getGuestCount() {
+        return guestCount;
+    }
+
+    public void setGuestCount(int guestCount) {
+        this.guestCount = guestCount;
     }
 }

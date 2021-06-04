@@ -9,6 +9,15 @@ public class CustomerForm {
     private String gender;
     private String emailReceiveYn;
     private String smsReceiveYn;
+    private int reservation_count = 0;
+
+    public int getReservation_count() {
+        return reservation_count;
+    }
+
+    public void setReservation_count(int reservation_count) {
+        this.reservation_count = reservation_count;
+    }
 
     public String getCid() {
         return cid;

@@ -6,24 +6,89 @@ import java.time.LocalDateTime;
 
 public class ReservationForm {
     private String customerID;
-    private int tableNo;
+    private String tableNo;
+    private String numberOfPeople;
+    private String customerName;
+    private String customerEmail;
+    private String hasCar;
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
     private LocalDateTime reservationDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
+    private LocalDateTime arrivalTime = LocalDateTime.now();
+    private String dishes;
+    private String dishCounts;
 
-    public String getCustomerID() {
-        return customerID;
+    public LocalDateTime getArrivalTime() {
+        return arrivalTime;
     }
 
-    public void setCustomerID(String customerID) {
-        this.customerID = customerID;
+    public void setArrivalTime(LocalDateTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 
-    public int getTableNo() {
+    public String getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(String dishes) {
+        this.dishes = dishes;
+    }
+
+    public String getDishCounts() {
+        return dishCounts;
+    }
+
+    public void setDishCounts(String dishCounts) {
+        this.dishCounts = dishCounts;
+    }
+
+    public String getNumberOfPeople() {
+        return numberOfPeople;
+    }
+
+    public void setNumberOfPeople(String numberOfPeople) {
+        this.numberOfPeople = numberOfPeople;
+    }
+
+    public String getTableNo() {
         return tableNo;
     }
 
-    public void setTableNo(int tableNo) {
+    public void setTableNo(String tableNo) {
         this.tableNo = tableNo;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
+
+    public String getCustomerID(){
+        return customerID;
+    }
+
+    public void setCustomerID(String customerID){
+        this.customerID = customerID;
+    }
+
+
+    public String getHasCar() {
+        return hasCar;
+    }
+
+    public void setHasCar(String hasCar) {
+        this.hasCar = hasCar;
     }
 
     public LocalDateTime getReservationDate() {

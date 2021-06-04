@@ -63,24 +63,18 @@
 				</div>
 
 				<div class="carousel-item">
-					<img src="../../resources/image/rooney.jpg" style="margin-top: 2rem;">
+					<img src="../../resources/image/food2.jpg" style="margin-top: 2rem;">
 					<div class="container">
 						<div class="carousel-caption"></div>
 					</div>
 				</div>
 
 				<div class="carousel-item">
-					<img src="../../resources/image/jisung.jpg" style="margin-top: 2rem;">
+					<img src="../../resources/image/food3.jpg" style="margin-top: 2rem;">
 					<div class="container">
-						<div class="carousel-caption text-end">
-							<h1>One more for good measure.</h1>
-							<p>Cras justo odio, dapibus ac facilisis in, egestas eget
-								quam. Donec id elit non mi porta gravida at eget metus. Nullam
-								id dolor id nibh ultricies vehicula ut id elit.</p>
-							<p>
-								<a class="btn btn-lg btn-primary" href="#" role="button">Browse
-									gallery</a>
-							</p>
+						<div class="carousel-caption text-end style="margin-bottom: -2rem;">
+							<h1>Restaurant</h1>
+							<p>항상 신선한 식재료로 대접합니다.</p>
 						</div>
 					</div>
 				</div>
@@ -96,37 +90,6 @@
 		</div>
 
 		<div class="container marketing">
-			<div class="row">
-				<div class="col-lg-4">
-					<div style="cursor: pointer;" onclick="location.href='Route.jsp'">
-						<img class="d-block mx-auto mb-4" src="../../resources/image/ronaldo.png" alt=""
-							width="252" height="252">
-					</div>
-
-					<h2>오시는 길</h2>
-
-				</div>
-
-				<div class="col-lg-4">
-					<div style="cursor: pointer;"
-						onclick="location.href='Menu.jsp'">
-						<img class="d-block mx-auto mb-4" src="../../resources/image/rooney.jpg" alt=""
-							width="252" height="252">
-					</div>
-
-					<h2>자주 묻는 질문</h2>
-
-				</div>
-
-				<div class="col-lg-4">
-					<div style="cursor: pointer;" onclick="location.href='Page.jsp'">
-						<img class="d-block mx-auto mb-4" src="../../resources/image/jisung.jpg" alt=""
-							width="252" height="252">
-					</div>
-
-					<h2>이용 후기</h2>
-				</div>
-			</div>
 			<div class="row featurette" style="user-select: auto;">
 				<div class="col-md-7" style="user-select: auto;">
 					<h2 class="featurette-heading" style="user-select: auto;">
