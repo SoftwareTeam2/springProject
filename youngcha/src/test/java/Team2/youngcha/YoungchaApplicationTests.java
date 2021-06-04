@@ -1,13 +1,9 @@
 package Team2.youngcha;
 
 import Team2.youngcha.hellospring.MainApplication;
-import Team2.youngcha.hellospring.domain.Income;
-import Team2.youngcha.hellospring.domain.Menu;
-import Team2.youngcha.hellospring.domain.Reservation;
-import Team2.youngcha.hellospring.domain.TableInfo;
+import Team2.youngcha.hellospring.domain.*;
 import Team2.youngcha.hellospring.repository.ManagerRepository;
-import Team2.youngcha.hellospring.repository.ReservationRepository;
-import Team2.youngcha.hellospring.repository.WalkInRepository;
+import Team2.youngcha.hellospring.service.CustomerService;
 import Team2.youngcha.hellospring.service.ManagerService;
 import Team2.youngcha.hellospring.service.ReservationService;
 import Team2.youngcha.hellospring.service.WalkInService;
@@ -37,9 +33,6 @@ class YoungchaApplicationTests {
     ReservationService reservationService;
 
     @Autowired
-    ReservationRepository reservationRepository;
-
-    @Autowired
     ManagerService managerService;
 
     @Autowired
@@ -49,7 +42,8 @@ class YoungchaApplicationTests {
     WalkInService walkInService;
 
     @Autowired
-    WalkInRepository walkInRepository;
+    CustomerService customerService;
+
 
     @Test
     void compareLocalDateTime() {
@@ -273,7 +267,7 @@ class YoungchaApplicationTests {
     @Test
     void 수입등록메뉴여러개개수확인(){
         LocalDateTime now = LocalDateTime.of(2021,6,4,18,45);
-        managerService.enrollIncome("Seafood Platter,Soup of the Day","3,2",now);
+        managerService.enrollIncome("hyeonho9877","Seafood Platter,Soup of the Day","3,2",now);
 
         List<Income> result = em.createQuery("select i from Income i where i.incomeDate=:argIncomeDate", Income.class)
                 .setParameter("argIncomeDate", now.toLocalDate())
@@ -285,7 +279,7 @@ class YoungchaApplicationTests {
     @Test
     void 수입등록메뉴여러개가격확인(){
         LocalDateTime now = LocalDateTime.of(2021,6,4,18,45);
-        managerService.enrollIncome("Seafood Platter,Soup of the Day","3,2",now);
+        managerService.enrollIncome("hyeonho9877","Seafood Platter,Soup of the Day","3,2",now);
 
         List<Income> result = em.createQuery("select i from Income i where i.incomeDate=:argIncomeDate", Income.class)
                 .setParameter("argIncomeDate", now.toLocalDate())
@@ -301,7 +295,69 @@ class YoungchaApplicationTests {
 
     @Test
     void 아이디찾기(){
+        // given, when
+        String result = customerService.isAlreadyJoined("신현호", "01086133952");
 
+        // then
+        assertThat(result).isEqualTo("hyeonho9877");
     }
 
+    @Test
+    void 비밀번호찾기(){
+        // given, when
+        Boolean result = customerService.findUserByPhoneNoAndNameAndCid("01086133952", "신현호", "hyeonho9877");
+
+        // then
+        assertThat(result).isEqualTo(true);
+    }
+
+    @Test
+    void 비밀번호변경(){
+        // given, when
+        customerService.changePSW("hyeonho9877", "changedPSW");
+        Customer customer = em.find(Customer.class, "hyeonho9877");
+
+        // then
+        assertThat(customer.getPsw()).isEqualTo("changedPSW");
+    }
+
+    @Test
+    void 판매량변화(){
+
+        // given, when
+        managerService.editSaleCount("hyeonho9877",LocalDateTime.of(2021,6,3,18,45));
+        Menu result = em.find(Menu.class,"Seafood Platter");
+        System.out.println(result.getSalesCount()+result.getDish());
+        // then
+        assertThat(result.getSalesCount()).isEqualTo(5);
+    }
+
+    @Test
+    void 재고량변화(){
+
+        // given, when
+        managerService.editSaleCount("hyeonho9877",LocalDateTime.of(2021,6,3,18,45));
+        Menu result = em.find(Menu.class,"Seafood Platter");
+        System.out.println(result.getSalesCount()+result.getDish());
+        // then
+        assertThat(result.getStock()).isEqualTo(3);
+    }
+
+    @Test
+    void 수입등급반영(){
+
+        // given
+        LocalDateTime now = LocalDateTime.now();
+        managerService.enrollIncome("hyeonho9877","Seafood Platter,","1,",now);
+
+        // when
+        Income result = em.createQuery("select i from Income i where i.incomeDate=:argIncomeDate", Income.class)
+                .setParameter("argIncomeDate", now.toLocalDate())
+                .getSingleResult();
+        Menu seafood_platter = em.find(Menu.class, "Seafood Platter");
+        System.out.println(result.getProfit());
+
+        // then
+        assertThat(result.getProfit()).isEqualTo((int)Math.round(seafood_platter.getPrice()*1*(1-5.0/100)));
+    }
 }

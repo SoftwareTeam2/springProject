@@ -1,12 +1,11 @@
 package Team2.youngcha.hellospring.controller;
 
 import Team2.youngcha.hellospring.domain.Income;
+import Team2.youngcha.hellospring.domain.Reservation;
 import Team2.youngcha.hellospring.service.ManagerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,18 +20,32 @@ public class ManagerController {
         this.managerService = managerService;
     }
 
+    @GetMapping("/manager")
+    public String managerPage() {
+        return "Management";
+    }
+
+    @GetMapping("/waitList")
+    public String lists() {
+        return "/waitList";
+    }
+
+    @GetMapping("/waitList/getList")
+    @ResponseBody
+    public List<Reservation> getWaitList() {
+        return managerService.callWaitList();
+    }
+
     @PostMapping("/waitList")
-    public String todo(@RequestParam(name = "customerID") String customerID,
-                       @RequestParam(name = "resDate")  LocalDateTime resDate,
-                       @RequestParam(name = "dishes") String dishes,
-                       @RequestParam(name = "dishCounts") String dishCounts) {
+    @ResponseBody
+    public boolean todo(@RequestBody ReservationForm form) {
+            managerService.reservationCountReallocation(form.getCustomerID());
+            managerService.rankReallocation(form.getCustomerID());
+            LocalDateTime now = managerService.setArrivalTime(form.getCustomerID(), form.getReservationDate());
+            managerService.enrollIncome(form.getCustomerID(), form.getDishes(), form.getDishCounts(), now);
+            managerService.editSaleCount(form.getCustomerID(), form.getReservationDate());
 
-        managerService.reservationCountReallocation(customerID);
-        managerService.rankRallocation(customerID);
-        LocalDateTime now = managerService.setArrivalTime(customerID, resDate);
-        managerService.enrollIncome(dishes, dishCounts, now);
-
-        return "redirect:/";
+            return true;
     }
 
     @GetMapping("/manager/tableSetting")
@@ -56,7 +69,7 @@ public class ManagerController {
     }
 
     @GetMapping("/manager/tableManage")
-    public String createPage(){
+    public String createPage() {
         return "tableManage";
     }
 
@@ -67,21 +80,21 @@ public class ManagerController {
     }
 
     @GetMapping("/manager/dishManage")
-    public String createDishPage(){
+    public String createDishPage() {
         return "dishManage";
     }
 
     @PostMapping("/manager/dishManage")
-    public String editDishes(@RequestParam(name = "dishInfo") Map<String,String> dishInfo) {
+    public String editDishes(@RequestParam(name = "dishInfo") Map<String, String> dishInfo) {
         managerService.editDishes(dishInfo);
         return "dishManage";
     }
 
     @GetMapping("/manager/Income")
-    public String createIncomePage(Model model){
+    public String createIncomePage(Model model) {
         List<Income> incomeList = managerService.getIncome();
-        model.addAttribute("totalIncome",incomeList);
-        model.addAttribute("incomeWithDishAndProfit",managerService.getDishWithProfit(incomeList));
+        model.addAttribute("totalIncome", incomeList);
+        model.addAttribute("incomeWithDishAndProfit", managerService.getDishWithProfit(incomeList));
         model.addAttribute("incomeWithDishAndDishCount", managerService.getDishWithCount(incomeList));
 
         return "StatisticsGraph";

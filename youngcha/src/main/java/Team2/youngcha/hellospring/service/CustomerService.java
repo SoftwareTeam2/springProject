@@ -52,12 +52,6 @@ public class CustomerService {
         return memberRepository.findAll();
     }
 
-    /*
-    public Optional<Member> findOne(Long memberId) {
-        return memberRepository.findById(memberId);
-    }
-     */
-
     public Boolean LogIn(String id, String psw) {
         return memberRepository.validateUser(id, psw);
     }
@@ -70,19 +64,24 @@ public class CustomerService {
         return (string.equals("Y")) ? true : false;
     }
 
-    public String isAlreadyJoined(String name, String email) {
-        Optional<Customer> result = memberRepository.findIdByNameAndEmail(name, email);
+    public String isAlreadyJoined(String name, String phoneNumber) {
+        Optional<Customer> result = memberRepository.findIdByNameAndPhoneNo(name, phoneNumber);
         if (result.isPresent()) return result.get().getCid();
-        return "";
+        return "1";
     }
 
-    public Boolean findByEmailAndNameAndCid(String email, String name, String cid) {
-        Optional<Customer> result = memberRepository.findByEmailAndNameAndCid(email, name, cid);
+    public Boolean findUserByPhoneNoAndNameAndCid(String phoneNo, String name, String cid) {
+        Optional<Customer> result = memberRepository.findUserByPhoneNoAndNameAndCid(phoneNo, name, cid);
         if(result.isPresent()) return true;
         else return false;
     }
 
     public Boolean changePSW(String cid, String psw) {
         return memberRepository.changePSW(cid, psw);
+    }
+
+    public Boolean checkIDDuplication(String cid){
+        Optional<Customer> byId = memberRepository.findById(cid);
+        return byId.isPresent();
     }
 }

@@ -5,12 +5,12 @@ import Team2.youngcha.hellospring.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CustomerController {
@@ -40,7 +40,7 @@ public class CustomerController {
         customer.setPhoneNumber(form.getPhoneNumber());
         customer.setReservation_count(customer.getReservation_count());
 
-        if(customerService.join(customer))
+        if (customerService.join(customer))
             return "redirect:/";
         else
             return "SignUp";
@@ -66,8 +66,8 @@ public class CustomerController {
             else session.setAttribute("admin", false);
             session.setAttribute("loginCheck", true);
             session.setAttribute("userID", form.getUserID());
-            session.setAttribute("userEmail",customerService.findEmailByCid(form.getUserID()));
-            session.setAttribute("userName",customerService.findNameByCid(form.getUserID()));
+            session.setAttribute("userEmail", customerService.findEmailByCid(form.getUserID()));
+            session.setAttribute("userName", customerService.findNameByCid(form.getUserID()));
             return "redirect:/";
         } else return "Login";
     }
@@ -81,30 +81,72 @@ public class CustomerController {
     }
 
     @GetMapping("/customers/findID")
-    public String createFindIDPage(){
+    public String createFindIDPage() {
         return "FindID";
     }
 
     @PostMapping("/customers/findID")
-    public String findID(@RequestParam(name = "name") String name, @RequestParam(name = "email") String email, Model model){
-        String cid = customerService.isAlreadyJoined(name, email);
+    public String findID(@RequestParam(name = "findName") String name,
+                         @RequestParam(name = "findPhone_1") String findPhone_1,
+                         @RequestParam(name = "findPhone_2") String findPhone_2,
+                         @RequestParam(name = "findPhone_3") String findPhone_3,
+                         Model model
+                         ) {
+        String phoneNumber = new String(findPhone_1 + findPhone_2 + findPhone_3);
+        String cid = customerService.isAlreadyJoined(name, phoneNumber);
         model.addAttribute("cid", cid);
-        return "foundId";
+        return "FindID";
     }
 
     @GetMapping("/customers/findPW")
-    public String findPW(@RequestParam(name = "email") String email,@RequestParam(name = "name") String name, @RequestParam(name = "cid") String cid,HttpSession session) {
-        if(customerService.findByEmailAndNameAndCid(email,name,cid)){
-            session.setAttribute("userID",cid);
-            return "changePSW";
+    public String createFindPWPage() {
+        return "FindPW";
+    }
+
+    @PostMapping("/customers/findPW")
+    public String findPW(@RequestParam(name = "findName") String name,
+                         @RequestParam(name = "findPhone_1") String findPhone_1,
+                         @RequestParam(name = "findPhone_2") String findPhone_2,
+                         @RequestParam(name = "findPhone_3") String findPhone_3,
+                         @RequestParam(name = "findID") String findID,
+                         HttpSession session) {
+        String phoneNumber = new String(findPhone_1 + findPhone_2 + findPhone_3);
+        if (customerService.findUserByPhoneNoAndNameAndCid(phoneNumber, name, findID)) {
+            session.setAttribute("userID", findID);
+            return "ChangePSW";
         }
         return "infoFault";
     }
 
     @PostMapping("/customers/changePSW")
-    public String changePSW(@RequestParam(name = "newPSW") String newPSW, HttpSession session){
+    public String changePSW(@RequestParam(name = "newPSW") String newPSW, HttpSession session,Model model) {
         String userID = String.valueOf(session.getAttribute("userID"));
-        customerService.changePSW(userID, newPSW);
-        return "Login";
+        Boolean result = customerService.changePSW(userID, newPSW);
+        model.addAttribute("result", result);
+        return "FindPW";
+    }
+
+    @GetMapping("/customers/idcheck")
+    public String createTestPage(){
+        return "jqueryExample";
+    }
+
+    @PostMapping("/customers/idChecks")
+    @ResponseBody
+    public boolean idDuplicateCheck(@RequestBody LogInForm form){
+        System.out.println(form.getUserID());
+        return customerService.checkIDDuplication(form.getUserID());
+    }
+
+    @GetMapping("/customers/test")
+    @ResponseBody
+    public Map<String, Object> ajax(){
+        Map<String,Object> map = new HashMap<String,Object>();
+
+        map.put("kor","KOREA");
+        map.put("us","united states");
+
+        return map;
+
     }
 }

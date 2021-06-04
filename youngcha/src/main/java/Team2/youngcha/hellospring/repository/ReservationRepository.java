@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -25,26 +26,16 @@ public class ReservationRepository {
     }
 
     public List<Reservation> findAll() {
-        return em.createQuery("select r from Reservation r where :now < r.reservationDate", Reservation.class)
-                .setParameter("now",LocalDateTime.now())
+        return em.createQuery("select r from Reservation r", Reservation.class)
                 .getResultList();
     }
 
     public List<Reservation> findByCustomerID(String id) {
-        List<Reservation> result = em.createQuery("select r from Reservation r where r.customerId=:customerId",Reservation.class)
-                .setParameter("customerId", id)
+        List<Reservation> result = em.createQuery("select r from Reservation r where r.customerID=:customerID",Reservation.class)
+                .setParameter("customerID", id)
                 .getResultList();
         return result;
     }
-
-//    @Modifying(clearAutomatically = true)
-//    public String customerArrival(String customerId) {
-//        Reservation reservation = em.createQuery("select r from Reservation r where r.customerId=:customerId", Reservation.class)
-//                .setParameter("customerId", customerId)
-//                .getSingleResult();
-//        reservation.setArrivalTime();
-//        return reservation.getArrivalTime().toString();
-//    }
 
     @Modifying(clearAutomatically = true)
     public Long tableReallocation(Long oid,String tableNo) {
@@ -97,5 +88,14 @@ public class ReservationRepository {
     public void reservationCountReallocation(String ID){
         Customer customer = em.find(Customer.class, ID);
         customer.setReservation_count(customer.getReservation_count()+1);
+    }
+
+    public void cancelReservation(String customerID){
+        Reservation reservation = em.find(Reservation.class, customerID);
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        em.remove(reservation);
+        em.flush();
+        transaction.commit();
     }
 }

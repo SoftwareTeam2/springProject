@@ -15,6 +15,32 @@ public class ReservationForm {
     private LocalDateTime reservationDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
     private LocalDateTime arrivalTime = LocalDateTime.now();
+    private String dishes;
+    private String dishCounts;
+
+    public LocalDateTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(LocalDateTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    public String getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(String dishes) {
+        this.dishes = dishes;
+    }
+
+    public String getDishCounts() {
+        return dishCounts;
+    }
+
+    public void setDishCounts(String dishCounts) {
+        this.dishCounts = dishCounts;
+    }
 
     public String getNumberOfPeople() {
         return numberOfPeople;
