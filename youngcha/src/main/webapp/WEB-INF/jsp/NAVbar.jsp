@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>네비게이션 바</title>
 <link href="../../resources/css/navbar-top-fixed.css" rel="stylesheet">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
 
 <style>
@@ -43,22 +42,8 @@
 				<li class="nav-item"><a class="nav-link" href="/reservations/new"
 					style="color: #FFFFFF; font-weight: bold;">예약</a></li>
 
-				<li class="nav-item"><a class="nav-link" href="/statisticsGraph"
-					style="color: #FFFFFF; font-weight: bold;">통계</a></li>
-
-				<li class="nav-item"><a class="nav-link" href="/waitList"
-										style="color: #FFFFFF; font-weight: bold;">대기리스트</a></li>
-
-				<li class="nav-item"><a class="nav-link" href="MBDWeb.jsp"
+				<li class="nav-item"><a class="nav-link" href="/manager"
 					style="color: #FFFFFF; font-weight: bold;">관리</a></li>
-				<li class="nav-item">
-                    <% String Id = (String)session.getAttribute("userID"); %>
-                    <% if(Id!=null){ %>
-                        <a class="nav-link" href="/inquiry" style="color: #FFFFFF; font-weight: bold;">예약조회</a>
-                    <% } else { %>
-                        <a class="nav-link" href="/customers/login" style="color: #FFFFFF; font-weight: bold;">예약조회</a>
-                    <% } %>
-                </li>
 			</ul>
 
 			<ul class="navbar-nav navbar-right">

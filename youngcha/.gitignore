@@ -36,3 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 /youngcha.zip
+/src/main/webapp/WEB-INF/jsp/ajaxTest.jsp
+/src/main/webapp/WEB-INF/jsp/jqueryExample.jsp

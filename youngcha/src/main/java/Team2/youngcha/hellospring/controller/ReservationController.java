@@ -19,13 +19,6 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping("/waitList")
-    public String lists(Model model) {
-        List<Reservation> list = reservationService.listsReservation();
-        model.addAttribute("list", list);
-        return "/waitList";
-    }
-
     @GetMapping("/reservations/new")
     public String createReservationForm(Model model) {
         //reservationService.getDishStock();
@@ -48,19 +41,6 @@ public class ReservationController {
         reservationService.reservationCountReallocation(ID);
         reservationService.join(reservation);
 
-        return "redirect:/";
-    }
-
-    @GetMapping("/reservations/cancel")
-    public String lists(HttpSession session, Model model) {
-        List<Reservation> reservationList = reservationService.cancel(String.valueOf(session.getAttribute("id")));
-        model.addAttribute("reservationList", reservationList);
-        return "booking/CancelReservation";
-    }
-
-    @PostMapping("/reservations/cancel")
-    public String cancelReservation(@RequestParam(name = "cancelOid") Long oid) {
-        reservationService.cancel(oid);
         return "redirect:/";
     }
 

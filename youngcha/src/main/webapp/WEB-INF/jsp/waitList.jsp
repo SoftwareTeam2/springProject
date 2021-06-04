@@ -8,11 +8,100 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>boardList</title>
+    <script>
+        $(document).ready(function(){
+            $(document).on("click","button",function(){
+                var button = $(this);
+                var tr = $(this).parent().parent();
+                var td = tr.children();
+                var cid = td.eq(0).text();
+                var resDate = td.eq(6).text();
+                var dishes = td.eq(7).text();
+                var dishCounts = td.eq(8).text();
+                var resInfo={"customerID":cid,"reservationDate":resDate,"dishes":dishes,"dishCounts":dishCounts};
+                $.ajax({
+                    url:"/waitList",
+                    type:'post',
+                    contentType:'application/json; charset=utf8',
+                    dataType:'json',
+                    data:JSON.stringify(resInfo),
+                    success:function(data){
+                        console.log(data)
+                        if(data){
+                            alert("도착이 확인되었습니다.");
+                            button.prop("disabled",true);
+                        }else{
+                            alert("오류가 발생하였습니다. 다시 시도하여 주십시오.");
+                        }
+                    }
+                })
+            })
+        })
+        $(function(){
+            $.ajax({
+                url:'/waitList/getList',
+                type:'get',
+
+                success:function(data){
+                    var targetTable = $('#tableBody');
+                    data.forEach(function(item,idx){
+                        var add_data='';
+                        add_data +='<tr id="tr_'+idx+"\">"
+                        
+                        add_data +='<td>';
+                        add_data += item['customerID']
+                        add_data +='</td>';
+
+                        add_data +='<td>';
+                        add_data += item['tableNo']
+                        add_data +='</td>';
+
+                        add_data +='<td>';
+                        add_data += item['numberOfPeople']
+                        add_data +='</td>';
+
+                        add_data +='<td>';
+                        add_data += item['customerName']
+                        add_data +='</td>';
+
+                        add_data +='<td>';
+                        add_data += item['customerEmail']
+                        add_data +='</td>';
+
+                        add_data +='<td>';
+                        add_data += item['hasCar']
+                        add_data +='</td>';
+
+                        add_data +='<td>';
+                        add_data += item['reservationDate']
+                        add_data +='</td>';
+
+                        add_data +='<td style="display:none">';
+                        add_data += item['dishes']
+                        add_data +='</td>';
+
+                        add_data +='<td style="display:none">';
+                        add_data += item['dishCounts']
+                        add_data +='</td>';
+
+                        add_data +='<td>';
+                        add_data += '<button class=\"tr-button\" id="tr_'+idx+"_button\"style=\"width=100%\">도착 확인</button>";
+                        add_data +='</td>';
+
+                        targetTable.append(add_data);
+                    })
+                }
+            
+            })
+        })
+        
+    </script>
 </head>
 <body>
 <div class="page-wrapper">
@@ -40,25 +129,12 @@
                             <th>이름</th>
                             <th>이메일</th>
                             <th>자차여부</th>
-                            <th>도착시간</th>
-                            <th>도착기록</th>
+                            <th>예약 시간</th>
+                            <th>도착 기록</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <c:forEach items="${list}" var="Reservation">
-                          <form action="/waitList" method="POST">
-                            <tr>
-                                <td>${Reservation.customerID}</td>
-                                <td>${Reservation.tableNo}</td>
-                                <td>${Reservation.numberOfPeople}</td>
-                                <td>${Reservation.customerName}</td>
-                                <td>${Reservation.customerEmail}</td>
-                                <td>${Reservation.hasCar}</td>
-                                <td>${Reservation.reservationDate}</td>
-                                <td><button>도착시간 기록하기</button></td>
-                             </form>
-                            </tr>
-                        </c:forEach>
+                        <tbody id="tableBody">
+                        
                         </tbody>
                     </table>
                 </div>

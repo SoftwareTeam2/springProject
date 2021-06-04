@@ -61,13 +61,22 @@
 				</div>
 			</div>
 
-			<button class="w-100 btn btn-warning btn-success" 
+			<button class="w-100 btn btn-warning btn-success"
 				style= "padding: 20px;" type="submit">로그인 </button>
 
+			<script type="text/javascript">
+                        function FindID(){
+                            window.open("<%= request.getContextPath() %>/customers/findID", "id", "width=768, height=470")
+                        }
+                        function FindPW(){
+                            window.open("<%= request.getContextPath() %>/customers/findPW", "pw", "width=768, height=525")
+                        }
+            </script>
+
 			<ul class="list-inline" style= "padding: 20px;">
-				<li class="list-inline-item"><a href="/customers/findID"
+				<li class="list-inline-item"><a href="javascript:FindID()"
 					style="text-decoration: none; color: #0078FF">아이디 찾기</a></li>
-				<li class="list-inline-item"><a href="/customers/findPW"
+				<li class="list-inline-item"><a href="javascript:FindPW()"
 					style="text-decoration: none; color: #0078FF">비밀번호 찾기</a></li>
 				<li class="list-inline-item"><a href="/customers/new"
 					style="text-decoration: none; color: #0078FF">회원가입</a></li>

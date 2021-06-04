@@ -1,9 +1,6 @@
 package Team2.youngcha.hellospring.service;
 
-import Team2.youngcha.hellospring.domain.Income;
-import Team2.youngcha.hellospring.domain.Menu;
-import Team2.youngcha.hellospring.domain.Reservation;
-import Team2.youngcha.hellospring.domain.TableInfo;
+import Team2.youngcha.hellospring.domain.*;
 import Team2.youngcha.hellospring.repository.ManagerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,8 +42,8 @@ public class ManagerService {
         Optional<Reservation> result = findReservationByCidOnToday(cid);
         if (result.isPresent()) {
             Reservation reservation = result.get();
-            List<Boolean> booleans = validateDuplicateTable(reservation,Integer.valueOf(reservation.getNumberOfPeople()));
-            if (booleans.get(Integer.valueOf(tableNo)-1)) {
+            List<Boolean> booleans = validateDuplicateTable(reservation, Integer.valueOf(reservation.getNumberOfPeople()));
+            if (booleans.get(Integer.valueOf(tableNo) - 1)) {
                 managerRepository.changeTableNo(reservation, tableNo);
                 return true;
             }
@@ -80,7 +77,7 @@ public class ManagerService {
     public void joinTable(List<Integer> tableList) {
         for (int i = 0; i < tableList.size(); i++) {
             TableInfo newTable = new TableInfo();
-            newTable.setTableNumber(i+1);
+            newTable.setTableNumber(i + 1);
             newTable.setPeople(tableList.get(i));
             newTable.setPlaces(1);
 
@@ -88,11 +85,11 @@ public class ManagerService {
         }
     }
 
-    public void editDishes(Map<String,String> dishInfo) {
-        for(String dish : dishInfo.keySet()) {
+    public void editDishes(Map<String, String> dishInfo) {
+        for (String dish : dishInfo.keySet()) {
             Optional<Menu> result = managerRepository.isDishAlreadyExists(dish);
-            if(result.isPresent())
-                managerRepository.changeDishPrice(result.get(),Integer.valueOf(dishInfo.get(dish)));
+            if (result.isPresent())
+                managerRepository.changeDishPrice(result.get(), Integer.valueOf(dishInfo.get(dish)));
             else {
                 Menu newMenu = new Menu();
                 newMenu.setDish(dish);
@@ -102,15 +99,15 @@ public class ManagerService {
         }
     }
 
-    public List<Income> getIncome(){
+    public List<Income> getIncome() {
         return managerRepository.getIncome();
     }
 
-    public Map<String,Integer> getDishWithProfit(List<Income> incomeList){
+    public Map<String, Integer> getDishWithProfit(List<Income> incomeList) {
         HashMap<String, Integer> result = new HashMap<>();
-        for(Income income : incomeList){
-            if(result.containsKey(income.getDish()))
-                result.replace(income.getDish(),result.get(income.getDish())+income.getProfit());
+        for (Income income : incomeList) {
+            if (result.containsKey(income.getDish()))
+                result.replace(income.getDish(), result.get(income.getDish()) + income.getProfit());
             else result.put(income.getDish(), income.getProfit());
         }
         return result;
@@ -118,27 +115,32 @@ public class ManagerService {
 
     public Map<String, Integer> getDishWithCount(List<Income> incomeList) {
         HashMap<String, Integer> result = new HashMap<>();
-        for(Income income : incomeList){
-            if(result.containsKey(income.getDish()))
-                result.replace(income.getDish(),result.get(income.getDish())+income.getDishCount());
+        for (Income income : incomeList) {
+            if (result.containsKey(income.getDish()))
+                result.replace(income.getDish(), result.get(income.getDish()) + income.getDishCount());
             else result.put(income.getDish(), income.getDishCount());
         }
         return result;
     }
 
-    public void rankRallocation(String ID){
+    public void rankReallocation(String ID) {
         managerRepository.rankReallocation(ID);
     }
 
-    public void reservationCountReallocation(String ID){
+    public void reservationCountReallocation(String ID) {
         managerRepository.reservationCountReallocation(ID);
     }
 
-    public LocalDateTime setArrivalTime(String ID,LocalDateTime resDate){
+    public LocalDateTime setArrivalTime(String ID, LocalDateTime resDate) {
         return managerRepository.setArrivalTime(ID, resDate);
     }
 
-    public void enrollIncome(String argDishes, String argDishCounts,LocalDateTime now){
+    public void enrollIncome(String cid, String argDishes, String argDishCounts, LocalDateTime now) throws IllegalStateException{
+        Optional<Customer> customer = managerRepository.findCustomer(cid);
+        double discountRate = 0;
+        if(customer.isPresent())
+            discountRate = 1 - discount.get(customer.get().getRank())/100;
+        else throw new IllegalStateException("없는 회원입니다.");
         String[] dishes = argDishes.split(",");
         String[] dishCounts = argDishCounts.split(",");
         for (int i = 0; i < dishes.length; i++) {
@@ -146,9 +148,29 @@ public class ManagerService {
             income.setIncomeDate(now.toLocalDate());
             income.setDish(dishes[i]);
             income.setDishCount(Integer.valueOf(dishCounts[i]));
-            income.setProfit(managerRepository.getDishPrice(dishes[i])*Integer.valueOf(Integer.valueOf(dishCounts[i])));
+            income.setProfit((int)Math.round(managerRepository.getDishPrice(dishes[i]) * Integer.valueOf(Integer.valueOf(dishCounts[i]))*discountRate));
 
             managerRepository.saveIncome(income);
         }
     }
+
+    public void editSaleCount(String ID, LocalDateTime resDate) {
+        Reservation reservation = managerRepository.sendReservationDishCount(ID, resDate);
+
+        String[] dishes = reservation.getDishes().split(",");
+        String[] dishCounts = reservation.getDishCounts().split(",");
+
+        for (int i=0;i<dishes.length;i++) {
+            managerRepository.changeDishSaleCount(dishes[i], dishCounts[i]);
+            managerRepository.changeDishStock(dishes[i], dishCounts[i]);
+        }
+    }
+
+    public List<Reservation> callWaitList(){
+        LocalDateTime now = LocalDateTime.now();
+        List<Reservation> resAfterNow = managerRepository.findResAfterNow(now);
+        return resAfterNow;
+    }
+
+    private static final Map<String, Double> discount = Map.of("General",3.0,"VIP",5.0,"VVIP",8.0);
 }

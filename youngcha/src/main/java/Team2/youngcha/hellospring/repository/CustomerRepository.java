@@ -25,11 +25,13 @@ public class CustomerRepository implements MemberRepository {
     }
 
     @Override
-    public Optional<Customer> findById(Long id) {
-        Customer customer = em.find(Customer.class, id);
-        return Optional.ofNullable(customer);
+    public Optional<Customer> findById(String cid) {
+        try {
+            return Optional.ofNullable(em.find(Customer.class, cid));
+        }catch (Exception e){
+            return Optional.empty();
+        }
     }
-
 
     public Optional<Customer> findByCid(Customer customer) {
         try {
@@ -97,11 +99,11 @@ public class CustomerRepository implements MemberRepository {
     }
 
     @Override
-    public Optional<Customer> findIdByNameAndEmail(String name, String email) {
+    public Optional<Customer> findIdByNameAndPhoneNo(String name, String phoneNumber) {
         try {
-            Customer result = em.createQuery("select c from Customer c where c.name=:name and c.email=:email", Customer.class)
+            Customer result = em.createQuery("select c from Customer c where c.name=:name and c.phoneNumber=:phoneNumber", Customer.class)
                     .setParameter("name", name)
-                    .setParameter("email", email)
+                    .setParameter("phoneNumber", phoneNumber)
                     .getSingleResult();
             return Optional.ofNullable(result);
         } catch (Exception e) {
@@ -110,10 +112,10 @@ public class CustomerRepository implements MemberRepository {
     }
 
     @Override
-    public Optional<Customer> findByEmailAndNameAndCid(String email, String name, String cid) {
+    public Optional<Customer> findUserByPhoneNoAndNameAndCid(String phoneNumber, String name, String cid) {
         try {
-            return Optional.ofNullable(em.createQuery("select c from Customer c where c.email=:email and c.name=:name and c.cid=:cid", Customer.class)
-                    .setParameter("email", email)
+            return Optional.ofNullable(em.createQuery("select c from Customer c where c.phoneNumber=:phoneNumber and c.name=:name and c.cid=:cid", Customer.class)
+                    .setParameter("phoneNumber", phoneNumber)
                     .setParameter("name", name)
                     .setParameter("cid", cid)
                     .getSingleResult());
