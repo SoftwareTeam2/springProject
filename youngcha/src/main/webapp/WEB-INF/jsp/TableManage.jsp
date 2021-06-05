@@ -51,6 +51,12 @@
 	font-size: large;
 	border-radius: 10%;
 }
+
+.remove{
+	background-color: white;
+	font-size: large;
+	border-radius: 10%;
+}
 </style>
 </head>
 

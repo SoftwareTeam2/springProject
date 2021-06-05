@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -113,5 +114,21 @@ public class ReservationService {
 
     public void cancel(Long oid){
         reservationRepository.cancelReservation(oid);
+    }
+
+    public LocalTime timeConverter(String targetTime){
+        int resultHour = 0;
+        int resultMin = 0;
+        String[] split = targetTime.split("[^0-9]");
+
+        if(targetTime.contains("PM"))
+            resultHour = Integer.valueOf(split[split.length-2])+12;
+        else
+            resultHour = Integer.valueOf(split[split.length-2]);
+
+        resultMin = Integer.valueOf(split[split.length-1]);
+
+        LocalTime parsedResTime = LocalTime.of(resultHour, resultMin);
+        return parsedResTime;
     }
 }

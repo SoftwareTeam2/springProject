@@ -98,7 +98,7 @@
 							<div class="col-md-4" style="user-select: auto;">
 								<label for="numberOfPeople" class="form-label"
 									style="user-select: auto;">자차 여부</label> <select
-									class="form-select" name="numberOfPeople" id="numberOfPeople"
+									class="form-select" name="hasCar" id="hasCar"
 									required="" style="user-select: auto;">
 									<option value="" style="user-select: auto;">선택</option>
 									<option style="user-select: auto;">O</option>

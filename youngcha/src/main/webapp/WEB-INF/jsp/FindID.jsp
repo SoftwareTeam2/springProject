@@ -88,6 +88,8 @@
 							const element = document.getElementById("target")
 							if (customerID != ""){
 								element.innerHTML = "<p>찾으시는 ID는 "+customerID+"입니다.</p>";
+							} else if(customerID=="0"){
+								alert('입력된 정보로 가입된 회원이 존재하지 않습니다.');
 							}
 						</script>
 						<%@ include file="Footer.jsp"%>

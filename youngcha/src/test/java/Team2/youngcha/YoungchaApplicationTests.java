@@ -360,4 +360,10 @@ class YoungchaApplicationTests {
         // then
         assertThat(result.getProfit()).isEqualTo((int)Math.round(seafood_platter.getPrice()*1*(1-5.0/100)));
     }
+
+    @Test
+    void 시간문자열처리(){
+        String source = "PM 03:45";
+        reservationService.timeConverter(source);
+    }
 }

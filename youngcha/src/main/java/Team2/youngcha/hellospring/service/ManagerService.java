@@ -75,20 +75,27 @@ public class ManagerService {
     }
 
     public void joinTable(List<String> tableList) {
+        List<TableInfo> tables = managerRepository.getTables();
+        int size = tables.size() - tableList.size();
         for (int i = 0; i < tableList.size(); i++) {
             Optional<TableInfo> singleTable = managerRepository.getSingleTable(i + 1);
             if (singleTable.isPresent()) {
                 TableInfo myTable = singleTable.get();
                 if (myTable.getPeople() != Integer.valueOf(tableList.get(i))) {
-                    System.out.println(i+" "+myTable.getPeople()+" "+tableList.get(i));
-                    managerRepository.setTablePeople(myTable,Integer.valueOf(tableList.get((i))));
+                    System.out.println(i + " " + myTable.getPeople() + " " + tableList.get(i));
+                    managerRepository.setTablePeople(myTable, Integer.valueOf(tableList.get((i))));
                 }
-            } else{
+            } else {
                 TableInfo newTable = new TableInfo();
                 newTable.setTableNumber(i + 1);
                 newTable.setPeople(Integer.valueOf(tableList.get(i)));
                 newTable.setPlaces(1);
                 managerRepository.saveTableInfo(newTable);
+            }
+        }
+        if (size > 0) {
+            for (int i = tableList.size(); i < tables.size(); i++) {
+                managerRepository.destroyTable(managerRepository.getSingleTable(i + 1).get());
             }
         }
     }
@@ -143,11 +150,11 @@ public class ManagerService {
         return managerRepository.setArrivalTime(ID, resDate);
     }
 
-    public void enrollIncome(String cid, String argDishes, String argDishCounts, LocalDateTime now) throws IllegalStateException{
+    public void enrollIncome(String cid, String argDishes, String argDishCounts, LocalDateTime now) throws IllegalStateException {
         Optional<Customer> customer = managerRepository.findCustomer(cid);
         double discountRate = 0;
-        if(customer.isPresent())
-            discountRate = 1 - discount.get(customer.get().getRank())/100;
+        if (customer.isPresent())
+            discountRate = 1 - discount.get(customer.get().getRank()) / 100;
         else throw new IllegalStateException("없는 회원입니다.");
         String[] dishes = argDishes.split(",");
         String[] dishCounts = argDishCounts.split(",");
@@ -156,7 +163,7 @@ public class ManagerService {
             income.setIncomeDate(now.toLocalDate());
             income.setDish(dishes[i]);
             income.setDishCount(Integer.valueOf(dishCounts[i]));
-            income.setProfit((int)Math.round(managerRepository.getDishPrice(dishes[i]) * Integer.valueOf(Integer.valueOf(dishCounts[i]))*discountRate));
+            income.setProfit((int) Math.round(managerRepository.getDishPrice(dishes[i]) * Integer.valueOf(Integer.valueOf(dishCounts[i])) * discountRate));
 
             managerRepository.saveIncome(income);
         }
@@ -168,23 +175,23 @@ public class ManagerService {
         String[] dishes = reservation.getDishes().split(",");
         String[] dishCounts = reservation.getDishCounts().split(",");
 
-        for (int i=0;i<dishes.length;i++) {
+        for (int i = 0; i < dishes.length; i++) {
             managerRepository.changeDishSaleCount(dishes[i], dishCounts[i]);
             managerRepository.changeDishStock(dishes[i], dishCounts[i]);
         }
     }
 
-    public List<Reservation> callWaitList(){
+    public List<Reservation> callWaitList() {
         LocalDateTime now = LocalDateTime.now();
         List<Reservation> resAfterNow = managerRepository.findResAfterNow(now);
         return resAfterNow;
     }
 
-    public List<TableInfo> getTableLists(){
+    public List<TableInfo> getTableLists() {
         List<TableInfo> tables = managerRepository.getTables();
         return tables;
     }
 
 
-    private static final Map<String, Double> discount = Map.of("General",3.0,"VIP",5.0,"VVIP",8.0);
+    private static final Map<String, Double> discount = Map.of("General", 3.0, "VIP", 5.0, "VVIP", 8.0);
 }

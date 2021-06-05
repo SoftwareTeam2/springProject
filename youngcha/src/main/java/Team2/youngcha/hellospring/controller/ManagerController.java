@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -51,11 +50,11 @@ public class ManagerController {
     @PostMapping("/waitList")
     @ResponseBody
     public boolean todo(@RequestBody ReservationForm form) {
-            managerService.reservationCountReallocation(form.getCustomerID());
-            managerService.rankReallocation(form.getCustomerID());
-            LocalDateTime now = managerService.setArrivalTime(form.getCustomerID(), form.getReservationDate());
-            managerService.enrollIncome(form.getCustomerID(), form.getDishes(), form.getDishCounts(), now);
-            managerService.editSaleCount(form.getCustomerID(), form.getReservationDate());
+            //managerService.reservationCountReallocation(form.getCustomerID());
+            //managerService.rankReallocation(form.getCustomerID());
+            //LocalDateTime now = managerService.setArrivalTime(form.getCustomerID(), form.getReservationDate());
+            //managerService.enrollIncome(form.getCustomerID(), form.getDishes(), form.getDishCounts(), now);
+            //managerService.editSaleCount(form.getCustomerID(), form.getReservationDate());
 
             return true;
     }

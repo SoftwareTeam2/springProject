@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -33,12 +34,11 @@ public class ReservationController {
         reservation.setCustomerID(String.valueOf(session.getAttribute("userID")));
         reservation.setCustomerName(String.valueOf(session.getAttribute("userName")));
         reservation.setCustomerEmail(String.valueOf(session.getAttribute("userEmail")));
-        reservation.setTableNo(reservationForm.getTableNo());
+        reservation.setTableNo("3");
         reservation.setNumberOfPeople(reservationForm.getNumberOfPeople());
         reservation.setHasCar(ReservationService.SToBConvert(reservationForm.getHasCar()));
-        reservation.setReservationDate(reservationForm.getReservationDate());
+        reservation.setReservationDate(LocalDateTime.of(reservationForm.getStartDate(),reservationService.timeConverter(reservationForm.getStartTime())));
 
-        reservationService.reservationCountReallocation(ID);
         reservationService.join(reservation);
 
         return "redirect:/";

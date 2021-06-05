@@ -1,7 +1,6 @@
 package Team2.youngcha.hellospring.domain;
 
 import Team2.youngcha.hellospring.util.BooleanToYNConverter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -23,10 +22,8 @@ public class Reservation extends Booking {
     private String customerEmail;
     @Convert(converter = BooleanToYNConverter.class)
     private Boolean hasCar;
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
     @Column(name = "reservation_date")
     private LocalDateTime reservationDate;
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
     @Column(name = "arrival_time")
     private LocalDateTime arrivalTime;
     private String dishes;
