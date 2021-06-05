@@ -89,6 +89,13 @@
 
                 	<h2 style="text-align:center">재고관리</h2>
                 </div>
+                <div class="col-lg-3">
+                    <div style="cursor: pointer;" onclick="location.href='/manager/tableManage'">
+                        <img class="d-block mx-auto mb-4" src="../../resources/image/jisung.jpg" alt="" width="252" height="252">
+                    </div>
+
+                    <h2 style="text-align:center">테이블 설정</h2>
+                </div>
 			</div>
 		</div>
 	</main>

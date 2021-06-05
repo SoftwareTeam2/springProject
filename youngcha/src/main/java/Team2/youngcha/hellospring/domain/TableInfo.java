@@ -5,8 +5,7 @@ import javax.persistence.*;
 @Entity
 public class TableInfo {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long oid;
+    @Id
     private int tableNumber;
     @Column(columnDefinition = "int default 4")
     private int people;
@@ -18,14 +17,6 @@ public class TableInfo {
 
     public void setPeople(int people) {
         this.people = people;
-    }
-
-    public Long getOid() {
-        return oid;
-    }
-
-    public void setOid(Long oid) {
-        this.oid = oid;
     }
 
     public int getTableNumber() {

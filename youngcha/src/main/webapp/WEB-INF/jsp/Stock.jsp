@@ -105,7 +105,6 @@
 	</div>
 
 	<%@ include file="Footer.jsp"%>
-
 	<script src="form-validation.js" style="user-select: auto;"></script>
 	<div class="liner-scroll-points-container" style="user-select: auto;"></div>
 </body>

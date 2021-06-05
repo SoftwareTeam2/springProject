@@ -51,6 +51,7 @@
                 success:function(data){
                     var targetTable = $('#tableBody');
                     data.forEach(function(item,idx){
+                        console.log(item);
                         var add_data='';
                         add_data +='<tr id="tr_'+idx+"\">"
                         
