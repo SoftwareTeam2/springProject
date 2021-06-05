@@ -32,7 +32,7 @@ public class ManagerRepository {
         entityManager.persist(income);
     }
 
-    public Optional<Customer> findCustomer(String cid){
+    public Optional<Customer> findCustomer(String cid) {
         try {
             return Optional.ofNullable(entityManager.find(Customer.class, cid));
         } catch (Exception e) {
@@ -177,7 +177,7 @@ public class ManagerRepository {
     }
 
     public List<Reservation> findResAfterNow(LocalDateTime now) {
-        List<Reservation> resultList = entityManager.createQuery("select r from Reservation r where r.reservationDate>=:now ", Reservation.class)
+        List<Reservation> resultList = entityManager.createQuery("select r from Reservation r where r.reservationDate<=:now ", Reservation.class)
                 .setParameter("now", now)
                 .getResultList();
 
@@ -185,5 +185,28 @@ public class ManagerRepository {
 
     }
 
+    public Optional<TableInfo> getSingleTable(int tableNo) {
+        try {
+            return Optional.ofNullable(entityManager.createQuery("select t from TableInfo t where t.tableNumber=:tableNo", TableInfo.class)
+                    .setParameter("tableNo", tableNo)
+                    .getSingleResult());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+
+    }
+
+    public void destroyTable(TableInfo tableInfo){
+        entityManager.remove(tableInfo);
+    }
+
+    @Modifying(clearAutomatically = true)
+    public void setTablePeople(TableInfo table, int people){
+        int i = entityManager.createQuery("Update TableInfo t SET t.people = :people where t.tableNumber=:tableNo")
+                .setParameter("people", people)
+                .setParameter("tableNo", table.getTableNumber())
+                .executeUpdate();
+        System.out.println(i);
+    }
 
 }

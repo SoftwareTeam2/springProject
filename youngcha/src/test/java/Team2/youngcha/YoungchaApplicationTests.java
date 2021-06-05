@@ -165,16 +165,16 @@ class YoungchaApplicationTests {
     void 테이블설정하기(){
 
         //given
-        List<Integer> tableList = new ArrayList<Integer>();
-        tableList.add(2);
-        tableList.add(4);
-        tableList.add(4);
-        tableList.add(4);
-        tableList.add(2);
-        tableList.add(3);
-        tableList.add(3);
-        tableList.add(4);
-        tableList.add(4);
+        List<String> tableList = new ArrayList<String>();
+        tableList.add("2");
+        tableList.add("4");
+        tableList.add("4");
+        tableList.add("4");
+        tableList.add("2");
+        tableList.add("3");
+        tableList.add("3");
+        tableList.add("4");
+        tableList.add("4");
 
         managerService.joinTable(tableList);
         List<TableInfo> result = em.createQuery("select t from TableInfo t", TableInfo.class).getResultList();

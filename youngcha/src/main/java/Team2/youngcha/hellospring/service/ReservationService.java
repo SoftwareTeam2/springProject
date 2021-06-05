@@ -101,12 +101,17 @@ public class ReservationService {
         reservationRepository.reservationCountReallocation(ID);
     }
 
-    public void cancelReservation(String customerID){
-        reservationRepository.cancelReservation(customerID);
-    }
-
     public List<Reservation> findResByCid(String cid){
         List<Reservation> result = reservationRepository.findByCustomerID(cid);
         return result;
+    }
+
+    public List<Reservation> cancel(String id) {
+        List<Reservation> result = reservationRepository.findByCustomerID(id);
+        return result;
+    }
+
+    public void cancel(Long oid){
+        reservationRepository.cancelReservation(oid);
     }
 }

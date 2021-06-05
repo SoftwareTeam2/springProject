@@ -88,4 +88,17 @@ public class ReservationController {
         model.addAttribute("result", reservationService.updateReservation(cid, sourceDate, destDate, guestCount, tableNo));
         return "UpdateResResultPage";
     }
+
+    @GetMapping("/reservations/cancel")
+    public String lists(HttpSession session, Model model) {
+        List<Reservation> reservationList = reservationService.cancel(String.valueOf(session.getAttribute("userID")));
+        model.addAttribute("reservationList", reservationList);
+        return "booking/CancelReservation";
+    }
+
+    @GetMapping("/reservations/cancel/my")
+    public String cancelReservation(@RequestParam(name = "cancelOid") Long oid) {
+        reservationService.cancel(oid);
+        return "redirect:/";
+    }
 }

@@ -47,21 +47,35 @@
 			</ul>
 
 			<ul class="navbar-nav navbar-right">
-				<li class="nav-item">
-					<%
-				String ID = (String)session.getAttribute("userID");
-				
-				if(ID!=null){
-					%> <a class="nav-link" href="/customers/logout"
-					style="color: #FFFFFF; font-weight: bold;">로그아웃</a> <%
-					}
-				else{
-					%> <a class="nav-link" href="/customers/login"
-					style="color: #FFFFFF; font-weight: bold;">로그인</a> <%
-				}
-				%>
-				</li>
-			</ul>
+
+                          <li class="nav-item">
+                                 <%
+                            String Id = (String)session.getAttribute("userID"); %>
+                                      <% if(Id!=null){
+                                      %>
+                                      <!--<a class="nav-link" href="/waitList" style="color: #FFFFFF; font-weight: bold;">마이페이지</a>-->
+                                      <a class="nav-link" href="/reservations/cancel" style="color: #FFFFFF; font-weight: bold;">마이페이지</a>
+                                      <%
+                                      }
+                            else { %>
+                                 <a class="nav-link" href="/customers/login" style="color: #FFFFFF; font-weight: bold;">마이페이지</a>
+                            <% } %>
+                            </li>
+                        <li class="nav-item">
+                           <%
+                        String ID = (String)session.getAttribute("userID");
+
+                        if(ID!=null){
+                           %> <a class="nav-link" href="/customers/logout"
+                           style="color: #FFFFFF; font-weight: bold;">로그아웃</a> <%
+                           }
+                        else{
+                           %> <a class="nav-link" href="/customers/login"
+                           style="color: #FFFFFF; font-weight: bold;">로그인</a> <%
+                        }
+                        %>
+                        </li>
+                     </ul>
 		</div>
 	</div>
 </nav>

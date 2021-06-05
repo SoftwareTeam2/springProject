@@ -74,14 +74,22 @@ public class ManagerService {
         return Arrays.asList(validAry);
     }
 
-    public void joinTable(List<Integer> tableList) {
+    public void joinTable(List<String> tableList) {
         for (int i = 0; i < tableList.size(); i++) {
-            TableInfo newTable = new TableInfo();
-            newTable.setTableNumber(i + 1);
-            newTable.setPeople(tableList.get(i));
-            newTable.setPlaces(1);
-
-            managerRepository.saveTableInfo(newTable);
+            Optional<TableInfo> singleTable = managerRepository.getSingleTable(i + 1);
+            if (singleTable.isPresent()) {
+                TableInfo myTable = singleTable.get();
+                if (myTable.getPeople() != Integer.valueOf(tableList.get(i))) {
+                    System.out.println(i+" "+myTable.getPeople()+" "+tableList.get(i));
+                    managerRepository.setTablePeople(myTable,Integer.valueOf(tableList.get((i))));
+                }
+            } else{
+                TableInfo newTable = new TableInfo();
+                newTable.setTableNumber(i + 1);
+                newTable.setPeople(Integer.valueOf(tableList.get(i)));
+                newTable.setPlaces(1);
+                managerRepository.saveTableInfo(newTable);
+            }
         }
     }
 
@@ -171,6 +179,12 @@ public class ManagerService {
         List<Reservation> resAfterNow = managerRepository.findResAfterNow(now);
         return resAfterNow;
     }
+
+    public List<TableInfo> getTableLists(){
+        List<TableInfo> tables = managerRepository.getTables();
+        return tables;
+    }
+
 
     private static final Map<String, Double> discount = Map.of("General",3.0,"VIP",5.0,"VVIP",8.0);
 }
