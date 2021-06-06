@@ -61,7 +61,7 @@ public class CustomerService {
     }
 
     public static Boolean SToBConvert(String string) {
-        return (string.equals("Y")) ? true : false;
+        return string.equals("Y");
     }
 
     public String isAlreadyJoined(String name, String phoneNumber) {
@@ -72,8 +72,7 @@ public class CustomerService {
 
     public Boolean findUserByPhoneNoAndNameAndCid(String phoneNo, String name, String cid) {
         Optional<Customer> result = memberRepository.findUserByPhoneNoAndNameAndCid(phoneNo, name, cid);
-        if(result.isPresent()) return true;
-        else return false;
+        return result.isPresent();
     }
 
     public Boolean changePSW(String cid, String psw) {

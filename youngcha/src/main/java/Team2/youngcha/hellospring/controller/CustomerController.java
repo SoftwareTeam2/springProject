@@ -90,7 +90,7 @@ public class CustomerController {
                          @RequestParam(name = "findPhone_3") String findPhone_3,
                          Model model
                          ) {
-        String phoneNumber = new String(findPhone_1 + findPhone_2 + findPhone_3);
+        String phoneNumber = findPhone_1 + findPhone_2 + findPhone_3;
         String cid = customerService.isAlreadyJoined(name, phoneNumber);
         model.addAttribute("cid", cid);
         return "FindID";
@@ -108,7 +108,7 @@ public class CustomerController {
                          @RequestParam(name = "findPhone_3") String findPhone_3,
                          @RequestParam(name = "findID") String findID,
                          HttpSession session) {
-        String phoneNumber = new String(findPhone_1 + findPhone_2 + findPhone_3);
+        String phoneNumber = findPhone_1 + findPhone_2 + findPhone_3;
         if (customerService.findUserByPhoneNoAndNameAndCid(phoneNumber, name, findID)) {
             session.setAttribute("userID", findID);
             return "ChangePSW";

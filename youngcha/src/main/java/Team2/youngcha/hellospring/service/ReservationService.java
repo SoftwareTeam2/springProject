@@ -29,12 +29,12 @@ public class ReservationService {
         List<Integer> peoples = reservationForm.getPeoples();
         String inputPeoples = "";
         for(int person:peoples){
-            inputPeoples += String.valueOf(person)+",";
+            inputPeoples += person +",";
         }
         List<Integer> dishCountsLists = reservationForm.getDishCountsLists();
         String inputDishCountsLists = "";
         for(int dishcount : dishCountsLists){
-            inputDishCountsLists += String.valueOf(dishcount)+"," ;
+            inputDishCountsLists += dishcount +"," ;
         }
         List<String> dishesList = reservationForm.getDishesList();
         String inputDishesList = "";
@@ -70,7 +70,7 @@ public class ReservationService {
     }
 
     public static Boolean SToBConvert(String string) {
-        return (string.equals("O")) ? true : false;
+        return string.equals("O");
     }
 
     public List<Boolean> findValidTables(LocalDateTime reservationDate, String guestCount) {
