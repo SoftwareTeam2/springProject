@@ -67,7 +67,7 @@
                   <th>${inq.tableNo}</th>
                   <th>${inq.hasCar}</th>
                   <th>${inq.numberOfPeople}</th>
-                  <td><a href="/reservations/cancel/my?cancelOid=${inq.oid}">삭제</a></td>
+                  <td><a href="/reservations/cancel/my?cancelOid=${inq.oid}" onclick=alert("취소되었습니다.")>삭제</a></td>
                </tr>
             </c:if>
          </c:forEach>
