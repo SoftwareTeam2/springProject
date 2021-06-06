@@ -144,10 +144,11 @@ function drawAnnotations(chartData, size) {
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
-<body load="drawAnnotations()">
+<body style = "padding-top:100px;" load="drawAnnotations()">
+<h1 style="text-align:center; padding:20px;">통계</h1>
   <div id="chart_div"></div>
-  <div id="chart_div_count"></div>
-  <div id="total"></div>
+  <div style = "padding-top:20px;" id="chart_div_count"></div>
+  <div style = "padding-top:70px; padding-bottom:70px; margin: 0 auto; width:150px; height: auto;" id="total"></div>
   <%@ include file="Footer.jsp"%>
 </body>
 </html>
