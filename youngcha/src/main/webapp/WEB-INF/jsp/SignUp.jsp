@@ -73,8 +73,8 @@
 		
 	<div class="container">
 	<div class="py-5 text-center">
-					<img class="d-block mx-auto mb-4" src="../../resources/image/signup.png" alt=""
-						width="150" height="100">
+					<img class="d-block mx-auto mb-4" src="../../resources/image/Signin.png" alt=""
+						width="125" height="125">
 					<h2>회원가입</h2>
                     <p class="lead"></p>
 				</div>
@@ -91,7 +91,7 @@
 			<label for="inputPassword" class="col-lg-2 control-label">비밀번호</label>
 			<div class="col-lg-10">
 				<input type="password" class="form-control" id="password"
-					name="psw" data-rule-required="true" placeholder="비밀번호"
+					name="psw" data-rule-required="true" placeholder="8~16자의 영문 대소문자, 숫자, 특수문자만 가능합니다."
 					maxlength="30">
 			</div>
 		</div>
@@ -104,7 +104,7 @@
 			</div>
 		</div>
 		<div class="form-group" id="divName" style="margin-bottom: 15px;">
-			<label for="inputName" class="col-lg-2 control-label">이름</label>
+			<label for="name" class="col-lg-2 control-label">이름</label>
 			<div class="col-lg-10">
 				<input type="text" class="form-control onlyHangul" id="name" name="name"
 					data-rule-required="true" placeholder="한글만 입력 가능합니다."
@@ -113,14 +113,14 @@
 		</div>
 
 		<div class="form-group" id="divEmail" style="margin-bottom: 15px;">
-			<label for="inputEmail" class="col-lg-2 control-label">이메일</label>
+			<label for="email" class="col-lg-2 control-label">이메일</label>
 			<div class="col-lg-10">
 				<input type="email" class="form-control" id="email" name="email"
 					data-rule-required="true" placeholder="이메일" maxlength="40">
 			</div>
 		</div>
 		<div class="form-group" id="divPhoneNumber" style="margin-bottom: 15px;">
-			<label for="inputPhoneNumber" class="col-lg-2 control-label">휴대폰
+			<label for="phoneNumber" class="col-lg-2 control-label">휴대폰
 				번호</label>
 			<div class="col-lg-10">
 				<input type="tel" class="form-control onlyNumber" id="phoneNumber" name="phoneNumber"
@@ -129,7 +129,7 @@
 			</div>
 		</div>
 		<div class="form-group" style="margin-bottom: 15px;">
-			<label for="inputPhoneNumber" class="col-lg-2 control-label">성별</label>
+			<label for="gender" class="col-lg-2 control-label">성별</label>
 			<div class="col-lg-10">
 				<select class="form-control" id="gender" name="gender">
 					<option value="M">남</option>
@@ -138,7 +138,7 @@
 			</div>
 		</div>
 		<div class="form-group" style="margin-bottom: 15px;" >
-			<label for="inputEmailReceiveYn" class="col-lg-2 control-label">이메일
+			<label for="emailReceiveYn" class="col-lg-2 control-label">이메일
 				수신여부</label>
 			<div class="col-lg-10">
 				<label class="radio-inline"> <input type="radio"
@@ -151,7 +151,7 @@
 			</div>
 		</div>
 		<div class="form-group" style="margin-bottom: 15px;">
-			<label for="inputPhoneNumber" class="col-lg-2 control-label">SMS
+			<label for="smsReceiveYn" class="col-lg-2 control-label">SMS
 				수신여부</label>
 			<div class="col-lg-10">
 				<label class="radio-inline"> <input type="radio"
@@ -167,13 +167,8 @@
 			<div class="col-lg-offset-2 col-lg-10">
 				<button type="submit" class="btn btn-warning btn-primary">가입</button>
 			</div>
-
 		</div>
-    </form>
-
-
 		<script>
-        
             $(function(){
                 //모달을 전역변수로 선언
                 var modalContents = $(".modal-contents");
@@ -447,13 +442,10 @@
                         divPhoneNumber.removeClass("has-error");
                         divPhoneNumber.addClass("has-success");
                     }
-                    
-                
                 });
-                
             });
-            
         </script>
+      </form>
 <%@ include file="Footer.jsp"%>
 	</div>
 </body>
