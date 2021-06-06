@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.3.10.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'Login'
@@ -25,6 +26,8 @@ dependencies {
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.3'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.12.3'
+	compile 'com.querydsl:querydsl-jpa' // querydsl
+	compile 'com.querydsl:querydsl-apt' // querydsl
 }
 
 test {

@@ -39,7 +39,7 @@ public class CustomerService {
         if(result.isPresent())
             return result.get().getEmail();
         else
-            return "";
+            return "0";
     }
 
     public String findNameByCid(String cid){
@@ -67,7 +67,7 @@ public class CustomerService {
     public String isAlreadyJoined(String name, String phoneNumber) {
         Optional<Customer> result = memberRepository.findIdByNameAndPhoneNo(name, phoneNumber);
         if (result.isPresent()) return result.get().getCid();
-        return "1";
+        return "";
     }
 
     public Boolean findUserByPhoneNoAndNameAndCid(String phoneNo, String name, String cid) {

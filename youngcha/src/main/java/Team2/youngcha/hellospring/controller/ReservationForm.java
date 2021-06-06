@@ -2,28 +2,88 @@ package Team2.youngcha.hellospring.controller;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ReservationForm {
     private String customerID;
     private String tableNo;
     private String numberOfPeople;
-    private String customerName;
-    private String customerEmail;
     private String hasCar;
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
-    private LocalDateTime reservationDate;
-    @DateTimeFormat(pattern = "yyyy-MM-dd-HH:mm")
-    private LocalDateTime arrivalTime = LocalDateTime.now();
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
+    private String startTime;
     private String dishes;
     private String dishCounts;
+    private LocalDateTime reservationDate;
+    private List<Integer> peoples;
+    private List<String> tableNos;
+    private List<String> dishesList;
+    private List<Integer> dishCountsLists;
 
-    public LocalDateTime getArrivalTime() {
-        return arrivalTime;
+    public List<String> getTableNos() {
+        return tableNos;
     }
 
-    public void setArrivalTime(LocalDateTime arrivalTime) {
-        this.arrivalTime = arrivalTime;
+    public void setTableNos(List<String> tableNos) {
+        this.tableNos = tableNos;
+    }
+
+    public List<String> getDishesList() {
+        return dishesList;
+    }
+
+    public void setDishesList(List<String> dishesList) {
+        this.dishesList = dishesList;
+    }
+
+    public List<Integer> getDishCountsLists() {
+        return dishCountsLists;
+    }
+
+    public void setDishCountsLists(List<Integer> dishCountsLists) {
+        this.dishCountsLists = dishCountsLists;
+    }
+
+    public List<Integer> getPeoples() {
+        return peoples;
+    }
+
+    public void setPeoples(List<Integer> peoples) {
+        this.peoples = peoples;
+    }
+
+    public LocalDateTime getReservationDate() {
+        return reservationDate;
+    }
+
+    public void setReservationDate(LocalDateTime reservationDate) {
+        this.reservationDate = reservationDate;
+    }
+
+    public String getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
     public String getDishes() {
@@ -58,31 +118,6 @@ public class ReservationForm {
         this.tableNo = tableNo;
     }
 
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
-
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
-    }
-
-    public String getCustomerID(){
-        return customerID;
-    }
-
-    public void setCustomerID(String customerID){
-        this.customerID = customerID;
-    }
-
-
     public String getHasCar() {
         return hasCar;
     }
@@ -91,11 +126,14 @@ public class ReservationForm {
         this.hasCar = hasCar;
     }
 
-    public LocalDateTime getReservationDate() {
-        return reservationDate;
-    }
-
-    public void setReservationDate(LocalDateTime reservationDate) {
-        this.reservationDate = reservationDate;
+    public void printAll() {
+        System.out.println("테이블 번호: "+
+                tableNo +"인원수: "+
+                numberOfPeople +"자차: "+
+                hasCar +"예약날짜: "+
+                startDate.toString() +"예약 시간: "+
+                startTime +"메뉴: "+
+                dishes +"수량: "+
+                dishCounts);
     }
 }

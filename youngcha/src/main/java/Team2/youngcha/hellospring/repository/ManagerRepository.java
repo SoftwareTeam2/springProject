@@ -104,9 +104,27 @@ public class ManagerRepository {
         }
     }
 
+    public List<Long> getIncomeSum() {
+        LocalDate now = LocalDate.now();
+        List<Long> resultList = entityManager.createQuery("select sum(i.profit) as income from Income i where i.incomeDate between :startRange and :endRange GROUP BY i.incomeDate")
+                .setParameter("startRange", now.minusDays(7))
+                .setParameter("endRange", now)
+                .getResultList();
+        return resultList;
+    }
+
+    public List<LocalDate> getIncomeDate(){
+        LocalDate now = LocalDate.now();
+        List<LocalDate> resultList = entityManager.createQuery("select distinct i.incomeDate as incomeDate from Income i where i.incomeDate between :startRange and :endRange")
+                .setParameter("startRange", now.minusDays(7))
+                .setParameter("endRange", now)
+                .getResultList();
+        return resultList;
+    }
+
     public List<Income> getIncome() {
         LocalDate now = LocalDate.now();
-        List<Income> resultList = entityManager.createQuery("select i from Income i where i.incomeDate between :startRange and :endRange", Income.class)
+        List<Income> resultList = entityManager.createQuery("select i from Income i where i.incomeDate between :startRange and :endRang",Income.class)
                 .setParameter("startRange", now.minusDays(7))
                 .setParameter("endRange", now)
                 .getResultList();
@@ -177,7 +195,7 @@ public class ManagerRepository {
     }
 
     public List<Reservation> findResAfterNow(LocalDateTime now) {
-        List<Reservation> resultList = entityManager.createQuery("select r from Reservation r where r.reservationDate<=:now ", Reservation.class)
+        List<Reservation> resultList = entityManager.createQuery("select r from Reservation r where r.reservationDate>=:now and r.arrivalTime=null", Reservation.class)
                 .setParameter("now", now)
                 .getResultList();
 

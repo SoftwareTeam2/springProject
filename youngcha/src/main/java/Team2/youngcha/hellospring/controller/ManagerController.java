@@ -1,19 +1,27 @@
 package Team2.youngcha.hellospring.controller;
 
-import Team2.youngcha.hellospring.domain.Income;
+import Team2.youngcha.hellospring.domain.Menu;
 import Team2.youngcha.hellospring.domain.Reservation;
 import Team2.youngcha.hellospring.domain.TableInfo;
+import Team2.youngcha.hellospring.repository.IncomeChartDataRepository;
+import Team2.youngcha.hellospring.responseBody.IncomeChartData;
 import Team2.youngcha.hellospring.service.ManagerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 public class ManagerController {
+
+    @Autowired
+    IncomeChartDataRepository repo;
 
     private final ManagerService managerService;
 
@@ -31,7 +39,7 @@ public class ManagerController {
     // 대기리스트 메인 페이지 로더
     @GetMapping("/waitList")
     public String lists() {
-        return "/waitList";
+        return "waitList";
     }
 
     // 현시간 이후의 예약 리스트 json으로 반환
@@ -51,13 +59,13 @@ public class ManagerController {
     @PostMapping("/waitList")
     @ResponseBody
     public boolean todo(@RequestBody ReservationForm form) {
-            managerService.reservationCountReallocation(form.getCustomerID());
-            managerService.rankReallocation(form.getCustomerID());
-            LocalDateTime now = managerService.setArrivalTime(form.getCustomerID(), form.getReservationDate());
-            managerService.enrollIncome(form.getCustomerID(), form.getDishes(), form.getDishCounts(), now);
-            managerService.editSaleCount(form.getCustomerID(), form.getReservationDate());
+        managerService.reservationCountReallocation(form.getCustomerID());
+        managerService.rankReallocation(form.getCustomerID());
+        LocalDateTime now = managerService.setArrivalTime(form.getCustomerID(), form.getReservationDate());
+        managerService.enrollIncome(form.getCustomerID(), form.getDishes(), form.getDishCounts(), now);
+        managerService.editSaleCount(form.getCustomerID(), form.getReservationDate());
 
-            return true;
+        return true;
     }
 
     // 기존 예약의 테이블 위치 재조정
@@ -113,11 +121,6 @@ public class ManagerController {
      */
     @GetMapping("/manager/Income")
     public String createIncomePage(Model model) {
-        List<Income> incomeList = managerService.getIncome();
-        model.addAttribute("totalIncome", incomeList);
-        model.addAttribute("incomeWithDishAndProfit", managerService.getDishWithProfit(incomeList));
-        model.addAttribute("incomeWithDishAndDishCount", managerService.getDishWithCount(incomeList));
-
         return "StatisticsGraph";
     }
 
@@ -127,4 +130,18 @@ public class ManagerController {
     public String createStockPage(){
         return "Stock";
     }
+
+    @PostMapping("/manager/Income/data")
+    @ResponseBody
+    public ResponseEntity<?> createIncomePage_chart() {
+        Collection<IncomeChartData> data = repo.getChartData();
+        return ResponseEntity.ok(data);
+    }
+
+    @GetMapping("/manager/stock/getStock")
+    @ResponseBody
+    public List<Menu> getMenuLists(){
+        return managerService.listAllMenus();
+    }
+
 }

@@ -29,7 +29,7 @@
    }
 </style>
 
-<link href="../../../../../../../../youngcha/src/main/webapp/resources/css/carousel.css" rel="stylesheet">
+<link href="../../youngcha/src/main/webapp/resources/css/carousel.css" rel="stylesheet">
 <head>
    <div class="py-5 text-center" style="user-select: auto;">
       <h2 style="user-select: auto;">예약조회</h2>

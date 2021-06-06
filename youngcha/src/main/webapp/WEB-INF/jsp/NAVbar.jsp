@@ -25,10 +25,10 @@
 
 </head>
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-warning">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="/"><img
-			src="../../resources/image/fork.jpg" width="100" height="50" border="0"> </a>
+		<a class="navbar-brand"  href="/"><img
+			src="../../resources/image/restaurant_icon2.png" width="64" height="60" border="0"> </a>
 
 		<button class="navbar-toggler	" type="button"
 			data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -47,35 +47,35 @@
 			</ul>
 
 			<ul class="navbar-nav navbar-right">
+			<li class="nav-item">
+                                             <%
+                                        String Id = (String)session.getAttribute("userID"); %>
+                                                  <% if(Id!=null){
+                                                  %>
+                                                  <!--<a class="nav-link" href="/waitList" style="color: #FFFFFF; font-weight: bold;">마이페이지</a>-->
+                                                  <a class="nav-link" href="/reservations/cancel" style="color: #FFFFFF; font-weight: bold;">마이페이지</a>
+                                                  <%
+                                                  }
+                                        else { %>
+                                             <a class="nav-link" href="/customers/login" style="color: #FFFFFF; font-weight: bold;">마이페이지</a>
+                                        <% } %>
+                                        </li>
+				<li class="nav-item">
+					<%
+				String ID = (String)session.getAttribute("userID");
 
-                          <li class="nav-item">
-                                 <%
-                            String Id = (String)session.getAttribute("userID"); %>
-                                      <% if(Id!=null){
-                                      %>
-                                      <!--<a class="nav-link" href="/waitList" style="color: #FFFFFF; font-weight: bold;">마이페이지</a>-->
-                                      <a class="nav-link" href="/reservations/cancel" style="color: #FFFFFF; font-weight: bold;">마이페이지</a>
-                                      <%
-                                      }
-                            else { %>
-                                 <a class="nav-link" href="/customers/login" style="color: #FFFFFF; font-weight: bold;">마이페이지</a>
-                            <% } %>
-                            </li>
-                        <li class="nav-item">
-                           <%
-                        String ID = (String)session.getAttribute("userID");
 
-                        if(ID!=null){
-                           %> <a class="nav-link" href="/customers/logout"
-                           style="color: #FFFFFF; font-weight: bold;">로그아웃</a> <%
-                           }
-                        else{
-                           %> <a class="nav-link" href="/customers/login"
-                           style="color: #FFFFFF; font-weight: bold;">로그인</a> <%
-                        }
-                        %>
-                        </li>
-                     </ul>
+				if(ID!=null){
+					%> <a class="nav-link" href="/customers/logout"
+					style="color: #FFFFFF; font-weight: bold;">로그아웃</a> <%
+					}
+				else{
+					%> <a class="nav-link" href="/customers/login"
+					style="color: #FFFFFF; font-weight: bold;">로그인</a> <%
+				}
+				%>
+				</li>
+			</ul>
 		</div>
 	</div>
 </nav>

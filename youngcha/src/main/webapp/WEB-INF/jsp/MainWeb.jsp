@@ -10,8 +10,7 @@
 <meta name="generator" content="Hugo 0.79.0">
 <title>메인 페이지</title>
 
-<link rel="canonical"
-	href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
 
 <!-- Bootstrap core CSS -->
 <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
@@ -20,6 +19,11 @@
 <%@ include file="NAVbar.jsp"%>
 
 <style>
+body{
+    background-image : url("../../resources/image/Background.png");
+    background-repeat : no-repeat;
+    background-size : cover;
+}
 .bd-placeholder-img {
 	font-size: 1.125rem;
 	text-anchor: middle;
@@ -41,7 +45,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 </head>
 
-<body style="padding-top: px;">
+<body>
 	<main>
 		<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
 			<ol class="carousel-indicators">
@@ -54,27 +58,29 @@
 				<div class="carousel-item active">
 					<img src="../../resources/image/food.jpg" style="margin-top: 2rem;">
 					<div class="container">
-						<div class="carousel-caption text-start"
-							style="margin-bottom: -2rem;">
-							<h1>Restaurant</h1>
+						<div class="carousel-caption text-start" style="margin-bottom: -2rem;">
+							<h1 style="color:">Restaurant</h1>
 							<p>저희 레스토랑에 오신 것을 환영합니다.</p>
 						</div>
 					</div>
 				</div>
 
 				<div class="carousel-item">
-					<img src="../../resources/image/food2.jpg" style="margin-top: 2rem;">
+					<img src="../../resources/image/food4.jpg" style="margin-top: 2rem;">
 					<div class="container">
-						<div class="carousel-caption"></div>
+						<div class="carousel-caption" style="margin-bottom: -2rem; user-select: auto;">
+                             <h1 style="user-select: auto;">Restaurant</h1>
+                             <p style="user-select: auto;">항상 신선한 식재료로 대접합니다.</p>
+                        </div>
 					</div>
 				</div>
 
 				<div class="carousel-item">
-					<img src="../../resources/image/food3.jpg" style="margin-top: 2rem;">
+					<img src="../../resources/image/food5.jpg" style="margin-top: 2rem;">
 					<div class="container">
-						<div class="carousel-caption text-end style="margin-bottom: -2rem;">
+						<div class="carousel-caption text-end" style="margin-bottom: -2rem;">
 							<h1>Restaurant</h1>
-							<p>항상 신선한 식재료로 대접합니다.</p>
+							<p>최고의 맛으로 최고의 서비스를 제공합니다.</p>
 						</div>
 					</div>
 				</div>
@@ -90,53 +96,34 @@
 		</div>
 
 		<div class="container marketing">
+		<script>
+        var bgm = new Audio('');
+        	var bgm_url = "../../resources/image/music2.mp3";
+        	bgm = new Audio(bgm_url);
+        	bgm.volume = 0.2;
+        	bgm.play();
+        </script>
 			<div class="row featurette" style="user-select: auto;">
 				<div class="col-md-7" style="user-select: auto;">
-					<h2 class="featurette-heading" style="user-select: auto;">
-						First featurette heading. <span class="text-muted"
-							style="user-select: auto;">It’ll blow your mind.</span>
-					</h2>
-					<p class="lead" style="user-select: auto;">Some great
-						placeholder content for the first featurette here. Imagine some
-						exciting prose here.</p>
+					<h2 class="featurette-heading" style="user-select: auto;"> 오시는 길</h2>
+					<p class="lead" style="padding-top:50px; user-select: auto;">지도와 주소를 오시는 길 찾기 편하시도록 표기 해두었습니다.</p>
 				</div>
-				<div class="col-md-5" style="user-select: auto;">
-					<svg
-						class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-						width="500" height="500" xmlns="http://www.w3.org/2000/svg"
-						role="img" aria-label="Placeholder: 500x500"
-						preserveAspectRatio="xMidYMid slice" focusable="false"
-						style="user-select: auto;">
-					<title style="user-select: auto;">Placeholder</title><rect
-							width="100%" height="100%" fill="#eee" style="user-select: auto;"></rect>
-					<text x="50%" y="50%" fill="#aaa" dy=".3em"
-							style="user-select: auto;">500x500</text></svg>
-
-				</div>
+				<div class="col-md-5" style="cursor: pointer; user-select: auto;" onclick="location.href='/Route'">
+                	<img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+                	src="../../resources/image/map2.png" alt="" width="500" height="500">
+                </div>
 			</div>
 			<div class="row featurette" style="user-select: auto;">
 				<div class="col-md-7 order-md-2" style="user-select: auto;">
-					<h2 class="featurette-heading" style="user-select: auto;">
-						Oh yeah, it’s that good. <span class="text-muted"
-							style="user-select: auto;">See for yourself.</span>
+					<h2 class="featurette-heading" style="margin-left:50px; user-select: auto;">인기 메뉴
+					<span class="text-muted" style="user-select: auto;">★Hot★</span>
 					</h2>
-					<p class="lead" style="user-select: auto;">Another featurette?
-						Of course. More placeholder content here to give you an idea of
-						how this layout would work with some actual real-world content in
-						place.</p>
+					<p class="lead" style="padding-top:50px; margin-left:50px; user-select: auto;">고객님들께 한주간 인기 있었던 메뉴들을 소개합니다.</p>
 				</div>
-				<div class="col-md-5 order-md-1" style="user-select: auto;">
-					<svg
-						class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-						width="500" height="500" xmlns="http://www.w3.org/2000/svg"
-						role="img" aria-label="Placeholder: 500x500"
-						preserveAspectRatio="xMidYMid slice" focusable="false"
-						style="user-select: auto;">
-					<title style="user-select: auto;">Placeholder</title><rect
-							width="100%" height="100%" fill="#eee" style="user-select: auto;"></rect>
-					<text x="50%" y="50%" fill="#aaa" dy=".3em"
-							style="user-select: auto;">500x500</text></svg>
-
+				<div class="col-md-5 order-md-1" style="cursor: pointer; user-select: auto;" onclick="location.href='/Menu'">
+				    <img  class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+                        src="../../resources/image/BestMenu.png" alt="" width="500" height="500">
+                </div>
 				</div>
 			</div>
 		</div>

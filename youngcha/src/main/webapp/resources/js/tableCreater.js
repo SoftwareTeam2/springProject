@@ -18,7 +18,9 @@ $(document).ready(function(){
         add_data+='<option value="3" style="user-select: auto;">3</option>'
         add_data+='<option value="4" style="user-select: auto;">4</option>'
         add_data+='</select>'
-        add_data+='<div class="invalid-feedback" style="user-select: auto;"></div>'
+        add_data+='</div>'
+        add_data+='<div class="col-md-5" style="user-select: auto;">'
+        add_data+='<button class=\"remove\">삭제</button>'
         add_data+='</div>'
         add_data+='</div>'
 
@@ -47,6 +49,13 @@ $(document).ready(function(){
             }
         })
     })
+    $(document).on("click",".remove",function(){
+        var result = confirm('테이블을 삭제하시겠습니까?');
+        if(result){
+            var target = $(this).parent().parent();
+            target.remove();
+        }
+    })
 })
     $(function(){
         $.ajax({
@@ -72,7 +81,9 @@ $(document).ready(function(){
                     add_data+='<option value="3" style="user-select: auto;">3</option>'
                     add_data+='<option value="4" style="user-select: auto;">4</option>'
                     add_data+='</select>'
-                    add_data+='<div class="invalid-feedback" style="user-select: auto;"></div>'
+                    add_data+='</div>'
+                    add_data+='<div class="col-md-5" style="user-select: auto;">'
+                    add_data+='<button class=\"remove\">삭제</button>'
                     add_data+='</div>'
                     add_data+='</div>'
                     
