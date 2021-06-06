@@ -124,7 +124,7 @@ public class ManagerRepository {
 
     public List<Income> getIncome() {
         LocalDate now = LocalDate.now();
-        List<Income> resultList = entityManager.createQuery("select i from Income i where i.incomeDate between :startRange and :endRang",Income.class)
+        List<Income> resultList = entityManager.createQuery("select i from Income i where i.incomeDate between :startRange and :endRange",Income.class)
                 .setParameter("startRange", now.minusDays(7))
                 .setParameter("endRange", now)
                 .getResultList();

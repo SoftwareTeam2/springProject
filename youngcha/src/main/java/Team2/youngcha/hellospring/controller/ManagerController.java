@@ -144,4 +144,10 @@ public class ManagerController {
         return managerService.listAllMenus();
     }
 
+    @GetMapping("/Menu")
+    public String incomeModel(Model model){
+        model.addAttribute("incomeList",managerService.getDishWithCount(managerService.getIncome()));
+        System.out.println(managerService.getDishWithCount(managerService.getIncome()).size());
+        return "Menu";
+    }
 }

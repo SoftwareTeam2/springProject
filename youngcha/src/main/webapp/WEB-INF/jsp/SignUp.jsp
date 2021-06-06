@@ -73,7 +73,7 @@
 		
 	<div class="container">
 	<div class="py-5 text-center">
-					<img class="d-block mx-auto mb-4" src="../../resources/image/ronaldo.png" alt=""
+					<img class="d-block mx-auto mb-4" src="../../resources/image/signup.png" alt=""
 						width="150" height="100">
 					<h2>회원가입</h2>
                     <p class="lead"></p>

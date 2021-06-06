@@ -11,8 +11,4 @@ public class RouteController {
         return "Route";
     }
 
-    @GetMapping("/Menu")
-    public String showMenu() {
-        return "Menu";
-    }
 }
