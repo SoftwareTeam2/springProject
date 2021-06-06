@@ -20,29 +20,61 @@ public class WalkInService {
         this.walkInRepository = walkInRepository;
     }
 
-    public Long join(WalkIn walkIn) {
+    public Long join(List<String> peoples, List<String> tableNos) {
+        WalkIn walkIn = new WalkIn();
+
+        String inputPeoples = "";
+        String inputTableNo= "";
+        for(int i=0;i<peoples.size();i++){
+            inputTableNo += tableNos.get(i)+",";
+            inputPeoples += tableNos.get(i)+",";
+        }
+        walkIn.setWalkInDate(LocalDateTime.now());
+        walkIn.setGuestCount(inputPeoples);
+        walkIn.setTableNo(inputTableNo);
+
         walkInRepository.save(walkIn);
+
         return walkIn.getOid();
     }
 
-    public List<Boolean> validateDuplicateTable(int guestCount) {
+    public List<Boolean> validateDuplicateTable(List<String> people) {
         List<Reservation> reservationList = walkInRepository.findByResDate(LocalDateTime.now());
-        System.out.println("전 후 예약 개수"+reservationList.size());
+        List<WalkIn> walkInList = walkInRepository.findWalkInByDate(LocalDateTime.now());
         List<TableInfo> tables = walkInRepository.getTables();
-        System.out.println("테이블 개수 "+tables.size());
         Boolean[] validAry = new Boolean[tables.size()];
         Arrays.fill(validAry,true);
         for(Reservation reservation : reservationList){
-            validAry[Integer.valueOf(reservation.getTableNo())-1] = false;
+            if(!reservation.getTableNo().contains(","))
+                validAry[Integer.valueOf(reservation.getTableNo())-1] = false;
+            else{
+                String[] split = reservation.getTableNo().split(",");
+                for (String tableNo:split){
+                    validAry[Integer.valueOf(tableNo)-1] = false;
+                }
+            }
         }
 
-        validateGuestCountTable(guestCount,tables,validAry);
+        for(WalkIn walkIn : walkInList){
+            if(!walkIn.getTableNo().contains(","))
+                validAry[Integer.valueOf(walkIn.getTableNo())-1] = false;
+            else{
+                String[] split = walkIn.getTableNo().split(",");
+                for (String tableNo:split){
+                    validAry[Integer.valueOf(tableNo)-1] = false;
+                }
+            }
+        }
+
+        validateGuestCountTable(people,tables,validAry);
         return Arrays.asList(validAry);
     }
-    private Boolean[] validateGuestCountTable(int guestCount, List<TableInfo> tables, Boolean[] validAry){
-        for(TableInfo tableInfo : tables){
-            if(tableInfo.getPeople()<guestCount){
-                validAry[tableInfo.getTableNumber()-1] = false;
+    private Boolean[] validateGuestCountTable(List<String> people, List<TableInfo> tables, Boolean[] validAry){
+        for(int i=0;i<tables.size();i++){
+            for(String person:people){
+                if(Integer.valueOf(person) > tables.get(i).getPeople()){
+                    validAry[i] = false;
+                }
             }
         }
         return validAry;
@@ -52,8 +84,7 @@ public class WalkInService {
         return walkInRepository.findAll();
     }
 
-    public List<Boolean> checkTable(int guestCount){
-        System.out.println(guestCount);
-        return validateDuplicateTable(guestCount);
+    public List<Boolean> checkTable(List<String> people){
+        return validateDuplicateTable(people);
     }
 }

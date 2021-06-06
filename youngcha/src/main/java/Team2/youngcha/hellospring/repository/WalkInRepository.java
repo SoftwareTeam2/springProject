@@ -18,12 +18,16 @@ public class WalkInRepository {
     }
 
     public Long save(WalkIn walkIn) {
-        //validateDuplicateTable(reservation); // 중복 시간대에 예약인지 확인 나중에는 아예 안보이게 하는 것도 가능??
-
         em.persist(walkIn);
         return walkIn.getOid();
     }
 
+    public List<WalkIn> findWalkInByDate(LocalDateTime now){
+        return em.createQuery("select w from WalkIn w where w.walkInDate between :startRange and :endRange",WalkIn.class)
+                .setParameter("startRange",now.minusHours(2))
+                .setParameter("endRange",now.plusHours(2))
+                .getResultList();
+    }
     public List<Reservation> findByResDate(LocalDateTime localDateTime) {
         List<Reservation> result = em.createQuery("select r from Reservation r where r.reservationDate between :minusHour and :plusHour", Reservation.class)
                 .setParameter("minusHour", localDateTime.minusHours(2))

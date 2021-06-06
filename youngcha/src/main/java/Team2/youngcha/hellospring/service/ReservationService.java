@@ -75,6 +75,7 @@ public class ReservationService {
 
     public List<Boolean> findValidTables(LocalDateTime reservationDate, String guestCount) {
         List<Reservation> resList = reservationRepository.findResByResDate(reservationDate.minusHours(2), reservationDate.plusHours(2));
+        reservationRepository.findWalkInByDate(reservationDate);
         List<Boolean> booleans = validateDuplicateTable(resList, guestCount);
 
         return booleans;

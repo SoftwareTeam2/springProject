@@ -87,9 +87,8 @@ class YoungchaApplicationTests {
 
     @Test
     void 워크인가능테이블() {
-
         // given, when
-        List<Boolean> booleans = walkInService.checkTable(3);
+        List<Boolean> booleans = walkInService.checkTable(null);
 
         // then
         assertThat(Collections.frequency(booleans, false)).isEqualTo(1);

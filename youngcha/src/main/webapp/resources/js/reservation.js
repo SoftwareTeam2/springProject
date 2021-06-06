@@ -95,8 +95,9 @@ $(function(){
 
             success:function(data){
                 console.log(data);
-                $('.tableImage').append('<img src=\'../../resources/image/structure.jpg\'/>');
+                $('.tableImage').append('<img style="height:600px; width:750px" src=\'../../resources/image/Tables.jpg\'/>');
                 var target = $('.tableSelector');
+                target.append('<h4> * 테이블은 위쪽부터 1번입니다.</h4><br>');
                 for (var i = 0; i < nopSize; i++) {
                     var times = i+1;
                     target.append('<h3>'+times+'번 예약</h3>');
@@ -122,6 +123,15 @@ $(function(){
 
     function sendDataListener(){
         $('#submit').on('click',function(){
+            var numberOfPeople = $('select[name="numberOfPeople"]');
+            var nopSize = numberOfPeople.length;
+            var checked = $('input:checkbox checked').length;
+            console.log(nopSize);
+            console.log(checked);
+            if(nopSize!=checked){
+                alert("테이블을 올바르게 선택해주세요")
+                return;
+            }
             var numberOfPeople = [];
             $('select[name="numberOfPeople"]').each(function(idx,target){
                 numberOfPeople.push(Number($(target).val()))
@@ -143,8 +153,6 @@ $(function(){
                     tables.push($(target).val());
                 }
             })
-            console.log(menu);
-            console.log(tables);
             $.ajax({
                 url:'/reservations/new',
                 type:'post',
@@ -173,7 +181,6 @@ $(function(){
         $('input:checkbox').on('click',function(){
             var numberOfPeople = $('select[name="numberOfPeople"]');
             var nopSize = numberOfPeople.length;
-            var itsMe = $(this);
             var myID = $(this).attr('id');
             var myFirstIndex = myID.charAt(myID.length-3);
             var myLastIndex = myID.charAt(myID.length-1);

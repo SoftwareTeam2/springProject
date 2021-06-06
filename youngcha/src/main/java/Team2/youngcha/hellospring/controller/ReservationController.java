@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -63,22 +62,6 @@ public class ReservationController {
     @GetMapping("/reservations/update")
     public String forwardToUpdatePage() {
         return "updateReservation";
-    }
-
-    @PostMapping("/reservations/update")
-    public String returnValidTables(@RequestParam(name = "customerID") String cid,
-                                    @RequestParam(name = "sourceDate") String sourceDate,
-                                    @RequestParam(name = "destDate") String destDate,
-                                    @RequestParam(name = "guestCount") String guestCount,
-                                    Model model,
-                                    HttpSession session) {
-        List<Boolean> validTables = reservationService.findValidTables(LocalDateTime.parse(sourceDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), guestCount);
-        session.setAttribute("cid", cid);
-        session.setAttribute("sourceDate", sourceDate);
-        session.setAttribute("destDate", destDate);
-        session.setAttribute("guestCount", guestCount);
-        model.addAttribute("tableInfo", validTables);
-        return "selectTable";
     }
 
     @GetMapping("/reservations/selectTable")
