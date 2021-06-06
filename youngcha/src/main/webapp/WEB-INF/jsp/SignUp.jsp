@@ -9,9 +9,12 @@
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Hugo 0.79.0">
 <title>회원 가입</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
-<link rel="canonical"
-	href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
 
 <!-- Bootstrap core CSS -->
 <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
@@ -38,47 +41,34 @@
 <!-- css 파일 분리 -->
 <link href="../../resources/css/join_style.css" rel="stylesheet">
 
-<script type="text/javascript">
-    
-        // 필수 입력정보인 아이디, 비밀번호가 입력되었는지 확인하는 함수
-        function checkValue()
-        {
-            if(!document.userInfo.id.value){
-                alert("아이디를 입력하세요.");
-                return false;
-            }
-            
-            if(!document.userInfo.password.value){
-                alert("비밀번호를 입력하세요.");
-                return false;
-            }
-            
-            // 비밀번호와 비밀번호 확인에 입력된 값이 동일한지 확인
-            if(document.userInfo.password.value != document.userInfo.passwordcheck.value ){
-                alert("비밀번호를 동일하게 입력하세요.");
-                return false;
-            }
-        }
-        
-        // 취소 버튼 클릭시 로그인 화면으로 이동
-        function goLoginForm() {
-            location.href="LoginForm.jsp";
-        }
-    </script>
 
 <link href="../../resources/css/signin2.css" rel="stylesheet">
 </head>
 <body class="bg-white" style="padding-top: 90px;">
+        <div class="container">
+            <div class="modal fade" id="defaultModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                               <h4 class="modal-title"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <p class="modal-contents"></p>
+                        </div>
+                         <div class="modal-footer">
+                             <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                         </div>
+                    </div>
+                </div>
+            </div>
 
-		
-	<div class="container">
 	<div class="py-5 text-center">
-					<img class="d-block mx-auto mb-4" src="../../resources/image/Signin.png" alt=""
-						width="125" height="125">
+					<img class="d-block mx-auto mb-4" src="../../resources/image/Signin.png" alt="" width="125" height="125">
 					<h2>회원가입</h2>
                     <p class="lead"></p>
 				</div>
-    <form action="/customers/new" method="POST">
+    <form class "form-horizontal" role="form" action="/customers/new" method="POST">
 		<div class="form-group" id="divId" style="margin-bottom: 15px;">
 			<label for="inputId" class="col-lg-2 control-label">아이디</label>
 			<div class="col-lg-10">
@@ -165,7 +155,7 @@
 		</div>
 		<div class="form-group" style="margin-bottom: 15px;">
 			<div class="col-lg-offset-2 col-lg-10">
-				<button type="submit" class="btn btn-warning btn-primary">가입</button>
+				<button type="submit" id = "check" class="btn btn-warning btn-primary">가입</button>
 			</div>
 		</div>
 		<script>
@@ -173,33 +163,33 @@
                 //모달을 전역변수로 선언
                 var modalContents = $(".modal-contents");
                 var modal = $("#defaultModal");
-                
+
                 $('.onlyAlphabetAndNumber').keyup(function(event){
                     if (!(event.keyCode >=37 && event.keyCode<=40)) {
                         var inputVal = $(this).val();
                         $(this).val($(this).val().replace(/[^_a-z0-9]/gi,'')); //_(underscore), 영어, 숫자만 가능
                     }
                 });
-                
+
                 $(".onlyHangul").keyup(function(event){
                     if (!(event.keyCode >=37 && event.keyCode<=40)) {
                         var inputVal = $(this).val();
                         $(this).val(inputVal.replace(/[a-z0-9]/gi,''));
                     }
                 });
-            
+
                 $(".onlyNumber").keyup(function(event){
                     if (!(event.keyCode >=37 && event.keyCode<=40)) {
                         var inputVal = $(this).val();
                         $(this).val(inputVal.replace(/[^0-9]/gi,''));
                     }
                 });
-                
+
                 //------- 검사하여 상태를 class에 적용
                 $('#id').keyup(function(event){
-                    
+
                     var divId = $('#divId');
-                    
+
                     if($('#id').val()==""){
                         divId.removeClass("has-success");
                         divId.addClass("has-error");
@@ -208,11 +198,11 @@
                         divId.addClass("has-success");
                     }
                 });
-                
+
                 $('#password').keyup(function(event){
-                    
+
                     var divPassword = $('#divPassword');
-                    
+
                     if($('#password').val()==""){
                         divPassword.removeClass("has-success");
                         divPassword.addClass("has-error");
@@ -221,13 +211,13 @@
                         divPassword.addClass("has-success");
                     }
                 });
-                
+
                 $('#passwordCheck').keyup(function(event){
-                    
+
                     var passwordCheck = $('#passwordCheck').val();
                     var password = $('#password').val();
                     var divPasswordCheck = $('#divPasswordCheck');
-                    
+
                     if((passwordCheck=="") || (password!=passwordCheck)){
                         divPasswordCheck.removeClass("has-success");
                         divPasswordCheck.addClass("has-error");
@@ -236,11 +226,11 @@
                         divPasswordCheck.addClass("has-success");
                     }
                 });
-                
+
                 $('#name').keyup(function(event){
-                    
+
                     var divName = $('#divName');
-                    
+
                     if($.trim($('#name').val())==""){
                         divName.removeClass("has-success");
                         divName.addClass("has-error");
@@ -249,11 +239,11 @@
                         divName.addClass("has-success");
                     }
                 });
-                
+
                 $('#nickname').keyup(function(event){
-                    
+
                     var divNickname = $('#divNickname');
-                    
+
                     if($.trim($('#nickname').val())==""){
                         divNickname.removeClass("has-success");
                         divNickname.addClass("has-error");
@@ -262,11 +252,11 @@
                         divNickname.addClass("has-success");
                     }
                 });
-                
+
                 $('#email').keyup(function(event){
-                    
+
                     var divEmail = $('#divEmail');
-                    
+
                     if($.trim($('#email').val())==""){
                         divEmail.removeClass("has-success");
                         divEmail.addClass("has-error");
@@ -275,11 +265,11 @@
                         divEmail.addClass("has-success");
                     }
                 });
-                
+
                 $('#phoneNumber').keyup(function(event){
-                    
+
                     var divPhoneNumber = $('#divPhoneNumber');
-                    
+
                     if($.trim($('#phoneNumber').val())==""){
                         divPhoneNumber.removeClass("has-success");
                         divPhoneNumber.addClass("has-error");
@@ -288,11 +278,11 @@
                         divPhoneNumber.addClass("has-success");
                     }
                 });
-                
-                
+
+
                 //------- validation 검사
                 $( "form" ).submit(function( event ) {
-                    
+
                     var provision = $('#provision');
                     var memberInfo = $('#memberInfo');
                     var divId = $('#divId');
@@ -302,12 +292,12 @@
                     var divNickname = $('#divNickname');
                     var divEmail = $('#divEmail');
                     var divPhoneNumber = $('#divPhoneNumber');
-                    
+
                     //회원가입약관
                     if($('#provisionYn:checked').val()=="N"){
                         modalContents.text("회원가입약관에 동의하여 주시기 바랍니다."); //모달 메시지 입력
                         modal.modal('show'); //모달 띄우기
-                        
+
                         provision.removeClass("has-success");
                         provision.addClass("has-error");
                         $('#provisionYn').focus();
@@ -316,12 +306,12 @@
                         provision.removeClass("has-error");
                         provision.addClass("has-success");
                     }
-                    
+
                     //개인정보취급방침
                     if($('#memberInfoYn:checked').val()=="N"){
                         modalContents.text("개인정보취급방침에 동의하여 주시기 바랍니다.");
                         modal.modal('show');
-                        
+
                         memberInfo.removeClass("has-success");
                         memberInfo.addClass("has-error");
                         $('#memberInfoYn').focus();
@@ -330,12 +320,12 @@
                         memberInfo.removeClass("has-error");
                         memberInfo.addClass("has-success");
                     }
-                    
+
                     //아이디 검사
                     if($('#id').val()==""){
                         modalContents.text("아이디를 입력하여 주시기 바랍니다.");
                         modal.modal('show');
-                        
+
                         divId.removeClass("has-success");
                         divId.addClass("has-error");
                         $('#id').focus();
@@ -344,12 +334,12 @@
                         divId.removeClass("has-error");
                         divId.addClass("has-success");
                     }
-                    
+
                     //패스워드 검사
                     if($('#password').val()==""){
                         modalContents.text("패스워드를 입력하여 주시기 바랍니다.");
                         modal.modal('show');
-                        
+
                         divPassword.removeClass("has-success");
                         divPassword.addClass("has-error");
                         $('#password').focus();
@@ -358,12 +348,12 @@
                         divPassword.removeClass("has-error");
                         divPassword.addClass("has-success");
                     }
-                    
+
                     //패스워드 확인
                     if($('#passwordCheck').val()==""){
                         modalContents.text("패스워드 확인을 입력하여 주시기 바랍니다.");
                         modal.modal('show');
-                        
+
                         divPasswordCheck.removeClass("has-success");
                         divPasswordCheck.addClass("has-error");
                         $('#passwordCheck').focus();
@@ -372,12 +362,12 @@
                         divPasswordCheck.removeClass("has-error");
                         divPasswordCheck.addClass("has-success");
                     }
-                    
+
                     //패스워드 비교
                     if($('#password').val()!=$('#passwordCheck').val() || $('#passwordCheck').val()==""){
                         modalContents.text("패스워드가 일치하지 않습니다.");
                         modal.modal('show');
-                        
+
                         divPasswordCheck.removeClass("has-success");
                         divPasswordCheck.addClass("has-error");
                         $('#passwordCheck').focus();
@@ -386,12 +376,12 @@
                         divPasswordCheck.removeClass("has-error");
                         divPasswordCheck.addClass("has-success");
                     }
-                    
+
                     //이름
                     if($('#name').val()==""){
                         modalContents.text("이름을 입력하여 주시기 바랍니다.");
                         modal.modal('show');
-                        
+
                         divName.removeClass("has-success");
                         divName.addClass("has-error");
                         $('#name').focus();
@@ -400,12 +390,12 @@
                         divName.removeClass("has-error");
                         divName.addClass("has-success");
                     }
-                    
+
                     //별명
                     if($('#nickname').val()==""){
                         modalContents.text("별명을 입력하여 주시기 바랍니다.");
                         modal.modal('show');
-                        
+
                         divNickname.removeClass("has-success");
                         divNickname.addClass("has-error");
                         $('#nickname').focus();
@@ -414,12 +404,12 @@
                         divNickname.removeClass("has-error");
                         divNickname.addClass("has-success");
                     }
-                    
+
                     //이메일
                     if($('#email').val()==""){
                         modalContents.text("이메일을 입력하여 주시기 바랍니다.");
                         modal.modal('show');
-                        
+
                         divEmail.removeClass("has-success");
                         divEmail.addClass("has-error");
                         $('#email').focus();
@@ -428,12 +418,12 @@
                         divEmail.removeClass("has-error");
                         divEmail.addClass("has-success");
                     }
-                    
+
                     //휴대폰 번호
                     if($('#phoneNumber').val()==""){
                         modalContents.text("휴대폰 번호를 입력하여 주시기 바랍니다.");
                         modal.modal('show');
-                        
+
                         divPhoneNumber.removeClass("has-success");
                         divPhoneNumber.addClass("has-error");
                         $('#phoneNumber').focus();
