@@ -75,8 +75,8 @@
 			<div class="col-md-7 col-lg-8" style="user-select: auto;">
 				<h4 style="user-select: auto;">인원 선택
                 	<span style="margin-left: 455px">
-                		<input class="btn btn-info btn-default btn-sm" type="button" onclick="add_People()" value="예약 추가">
-                		<input class="btn btn-info btn-default btn-sm" type="button" onclick="remove_People(this)" value="예약 삭제">
+                		<input class="btn btn-success btn-default btn-sm" type="button" onclick="add_People()" value="예약 추가" st>
+                		<input class="btn btn-danger btn-default btn-sm" type="button" onclick="remove_People(this)" value="예약 삭제">
                 	</span>
                 </h4>
 					<div id="addPeople" style="user-select: auto;">
@@ -109,8 +109,8 @@
 					<div id="addResv"></div>
 					<h4 style="padding-top:30px; user-select: auto;">메뉴 선택
                          <span style="margin-left: 455px">
-                    	     <input class="btn btn-info btn-default btn-sm" type="button" id="addMenuButton" value="메뉴 추가">
-                    	     <input class="btn btn-info btn-default btn-sm" type="button" id="removeButton" value="메뉴 삭제">
+                    	     <input class="btn btn-success btn-default btn-sm" type="button" id="addMenuButton" value="메뉴 추가">
+                    	     <input class="btn btn-danger btn-default btn-sm" type="button" id="removeButton" value="메뉴 삭제">
                     	 </span>
                     </h4>
 					<div id="addMenu" style="user-select: auto;">

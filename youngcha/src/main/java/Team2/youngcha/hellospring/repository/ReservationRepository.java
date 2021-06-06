@@ -1,9 +1,6 @@
 package Team2.youngcha.hellospring.repository;
 
-import Team2.youngcha.hellospring.domain.Customer;
-import Team2.youngcha.hellospring.domain.Menu;
-import Team2.youngcha.hellospring.domain.Reservation;
-import Team2.youngcha.hellospring.domain.TableInfo;
+import Team2.youngcha.hellospring.domain.*;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
@@ -104,5 +101,12 @@ public class ReservationRepository {
     public List<Menu> getAllList() {
         List<Menu> menuList = em.createQuery("select m from Menu m", Menu.class).getResultList();
         return menuList;
+    }
+
+    public List<WalkIn> findWalkInByDate(LocalDateTime resDate){
+        return em.createQuery("select w from WalkIn w where w.walkInDate between :startRange and :endRange",WalkIn.class)
+                .setParameter("startRange",resDate.minusHours(2))
+                .setParameter("endRange",resDate.plusHours(2))
+                .getResultList();
     }
 }
