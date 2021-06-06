@@ -1,15 +1,17 @@
 package Team2.youngcha.hellospring.controller;
 
+import Team2.youngcha.hellospring.domain.Menu;
 import Team2.youngcha.hellospring.domain.Reservation;
+import Team2.youngcha.hellospring.domain.TableInfo;
 import Team2.youngcha.hellospring.service.ReservationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -22,31 +24,31 @@ public class ReservationController {
 
     @GetMapping("/reservations/new")
     public String createReservationForm(Model model) {
-        //reservationService.getDishStock();
+        List<Menu> menuList = reservationService.getAllList();
+        model.addAttribute("menuList", menuList);
         return "Reservation";
     }
 
+    @GetMapping("/reservations/new/menu")
+    @ResponseBody
+    public List<Menu> getMenu() {
+        return reservationService.getAllList();
+    }
+
     @PostMapping("/reservations/new")
-    public String createReservation(HttpSession session, ReservationForm reservationForm) {
-        Reservation reservation = new Reservation();
+    @ResponseBody
+    public Long createReservation(HttpSession session, @RequestBody ReservationForm reservationForm) {
         String ID = (String) session.getAttribute("userID");
+        String email = (String) session.getAttribute("userEmail");
+        String name = (String) session.getAttribute("userName");
+        Long join = reservationService.join(ID, email, name, reservationForm);
 
-        reservation.setCustomerID(String.valueOf(session.getAttribute("userID")));
-        reservation.setCustomerName(String.valueOf(session.getAttribute("userName")));
-        reservation.setCustomerEmail(String.valueOf(session.getAttribute("userEmail")));
-        reservation.setTableNo("3");
-        reservation.setNumberOfPeople(reservationForm.getNumberOfPeople());
-        reservation.setHasCar(ReservationService.SToBConvert(reservationForm.getHasCar()));
-        reservation.setReservationDate(LocalDateTime.of(reservationForm.getStartDate(),reservationService.timeConverter(reservationForm.getStartTime())));
-
-        reservationService.join(reservation);
-
-        return "redirect:/";
+        return join;
     }
 
     @GetMapping("/reservations/reallocate")
     public String createReallocationForm(HttpSession session, Model model) {
-        List<Reservation> reservationList = reservationService.listReservationByCustomerId(String.valueOf(session.getAttribute("id")));
+        List<Reservation> reservationList = reservationService.getResListByCidAfterNow(String.valueOf(session.getAttribute("id")));
         model.addAttribute("reservations", reservationList);
         return "/booking/ReallocationList";
     }
@@ -70,7 +72,7 @@ public class ReservationController {
                                     @RequestParam(name = "guestCount") String guestCount,
                                     Model model,
                                     HttpSession session) {
-        List<Boolean> validTables = reservationService.findValidTables(cid, sourceDate, guestCount);
+        List<Boolean> validTables = reservationService.findValidTables(LocalDateTime.parse(sourceDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), guestCount);
         session.setAttribute("cid", cid);
         session.setAttribute("sourceDate", sourceDate);
         session.setAttribute("destDate", destDate);
@@ -91,7 +93,7 @@ public class ReservationController {
 
     @GetMapping("/reservations/cancel")
     public String lists(HttpSession session, Model model) {
-        List<Reservation> reservationList = reservationService.cancel(String.valueOf(session.getAttribute("userID")));
+        List<Reservation> reservationList = reservationService.getResListByCidAfterNow(String.valueOf(session.getAttribute("userID")));
         model.addAttribute("reservationList", reservationList);
         return "booking/CancelReservation";
     }
@@ -100,5 +102,21 @@ public class ReservationController {
     public String cancelReservation(@RequestParam(name = "cancelOid") Long oid) {
         reservationService.cancel(oid);
         return "redirect:/";
+    }
+
+    @GetMapping("/reservation/tableSelect")
+    public String createTableSelect(Model model){
+        List<TableInfo> tableList = reservationService.getTableList();
+        model.addAttribute("tableList", tableList);
+
+        return "tableSelect";
+    }
+
+    @PostMapping("/reservations/validTables")
+    @ResponseBody
+    public List<Boolean> getValidTables(@RequestBody ReservationForm reservationForm){
+        LocalTime time = reservationService.timeConverter(reservationForm.getStartTime());
+        LocalDateTime.of(reservationForm.getStartDate(),time).toString();
+        return reservationService.findValidTables(LocalDateTime.of(reservationForm.getStartDate(),time), reservationForm.getPeoples());
     }
 }

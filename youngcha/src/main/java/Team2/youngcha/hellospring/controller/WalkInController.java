@@ -4,8 +4,7 @@ import Team2.youngcha.hellospring.domain.WalkIn;
 import Team2.youngcha.hellospring.service.WalkInService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -19,19 +18,23 @@ public class WalkInController {
         this.walkInService = walkInService;
     }
 
+    @GetMapping("/walkIn/new")
+    public String createWalkInPage(){
+        return "WalkIn";
+    }
+
     @GetMapping("/walkIn/guestCount")
     public String receiveGuestCount(){
         return "newWalkIn";
     }
 
-    @GetMapping("/walkIn/validTables")
-    public String addValidTablesToModel(Model model, @RequestParam(name = "guestCount") int guestCount, HttpSession session) {
-        session.setAttribute("guestCount", guestCount);
-        model.addAttribute("validTables",walkInService.checkTable(guestCount));
-        return "selectTable";
+    @PostMapping("/walkIn/validTables")
+    @ResponseBody
+    public List<Boolean> checkValidTables(@RequestBody WalkInForm walkInForm) {
+        return walkInService.checkTable(walkInForm.getGuestCount());
     }
 
-    @GetMapping("/walkIn/new")
+    //@GetMapping("/walkIn/new")
     public String serviceWalkIn(@RequestParam(name = "tableNo") int tableNo, HttpSession session){
         WalkIn walkIn = new WalkIn();
         walkIn.setGuestCount(Integer.getInteger(String.valueOf(session.getAttribute("guestCount"))));
@@ -48,4 +51,5 @@ public class WalkInController {
         model.addAttribute("walkIns", walkIns);
         return "/booking/ListWalkIn";
     }
+
 }

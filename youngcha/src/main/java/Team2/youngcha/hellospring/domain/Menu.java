@@ -15,6 +15,16 @@ public class Menu {
     private int salesCount;
     private int stock;
     private LocalDate lastRestockedDate;
+    @Column(columnDefinition = "int default 100")
+    private int restockRate;
+
+    public int getRestockRate() {
+        return restockRate;
+    }
+
+    public void setRestockRate(int restockRate) {
+        this.restockRate = restockRate;
+    }
 
     public String getDish() {
         return dish;

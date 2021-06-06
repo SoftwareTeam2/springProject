@@ -5,6 +5,7 @@ import Team2.youngcha.hellospring.repository.ManagerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -118,6 +119,14 @@ public class ManagerService {
         return managerRepository.getIncome();
     }
 
+    public List<Long> getIncomeSum() {
+        return managerRepository.getIncomeSum();
+    }
+
+    public List<LocalDate> getIncomeDate(){
+        return managerRepository.getIncomeDate();
+    }
+
     public Map<String, Integer> getDishWithProfit(List<Income> incomeList) {
         HashMap<String, Integer> result = new HashMap<>();
         for (Income income : incomeList) {
@@ -190,6 +199,21 @@ public class ManagerService {
     public List<TableInfo> getTableLists() {
         List<TableInfo> tables = managerRepository.getTables();
         return tables;
+    }
+
+    public Map<LocalDate,Long> getIncomeInfo(){
+        List<LocalDate> incomeDate = getIncomeDate();
+        List<Long> incomeSum = getIncomeSum();
+        HashMap<LocalDate, Long> returnMap = new HashMap<>();
+        for(int i=0;i<incomeSum.size();i++){
+            returnMap.put(incomeDate.get(i),incomeSum.get(i));
+        }
+
+        return returnMap;
+    }
+
+    public List<Menu> listAllMenus(){
+        return managerRepository.listMenus();
     }
 
 

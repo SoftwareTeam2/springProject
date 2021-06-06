@@ -53,7 +53,7 @@
 				<div class="col-lg-3">
 					<div style="cursor: pointer;" onclick="location.href='/waitList'">
 						<img class="d-block mx-auto mb-4"
-							src="../../resources/image/ronaldo.png" alt="" width="252"
+							src="../../resources/image/WaitList.jpg" alt="" width="252"
 							height="252">
 					</div>
 					<h2 style="text-align:center"> 대기리스트</h2>
@@ -63,7 +63,7 @@
 
 					<div style="cursor: pointer;" onclick="location.href='/manager/Income'">
 						<img class="d-block mx-auto mb-4"
-							src="../../resources/image/rooney.jpg" alt="" width="252"
+							src="../../resources/image/Statistics.jpg" alt="" width="252"
 							height="252">
 					</div>
 
@@ -72,29 +72,22 @@
 				</div>
 
 				<div class="col-lg-3">
-					<div style="cursor: pointer;" onclick="location.href='Page.jsp'">
+					<div style="cursor: pointer;" onclick="location.href='manager/tableManage'">
 						<img class="d-block mx-auto mb-4"
-							src="../../resources/image/jisung.jpg" alt="" width="252"
+							src="../../resources/image/Table.jpg" alt="" width="252"
 							height="252">
 					</div>
 
-					<h2 style="text-align:center">기타</h2>
+					<h2 style="text-align:center">테이블 관리</h2>
 				</div>
 				<div class="col-lg-3">
                 	<div style="cursor: pointer;" onclick="location.href='/manager/stock'">
                 		<img class="d-block mx-auto mb-4"
-                			src="../../resources/image/jisung.jpg" alt="" width="252"
+                			src="../../resources/image/Stock.jpg" alt="" width="252"
                 			height="252">
                 	</div>
 
                 	<h2 style="text-align:center">재고관리</h2>
-                </div>
-                <div class="col-lg-3">
-                    <div style="cursor: pointer;" onclick="location.href='/manager/tableManage'">
-                        <img class="d-block mx-auto mb-4" src="../../resources/image/jisung.jpg" alt="" width="252" height="252">
-                    </div>
-
-                    <h2 style="text-align:center">테이블 설정</h2>
                 </div>
 			</div>
 		</div>

@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Entity
 public class Reservation extends Booking {
 
-
     @Column(name = "customer_id")
     private String customerID;
     @Column(name = "table_no")

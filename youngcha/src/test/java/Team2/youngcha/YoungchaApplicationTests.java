@@ -1,6 +1,7 @@
 package Team2.youngcha;
 
 import Team2.youngcha.hellospring.MainApplication;
+import Team2.youngcha.hellospring.controller.ReservationForm;
 import Team2.youngcha.hellospring.domain.*;
 import Team2.youngcha.hellospring.repository.ManagerRepository;
 import Team2.youngcha.hellospring.service.CustomerService;
@@ -67,10 +68,10 @@ class YoungchaApplicationTests {
         reservation.setCustomerID("go");
 
         // when
-        reservationService.join(reservation);
+        reservationService.join("hyeonho9877","hyeonho9877@gmail.com","신현호",new ReservationForm());
 
         // then
-        IllegalStateException e = assertThrows(IllegalStateException.class, () -> reservationService.join(reservation));
+        IllegalStateException e = assertThrows(IllegalStateException.class, () -> reservationService.join("hyeonho9877","hyeonho9877@gmail.com","신현호",new ReservationForm()));
         assertThat(e.getMessage()).isEqualTo("존재하는게 맞음");
     }
 
@@ -116,26 +117,18 @@ class YoungchaApplicationTests {
     void 유효테이블개수맞음() {
 
         // given, when
-        List<Boolean> hyeonho9877 = reservationService.findValidTables("hyeonho9877", "2021-05-29-13:20", "3");
+        List<Boolean> hyeonho9877 = reservationService.findValidTables(LocalDateTime.parse("2021-05-29 13:20",DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), "3");
 
         // then
         assertThat(Collections.frequency(hyeonho9877,true)).isEqualTo(4);
     }
 
-    @Test
-    void 유효테이블자리맞음(){
-        // given, when
-        List<Boolean> hyeonho9877 = reservationService.findValidTables("hyeonho9877", "2021-05-29-13:20", "3");
-
-        // then
-        assertThat(hyeonho9877.get(1)).isEqualTo(false);
-    }
 
     @Test
     void 유효테이블자리틀림() {
 
         // given, when
-        List<Boolean> hyeonho9877 = reservationService.findValidTables("hyeonho9877", "2021-05-29-14:20", "3");
+        List<Boolean> hyeonho9877 = reservationService.findValidTables(LocalDateTime.parse("2021-05-29 13:20",DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), "3");
 
         // then
         assertThat(hyeonho9877.get(0)).isEqualTo(false);
@@ -249,7 +242,7 @@ class YoungchaApplicationTests {
 
     @Test
     void 복수테이블예약(){
-        List<Boolean> hyeonho9877 = reservationService.findValidTables("hyeonho9877", "2021-06-03-00:36", "3");
+        List<Boolean> hyeonho9877 = reservationService.findValidTables(LocalDateTime.parse("2021-05-29 13:20",DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), "3");
         assertThat(Collections.frequency(hyeonho9877, false)).isEqualTo(3);
     }
 
@@ -359,11 +352,5 @@ class YoungchaApplicationTests {
 
         // then
         assertThat(result.getProfit()).isEqualTo((int)Math.round(seafood_platter.getPrice()*1*(1-5.0/100)));
-    }
-
-    @Test
-    void 시간문자열처리(){
-        String source = "PM 03:45";
-        reservationService.timeConverter(source);
     }
 }

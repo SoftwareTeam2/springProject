@@ -27,11 +27,13 @@ public class WalkInService {
 
     public List<Boolean> validateDuplicateTable(int guestCount) {
         List<Reservation> reservationList = walkInRepository.findByResDate(LocalDateTime.now());
+        System.out.println("전 후 예약 개수"+reservationList.size());
         List<TableInfo> tables = walkInRepository.getTables();
+        System.out.println("테이블 개수 "+tables.size());
         Boolean[] validAry = new Boolean[tables.size()];
         Arrays.fill(validAry,true);
         for(Reservation reservation : reservationList){
-            validAry[Integer.getInteger(reservation.getTableNo())-1] = false;
+            validAry[Integer.valueOf(reservation.getTableNo())-1] = false;
         }
 
         validateGuestCountTable(guestCount,tables,validAry);
@@ -51,6 +53,7 @@ public class WalkInService {
     }
 
     public List<Boolean> checkTable(int guestCount){
+        System.out.println(guestCount);
         return validateDuplicateTable(guestCount);
     }
 }

@@ -1,6 +1,7 @@
 package Team2.youngcha.hellospring.repository;
 
 import Team2.youngcha.hellospring.domain.Customer;
+import Team2.youngcha.hellospring.domain.Menu;
 import Team2.youngcha.hellospring.domain.Reservation;
 import Team2.youngcha.hellospring.domain.TableInfo;
 import org.springframework.data.jpa.repository.Modifying;
@@ -30,9 +31,10 @@ public class ReservationRepository {
                 .getResultList();
     }
 
-    public List<Reservation> findByCustomerID(String id) {
-        List<Reservation> result = em.createQuery("select r from Reservation r where r.customerID=:customerID",Reservation.class)
+    public List<Reservation> findByCustomerIDAfterNow(String id,LocalDateTime now) {
+        List<Reservation> result = em.createQuery("select r from Reservation r where r.customerID=:customerID and r.reservationDate>=:now",Reservation.class)
                 .setParameter("customerID", id)
+                .setParameter("now",now)
                 .getResultList();
         return result;
     }
@@ -97,5 +99,10 @@ public class ReservationRepository {
         em.remove(reservation);
         em.flush();
         transaction.commit();
+    }
+
+    public List<Menu> getAllList() {
+        List<Menu> menuList = em.createQuery("select m from Menu m", Menu.class).getResultList();
+        return menuList;
     }
 }

@@ -57,12 +57,14 @@
 	font-size: large;
 	border-radius: 10%;
 }
+
+.remove
 </style>
 </head>
 
 <div class="py-5 text-center" style="user-select: auto;">
 	<img class="d-block mx-auto mb-4"
-		src="../../resources/image/jisung.jpg" alt="" width="100" height="125"
+		src="../../resources/image/Option.png" alt="" width="100" height="125"
 		style="user-select: auto;">
 	<h2 style="user-select: auto;">테이블 설정</h2>
 </div>
